@@ -7,7 +7,6 @@ extension ContextExtentions on BuildContext {
 
   double get textScale => MediaQuery.textScalerOf(this).textScaleFactor;
 
-  // Scale يعتمد على عرض الشاشة
   double _baseScale() {
     final w = width.clamp(320.0, 430.0);
     return w / 390.0;
