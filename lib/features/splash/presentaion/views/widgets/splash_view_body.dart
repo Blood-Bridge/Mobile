@@ -1,10 +1,11 @@
-import 'package:blood_bridge/core/services/shared_prefrences_singelton.dart';
+import 'package:blood_bridge/core/services/hive_helper.dart';
 import 'package:blood_bridge/core/utiles/app_images.dart';
 import 'package:blood_bridge/core/utiles/app_text_styles.dart';
 import 'package:blood_bridge/features/auth/presentation/views/login_view.dart';
 import 'package:blood_bridge/features/on_boarding/presentaion/views/on_boarder_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class SplashViewBody extends StatefulWidget {
   const SplashViewBody({super.key});
@@ -45,13 +46,13 @@ class _SplashViewBodyState extends State<SplashViewBody> {
   }
 
   void excuteNavigation() {
-    bool isOnBoardingViewSeen = Prefs.getBool('kIsOnBoardingViewSeen');
+    bool isOnBoardingViewSeen = HiveHelper.checkOnBoardingValue();
     print('isOnBoardingViewSeen: $isOnBoardingViewSeen'); // Debug print
     Future.delayed(const Duration(seconds: 3), () {
       if (isOnBoardingViewSeen) {
-        Navigator.pushReplacementNamed(context, LoginView.routeName);
+        Get.offAll(() => LoginView());
       } else {
-        Navigator.pushReplacementNamed(context, OnBoarderView.routeName);
+        Get.offAll(() => OnBoarderView());
       }
     });
   }

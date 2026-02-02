@@ -1,9 +1,10 @@
-import 'package:blood_bridge/core/services/shared_prefrences_singelton.dart';
+import 'package:blood_bridge/core/services/hive_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/core/widgets/custom_button.dart';
 import 'package:blood_bridge/features/auth/presentation/views/login_view.dart';
 import 'package:blood_bridge/features/on_boarding/presentaion/views/widgets/on_boarder_page_view.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class OnBoardingViewBody extends StatefulWidget {
   const OnBoardingViewBody({super.key});
@@ -35,6 +36,7 @@ class _OnBoardingViewBodyState extends State<OnBoardingViewBody> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Expanded(child: OnBoarderPageView(pageController: pageController)),
 
@@ -51,7 +53,7 @@ class _OnBoardingViewBodyState extends State<OnBoardingViewBody> {
               decoration: BoxDecoration(
                 color: currentIndex == i
                     ? AppColors.primary
-                    : AppColors.primary.withOpacity(0.5),
+                    : AppColors.primary.withValues(alpha: 0.5),
                 borderRadius: BorderRadius.circular(4),
               ),
             ),
@@ -71,11 +73,12 @@ class _OnBoardingViewBodyState extends State<OnBoardingViewBody> {
               horizontal: 16.0,
               vertical: 16.0,
             ),
+
             child: CustomButton(
               backgroundColor: AppColors.primary,
               onPressed: () {
-                Prefs.setBool('kIsOnBoardingViewSeen', true);
-                Navigator.of(context).pushReplacementNamed(LoginView.routeName);
+                HiveHelper.setValueInOnboardingBox();
+                Get.offAll(() => LoginView());
               },
               text: 'Get Started',
             ),
