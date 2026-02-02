@@ -31,7 +31,7 @@ class OnBoarderPageView extends StatelessWidget {
         PageViewItem(
           image: Assets.imagesRingIcon,
           title: Text(
-            ' Connect Lives Instantly',
+            ' Save Lives Together',
             textAlign: TextAlign.center,
             style: TextStyles.regular24.copyWith(color: Color(0xFFE5E5E5)),
           ),
