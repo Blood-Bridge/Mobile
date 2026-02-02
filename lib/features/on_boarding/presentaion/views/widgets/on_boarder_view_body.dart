@@ -3,7 +3,6 @@ import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/core/widgets/custom_button.dart';
 import 'package:blood_bridge/features/auth/presentation/views/login_view.dart';
 import 'package:blood_bridge/features/on_boarding/presentaion/views/widgets/on_boarder_page_view.dart';
-import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 
 class OnBoardingViewBody extends StatefulWidget {
@@ -38,18 +37,32 @@ class _OnBoardingViewBodyState extends State<OnBoardingViewBody> {
     return Column(
       children: [
         Expanded(child: OnBoarderPageView(pageController: pageController)),
-        DotsIndicator(
-          dotsCount: 2,
-          decorator: DotsDecorator(
-            activeColor: AppColors.primary,
-            color: currentIndex == 1
-                ? AppColors.primary
-                : AppColors.primary.withValues(alpha: 0.5),
+
+        /// 🔵 Animated Indicator
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: List.generate(
+            2,
+            (i) => AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              margin: const EdgeInsets.symmetric(horizontal: 4),
+              height: 8,
+              width: currentIndex == i ? 24 : 8,
+              decoration: BoxDecoration(
+                color: currentIndex == i
+                    ? AppColors.primary
+                    : AppColors.primary.withOpacity(0.5),
+                borderRadius: BorderRadius.circular(4),
+              ),
+            ),
           ),
         ),
-        SizedBox(height: 29),
+
+        const SizedBox(height: 29),
+
+        /// 🔘 Get Started Button
         Visibility(
-          visible: currentIndex == 1 ? true : false,
+          visible: currentIndex == 1,
           maintainSize: true,
           maintainAnimation: true,
           maintainState: true,
@@ -68,7 +81,8 @@ class _OnBoardingViewBodyState extends State<OnBoardingViewBody> {
             ),
           ),
         ),
-        SizedBox(height: 29),
+
+        const SizedBox(height: 29),
       ],
     );
   }
