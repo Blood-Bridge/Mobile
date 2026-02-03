@@ -6,5 +6,5 @@ class AppColors {
   static const border = Color(0xFFA3A3A3);
   static const primary = Color(0xFFC97777);
   static const text = Color(0xFFFFFFFF);
-  static const textMuted = Color(0xFFE5E5E5);
+  static const textMuted = Color(0xFF4E5456);
 }

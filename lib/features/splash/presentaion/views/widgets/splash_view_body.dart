@@ -1,8 +1,8 @@
 import 'package:blood_bridge/core/services/hive_helper.dart';
 import 'package:blood_bridge/core/utiles/app_images.dart';
 import 'package:blood_bridge/core/utiles/app_text_styles.dart';
-import 'package:blood_bridge/features/auth/presentation/views/login_view.dart';
 import 'package:blood_bridge/features/on_boarding/presentaion/views/on_boarder_view.dart';
+import 'package:blood_bridge/features/welcome/presentation/views/welcome_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -46,11 +46,11 @@ class _SplashViewBodyState extends State<SplashViewBody> {
   }
 
   void excuteNavigation() {
-    bool isOnBoardingViewSeen = HiveHelper.checkOnBoardingValue();
+    bool isOnBoardingViewSeen = HiveHelper.isOnboardingCompleted();
     print('isOnBoardingViewSeen: $isOnBoardingViewSeen'); // Debug print
     Future.delayed(const Duration(seconds: 3), () {
       if (isOnBoardingViewSeen) {
-        Get.offAll(() => LoginView());
+        Get.offAll(() => WelcomeView());
       } else {
         Get.offAll(() => OnBoarderView());
       }

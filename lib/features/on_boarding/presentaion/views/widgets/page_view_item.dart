@@ -1,7 +1,7 @@
 import 'package:blood_bridge/core/services/hive_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/core/utiles/app_text_styles.dart';
-import 'package:blood_bridge/features/auth/presentation/views/login_view.dart';
+import 'package:blood_bridge/features/welcome/presentation/views/welcome_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -41,9 +41,9 @@ class PageViewItem extends StatelessWidget {
                 children: [
                   Spacer(),
                   GestureDetector(
-                    onTap: () {
-                      HiveHelper.setValueInOnboardingBox();
-                      Get.offAll(() => LoginView);
+                    onTap: () async {
+                      await HiveHelper.setOnboardingCompleted();
+                      Get.offAll(() => WelcomeView());
                       // Navigate to login or home screen
                     },
                     child: Padding(

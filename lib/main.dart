@@ -4,11 +4,13 @@ import 'package:blood_bridge/features/splash/presentaion/views/splash_view.dart'
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'generated/l10n.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter();
-  await Hive.openBox(HiveHelper.onboardingBox);
+  await Hive.initFlutter(); // مهم جدًا
+  await HiveHelper.init();
   runApp(const MyApp());
 }
 
@@ -19,6 +21,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      localizationsDelegates: [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      title: 'BloodBridge',
       theme: ThemeData.dark().copyWith(scaffoldBackgroundColor: AppColors.bg),
       debugShowCheckedModeBanner: false,
       home: SplashView(),
