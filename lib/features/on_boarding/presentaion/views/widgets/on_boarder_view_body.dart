@@ -1,8 +1,8 @@
 import 'package:blood_bridge/core/services/hive_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/core/widgets/custom_button.dart';
-import 'package:blood_bridge/features/auth/presentation/views/login_view.dart';
 import 'package:blood_bridge/features/on_boarding/presentaion/views/widgets/on_boarder_page_view.dart';
+import 'package:blood_bridge/features/welcome/presentation/views/welcome_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -76,9 +76,9 @@ class _OnBoardingViewBodyState extends State<OnBoardingViewBody> {
 
             child: CustomButton(
               backgroundColor: AppColors.primary,
-              onPressed: () {
-                HiveHelper.setValueInOnboardingBox();
-                Get.offAll(() => LoginView());
+              onPressed: () async {
+                await HiveHelper.setOnboardingCompleted();
+                Get.offAll(() => WelcomeView());
               },
               text: 'Get Started',
             ),
