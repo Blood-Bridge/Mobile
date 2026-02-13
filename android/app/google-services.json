@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "93595142949",
+    "project_id": "blood-bridge-55037",
+    "storage_bucket": "blood-bridge-55037.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:93595142949:android:3afaeb443e2a844b3f28cc",
+        "android_client_info": {
+          "package_name": "com.bloodbridge.fci"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "93595142949-8i3psnsqk8s4hl38pnksdtd3sjsdhng4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bloodbridge.fci",
+            "certificate_hash": "a3feef4d4ed53706da543de0dacfa3d2a6dd3773"
+          }
+        },
+        {
+          "client_id": "93595142949-bm7389k2gbtdrbf5mkjo1s2fvivikrsa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDw7H1IUTnZYKwXHfRd7Nqv4z22xZ1-pV8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "93595142949-bm7389k2gbtdrbf5mkjo1s2fvivikrsa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
