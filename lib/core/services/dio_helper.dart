@@ -1,0 +1,94 @@
+import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+class DioHelper {
+  static Dio? _dio;
+
+  DioHelper._();
+
+  static String prefer = "return=representation";
+
+  static void init() {
+    if (_dio != null) return;
+
+    final baseUrl = dotenv.env['DATA_URL'];
+
+    if (baseUrl == null) {
+      throw Exception("Missing DATA_URL in .env file");
+    }
+
+    _dio = Dio(
+      BaseOptions(
+        baseUrl: baseUrl,
+        receiveTimeout: const Duration(seconds: 15),
+        headers: {"Prefer": prefer},
+      ),
+    );
+
+    _dio!.interceptors.add(
+      LogInterceptor(
+        request: true,
+        requestBody: true,
+        responseBody: true,
+        error: true,
+      ),
+    );
+  }
+
+  static Future<Response> getData({
+    required String path,
+    Map<String, dynamic>? queryParameters,
+  }) async {
+    return await _dio!.get(path, queryParameters: queryParameters);
+  }
+
+  static Future<Response> postData({
+    required String path,
+    Map<String, dynamic>? queryParameters,
+    Map<String, dynamic>? body,
+    String? prefer,
+  }) async {
+    if (prefer != null) {
+      DioHelper.prefer = prefer;
+    }
+    final response = await _dio!.post(
+      path,
+      queryParameters: queryParameters,
+      data: body,
+    );
+    DioHelper.prefer = "return=representation";
+    return response;
+  }
+
+  static Future<Response> deleteData({
+    required String path,
+    Map<String, dynamic>? queryParameters,
+    Map<String, dynamic>? body,
+  }) async {
+    return await _dio!.delete(
+      path,
+      queryParameters: queryParameters,
+      data: body,
+    );
+  }
+
+  static Future<Response> patchData({
+    required String path,
+    Map<String, dynamic>? queryParameters,
+    Map<String, dynamic>? body,
+  }) async {
+    return await _dio!.patch(
+      path,
+      queryParameters: queryParameters,
+      data: body,
+    );
+  }
+
+  static Future<Response> putData({
+    required String path,
+    Map<String, dynamic>? queryParameters,
+    Map<String, dynamic>? body,
+  }) async {
+    return await _dio!.put(path, queryParameters: queryParameters, data: body);
+  }
+}
