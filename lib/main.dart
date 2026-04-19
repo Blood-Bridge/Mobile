@@ -11,6 +11,7 @@ import 'package:blood_bridge/features/setting/presentation/cubits/notifications_
 import 'package:blood_bridge/features/setting/presentation/cubits/notifications_cubit/cubit/notifications_state.dart';
 
 import 'package:blood_bridge/features/setting/presentation/views/setting_view.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -29,6 +30,7 @@ Future<void> main() async {
   await Hive.openBox(HiveHelper.userBox);
   await Hive.openBox(HiveHelper.permissionsBox);
   await Hive.openBox('settings'); // ← box للـ notifications settings
+  await Hive.openBox(HiveHelper.KEY_BOX_APP_LANGUAGE);
 
   await NotificationsService.init(); // ← init الإشعارات
 
@@ -66,18 +68,12 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: BlocBuilder<LanguageCubit, LanguageState>(
-        builder: (context, langState) {
+        builder: (context, state) {
           return GetMaterialApp(
             debugShowCheckedModeBanner: false,
-            locale: langState.language == AppLanguage.arabic
-                ? const Locale('ar')
-                : const Locale('en'),
-            supportedLocales: const [Locale('en'), Locale('ar')],
-            localizationsDelegates: const [
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
+            locale: state.locale,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
             theme: ThemeData.dark().copyWith(
               scaffoldBackgroundColor: AppColors.bg,
               primaryColor: AppColors.primary,

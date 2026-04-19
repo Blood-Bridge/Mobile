@@ -12,7 +12,7 @@ class LanguageSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<LanguageCubit, LanguageState>(
       builder: (context, state) {
-        final isEnglish = state.language == AppLanguage.english;
+        final isEnglish = state.locale == const Locale('en');
 
         return Container(
           margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -38,17 +38,13 @@ class LanguageSelector extends StatelessWidget {
                   _LangOption(
                     label: 'English',
                     isSelected: isEnglish,
-                    onTap: () => context.read<LanguageCubit>().changeLanguage(
-                      AppLanguage.english,
-                    ),
+                    onTap: () => context.read<LanguageCubit>().toEnglish(),
                   ),
                   const SizedBox(width: 10),
                   _LangOption(
                     label: 'العربية',
                     isSelected: !isEnglish,
-                    onTap: () => context.read<LanguageCubit>().changeLanguage(
-                      AppLanguage.arabic,
-                    ),
+                    onTap: () => context.read<LanguageCubit>().toArabic(),
                   ),
                 ],
               ),

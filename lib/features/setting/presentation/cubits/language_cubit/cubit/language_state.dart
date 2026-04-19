@@ -1,15 +1,13 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
 enum AppLanguage { english, arabic }
 
-class LanguageState extends Equatable {
-  final AppLanguage language;
+abstract class LanguageState {
+  final Locale locale;
+  const LanguageState(this.locale);
+}
 
-  const LanguageState({this.language = AppLanguage.english});
-
-  LanguageState copyWith({AppLanguage? language}) =>
-      LanguageState(language: language ?? this.language);
-
-  @override
-  List<Object?> get props => [language];
+class SelectedLocale extends LanguageState {
+  const SelectedLocale(Locale locale) : super(locale);
 }
