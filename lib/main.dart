@@ -1,33 +1,36 @@
 import 'dart:async';
 
 import 'package:blood_bridge/core/services/hive_helper.dart';
+import 'package:blood_bridge/core/services/notification_service.dart';
+
 import 'package:blood_bridge/core/utiles/app_colors.dart';
-import 'package:blood_bridge/features/home/presentation/views/donor/donor_screen.dart';
-import 'package:blood_bridge/features/map/presentation/view/map_screen.dart';
 import 'package:blood_bridge/features/permissions/presntation/cubit/permissions_cubit.dart';
-import 'package:blood_bridge/features/permissions/presntation/views/permissions_screen.dart';
+import 'package:blood_bridge/features/setting/presentation/cubits/language_cubit/cubit/language_cubit.dart';
+import 'package:blood_bridge/features/setting/presentation/cubits/language_cubit/cubit/language_state.dart';
+import 'package:blood_bridge/features/setting/presentation/cubits/notifications_cubit/cubit/notifications_cubit.dart';
+import 'package:blood_bridge/features/setting/presentation/cubits/notifications_cubit/cubit/notifications_state.dart';
+
 import 'package:blood_bridge/features/setting/presentation/views/setting_view.dart';
-import 'package:blood_bridge/features/user_information/presentation/views/user_info_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:latlong2/latlong.dart';
 import 'features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'features/home/presentation/views/reciver/receiver_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   await dotenv.load(fileName: "assets/env/.env");
 
-  // await Firebase.initializeApp();
   await Hive.openBox(HiveHelper.cachedLocationBox);
   await Hive.openBox(HiveHelper.onboardingBox);
   await Hive.openBox(HiveHelper.userBox);
   await Hive.openBox(HiveHelper.permissionsBox);
+  await Hive.openBox('settings'); // ← box للـ notifications settings
+
+  await NotificationsService.init(); // ← init الإشعارات
 
   FlutterError.onError = (FlutterErrorDetails details) {
     FlutterError.dumpErrorToConsole(details);
@@ -48,7 +51,6 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -57,19 +59,36 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => PermissionsCubit()..checkPermission(),
         ),
-      ],
-      child: GetMaterialApp(
-        theme: ThemeData.dark().copyWith(
-          scaffoldBackgroundColor: AppColors.bg,
-          primaryColor: AppColors.primary,
-          appBarTheme: const AppBarTheme(
-            backgroundColor: AppColors.border,
-            elevation: 0,
-          ),
+        BlocProvider(create: (context) => LanguageCubit()),
+        // ← نمرر الـ box للـ Cubit عشان يقرأ ويحفظ منه
+        BlocProvider(
+          create: (context) => NotificationsCubit(Hive.box('settings')),
         ),
-
-        debugShowCheckedModeBanner: false,
-        home: SettingView(),
+      ],
+      child: BlocBuilder<LanguageCubit, LanguageState>(
+        builder: (context, langState) {
+          return GetMaterialApp(
+            debugShowCheckedModeBanner: false,
+            locale: langState.language == AppLanguage.arabic
+                ? const Locale('ar')
+                : const Locale('en'),
+            supportedLocales: const [Locale('en'), Locale('ar')],
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            theme: ThemeData.dark().copyWith(
+              scaffoldBackgroundColor: AppColors.bg,
+              primaryColor: AppColors.primary,
+              appBarTheme: const AppBarTheme(
+                backgroundColor: AppColors.border,
+                elevation: 0,
+              ),
+            ),
+            home: SettingView(),
+          );
+        },
       ),
     );
   }

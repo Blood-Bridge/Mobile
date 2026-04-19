@@ -1,55 +1,61 @@
 import 'package:blood_bridge/core/services/text_style_helper.dart';
+import 'package:blood_bridge/features/setting/presentation/cubits/language_cubit/cubit/language_cubit.dart';
+import 'package:blood_bridge/features/setting/presentation/cubits/language_cubit/cubit/language_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 
 class LanguageSelector extends StatelessWidget {
-  final bool isEnglish;
-  final ValueChanged<bool> onChanged;
-
-  const LanguageSelector({
-    super.key,
-    required this.isEnglish,
-    required this.onChanged,
-  });
+  const LanguageSelector({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: AppColors.card,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.border, width: 1),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+    return BlocBuilder<LanguageCubit, LanguageState>(
+      builder: (context, state) {
+        final isEnglish = state.language == AppLanguage.english;
+
+        return Container(
+          margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: AppColors.card,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: AppColors.border, width: 1),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(Icons.language, color: AppColors.textMuted, size: 18),
-              const SizedBox(width: 8),
-              Text('Language', style: TextStyleHelper.h4(context)),
+              Row(
+                children: [
+                  Icon(Icons.language, color: AppColors.textMuted, size: 18),
+                  const SizedBox(width: 8),
+                  Text('Language', style: TextStyleHelper.h4(context)),
+                ],
+              ),
+              const SizedBox(height: 12),
+              Row(
+                children: [
+                  _LangOption(
+                    label: 'English',
+                    isSelected: isEnglish,
+                    onTap: () => context.read<LanguageCubit>().changeLanguage(
+                      AppLanguage.english,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  _LangOption(
+                    label: 'العربية',
+                    isSelected: !isEnglish,
+                    onTap: () => context.read<LanguageCubit>().changeLanguage(
+                      AppLanguage.arabic,
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
-          const SizedBox(height: 12),
-          Row(
-            children: [
-              _LangOption(
-                label: 'English',
-                isSelected: isEnglish,
-                onTap: () => onChanged(true),
-              ),
-              const SizedBox(width: 10),
-              _LangOption(
-                label: 'العربية',
-                isSelected: !isEnglish,
-                onTap: () => onChanged(false),
-              ),
-            ],
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
