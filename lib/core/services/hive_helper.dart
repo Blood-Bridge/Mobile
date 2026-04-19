@@ -8,6 +8,7 @@ class HiveHelper {
   static const userBox = "USER_BOX";
   static const permissionsBox = "PERMISSIONS";
   static const cachedLocationBox = "CACHED_LOCATION_BOX";
+  static const KEY_BOX_APP_LANGUAGE = "KEY_BOX_APP_LANGUAGE";
 
   /// Sets onboarding completion flag
   static Future<void> setValueInOnboardingBox() async {
@@ -35,6 +36,24 @@ class HiveHelper {
       await box.put("token", tokenParam);
     } catch (e) {
       throw Exception('Failed to set token: ${e.toString()}');
+    }
+  }
+
+  static Future<void> setLanguage(String? langCode) async {
+    try {
+      await Hive.box(KEY_BOX_APP_LANGUAGE).put(KEY_BOX_APP_LANGUAGE, langCode);
+    } catch (e) {
+      throw Exception("Failed to set language: ${e.toString()}");
+    }
+  }
+
+  static String? getLanguage() {
+    try {
+      final value =
+          Hive.box(KEY_BOX_APP_LANGUAGE).get(KEY_BOX_APP_LANGUAGE) as String?;
+      return value;
+    } catch (e) {
+      return null;
     }
   }
 
