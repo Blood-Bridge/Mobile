@@ -2,12 +2,15 @@ import 'dart:async';
 
 import 'package:blood_bridge/core/services/hive_helper.dart';
 import 'package:blood_bridge/core/services/notification_service.dart';
+
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/features/permissions/presntation/cubit/permissions_cubit.dart';
+import 'package:blood_bridge/features/setting/presentation/cubits/Preferences_cubit/cubit/preferences_state.dart';
 import 'package:blood_bridge/features/setting/presentation/cubits/language_cubit/cubit/language_cubit.dart';
 import 'package:blood_bridge/features/setting/presentation/cubits/language_cubit/cubit/language_state.dart';
 import 'package:blood_bridge/features/setting/presentation/cubits/notifications_cubit/cubit/notifications_cubit.dart';
-import 'package:blood_bridge/features/setting/presentation/cubits/privacy_cubit/cubit/privacy_cubit.dart'; // ← جديد
+import 'package:blood_bridge/features/setting/presentation/cubits/preferences_cubit/cubit/preferences_cubit.dart';
+import 'package:blood_bridge/features/setting/presentation/cubits/privacy_cubit/cubit/privacy_cubit.dart';
 import 'package:blood_bridge/features/setting/presentation/views/setting_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -56,32 +59,44 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => NotificationsCubit(Hive.box('settings')),
         ),
+        BlocProvider(create: (context) => PrivacyCubit(Hive.box('settings'))),
         BlocProvider(
-          create: (context) => PrivacyCubit(Hive.box('settings')), // ← جديد
+          create: (context) => PreferencesCubit(Hive.box('settings')),
         ),
       ],
+      // استمع للغة والـ dark mode مع بعض
       child: BlocBuilder<LanguageCubit, LanguageState>(
         builder: (context, langState) {
-          return GetMaterialApp(
-            debugShowCheckedModeBanner: false,
-            locale: langState.locale == AppLanguage.arabic
-                ? const Locale('ar')
-                : const Locale('en'),
-            supportedLocales: const [Locale('en'), Locale('ar')],
-            localizationsDelegates: const [
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            theme: ThemeData.dark().copyWith(
-              scaffoldBackgroundColor: AppColors.bg,
-              primaryColor: AppColors.primary,
-              appBarTheme: const AppBarTheme(
-                backgroundColor: AppColors.border,
-                elevation: 0,
-              ),
-            ),
-            home: SettingView(),
+          return BlocBuilder<PreferencesCubit, PreferencesState>(
+            builder: (context, prefsState) {
+              return GetMaterialApp(
+                debugShowCheckedModeBanner: false,
+                locale: langState.locale == AppLanguage.arabic
+                    ? const Locale('ar')
+                    : const Locale('en'),
+                supportedLocales: const [Locale('en'), Locale('ar')],
+                localizationsDelegates: const [
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                // ← Dark Mode يغير الـ theme بتاع التطبيق كله
+                theme: prefsState.darkMode
+                    ? ThemeData.dark().copyWith(
+                        scaffoldBackgroundColor: AppColors.bg,
+                        primaryColor: AppColors.primary,
+                        appBarTheme: const AppBarTheme(
+                          backgroundColor: AppColors.border,
+                          elevation: 0,
+                        ),
+                      )
+                    : ThemeData.light().copyWith(
+                        primaryColor: AppColors.primary,
+                        appBarTheme: const AppBarTheme(elevation: 0),
+                      ),
+                home: SettingView(),
+              );
+            },
           );
         },
       ),

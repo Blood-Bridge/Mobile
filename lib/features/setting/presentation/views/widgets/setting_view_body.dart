@@ -1,7 +1,9 @@
 import 'package:blood_bridge/core/services/text_style_helper.dart';
+import 'package:blood_bridge/features/setting/presentation/cubits/Preferences_cubit/cubit/preferences_state.dart';
 import 'package:blood_bridge/features/setting/presentation/cubits/language_cubit/cubit/language_cubit.dart';
 import 'package:blood_bridge/features/setting/presentation/cubits/notifications_cubit/cubit/notifications_cubit.dart';
 import 'package:blood_bridge/features/setting/presentation/cubits/notifications_cubit/cubit/notifications_state.dart';
+import 'package:blood_bridge/features/setting/presentation/cubits/preferences_cubit/cubit/preferences_cubit.dart';
 import 'package:blood_bridge/features/setting/presentation/cubits/privacy_cubit/cubit/privacy_cubit.dart';
 import 'package:blood_bridge/features/setting/presentation/cubits/privacy_cubit/cubit/privacy_state.dart';
 import 'package:blood_bridge/features/setting/presentation/views/widgets/setting_group.dart';
@@ -13,15 +15,8 @@ import '../widgets/arrow_item.dart';
 import '../widgets/language_selector.dart';
 import '../widgets/toggle_item.dart';
 
-class SettingViewBody extends StatefulWidget {
+class SettingViewBody extends StatelessWidget {
   const SettingViewBody({super.key});
-
-  @override
-  State<SettingViewBody> createState() => _SettingViewBodyState();
-}
-
-class _SettingViewBodyState extends State<SettingViewBody> {
-  bool _darkMode = true;
 
   @override
   Widget build(BuildContext context) {
@@ -107,18 +102,27 @@ class _SettingViewBodyState extends State<SettingViewBody> {
             },
           ),
 
-          // setState — Preferences محلية
-          SettingsGroup(
-            sectionTitle: 'Preferences',
-            children: [
-              ToggleItem(
-                title: 'Dark Mode',
-                subtitle: 'Always on for eye comfort',
-                value: _darkMode,
-                onChanged: (val) => setState(() => _darkMode = val),
-              ),
-              ArrowItem(title: 'Search Radius', subtitle: '5 km', onTap: () {}),
-            ],
+          // ✅ Preferences
+          BlocBuilder<PreferencesCubit, PreferencesState>(
+            builder: (context, state) {
+              return SettingsGroup(
+                sectionTitle: 'Preferences',
+                children: [
+                  ToggleItem(
+                    title: 'Dark Mode',
+                    subtitle: 'Always on for eye comfort',
+                    value: state.darkMode,
+                    onChanged: (val) =>
+                        context.read<PreferencesCubit>().toggleDarkMode(val),
+                  ),
+                  ArrowItem(
+                    title: 'Search Radius',
+                    subtitle: '${state.searchRadius.toInt()} km',
+                    onTap: () => _showRadiusSheet(context, state.searchRadius),
+                  ),
+                ],
+              );
+            },
           ),
 
           SettingsGroup(
@@ -130,6 +134,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
             ],
           ),
 
+          // ── FOOTER ──────────────────────────────────────────
           const SizedBox(height: 12),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
@@ -200,6 +205,71 @@ class _SettingViewBodyState extends State<SettingViewBody> {
           const SizedBox(height: 16),
         ],
       ),
+    );
+  }
+
+  // ── Search Radius Bottom Sheet ───────────────────────
+  void _showRadiusSheet(BuildContext context, double currentRadius) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppColors.card,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (_) => BlocProvider.value(
+        value: context.read<PreferencesCubit>(),
+        child: _RadiusSheet(currentRadius: currentRadius),
+      ),
+    );
+  }
+}
+
+// ── Radius Bottom Sheet Widget ───────────────────────────
+class _RadiusSheet extends StatelessWidget {
+  final double currentRadius;
+
+  const _RadiusSheet({required this.currentRadius});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<PreferencesCubit, PreferencesState>(
+      builder: (context, state) {
+        return Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('Search Radius', style: TextStyleHelper.h3(context)),
+              const SizedBox(height: 8),
+              Text(
+                '${state.searchRadius.toInt()} km',
+                style: TextStyleHelper.h2(
+                  context,
+                ).copyWith(color: AppColors.primary),
+              ),
+              const SizedBox(height: 16),
+              Slider(
+                value: state.searchRadius,
+                min: 1,
+                max: 50,
+                divisions: 49,
+                activeColor: AppColors.primary,
+                inactiveColor: AppColors.accent,
+                onChanged: (val) =>
+                    context.read<PreferencesCubit>().updateSearchRadius(val),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('1 km', style: TextStyleHelper.xs(context)),
+                  Text('50 km', style: TextStyleHelper.xs(context)),
+                ],
+              ),
+              const SizedBox(height: 16),
+            ],
+          ),
+        );
+      },
     );
   }
 }
