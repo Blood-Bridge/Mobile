@@ -5,41 +5,39 @@ import 'package:get/get.dart';
 
 import 'language_state.dart';
 
-// ✅ نستخدم Flutter بدل Platform
-final Locale systemLocale = WidgetsBinding.instance.platformDispatcher.locale;
-
 class LanguageCubit extends Cubit<LanguageState> {
   static String? get cachedLanguage => HiveHelper.getLanguage();
 
-  static Locale _locale = (cachedLanguage == null)
-      ? (systemLocale.languageCode == 'ar'
-            ? const Locale('ar')
-            : const Locale('en'))
-      : Locale(cachedLanguage!);
+  static Locale _locale = const Locale('en');
 
   static String? get currentLanguage => _locale.languageCode;
 
-  LanguageCubit()
-    : super(
-        SelectedLocale(
-          cachedLanguage == null ? _locale : Locale(cachedLanguage!),
-        ),
-      ) {
+  LanguageCubit() : super(SelectedLocale(_getInitialLocale()));
+
+  static Locale _getInitialLocale() {
+    final systemLocale = WidgetsBinding.instance.platformDispatcher.locale;
+
     if (cachedLanguage == null) {
-      HiveHelper.setLanguage(_locale.languageCode);
+      return systemLocale.languageCode == 'ar'
+          ? const Locale('ar')
+          : const Locale('en');
+    } else {
+      return Locale(cachedLanguage!);
     }
   }
 
   void toArabic() {
-    Get.updateLocale(const Locale("ar"));
+    _locale = const Locale('ar');
+    Get.updateLocale(_locale);
     HiveHelper.setLanguage('ar');
-    emit(SelectedLocale(_locale = const Locale('ar')));
+    emit(SelectedLocale(_locale));
   }
 
   void toEnglish() {
-    Get.updateLocale(const Locale("en"));
+    _locale = const Locale('en');
+    Get.updateLocale(_locale);
     HiveHelper.setLanguage('en');
-    emit(SelectedLocale(_locale = const Locale('en')));
+    emit(SelectedLocale(_locale));
   }
 
   static bool get isArabic => currentLanguage == 'ar';

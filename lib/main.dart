@@ -24,7 +24,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   await dotenv.load(fileName: "assets/env/.env");
-
+  await Hive.openBox(HiveHelper.KEY_BOX_APP_LANGUAGE);
   await Hive.openBox(HiveHelper.cachedLocationBox);
   await Hive.openBox(HiveHelper.onboardingBox);
   await Hive.openBox(HiveHelper.userBox);
