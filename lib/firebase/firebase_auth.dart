@@ -177,6 +177,42 @@ class FirebaseAuthHelper {
   //     }
   //   }
   //
+
+  static Future<void> signOutUser() async {
+    try {
+      final GoogleSignIn googleSignIn = GoogleSignIn();
+
+      // لو اليوزر داخل بـ Google نعمل disconnect
+      if (await googleSignIn.isSignedIn()) {
+        await googleSignIn.disconnect();
+      }
+
+      // نعمل sign out من Firebase
+      await FirebaseAuth.instance.signOut();
+
+      // نمسح بيانات اليوزر من Hive
+      await HiveHelper.clearToken();
+      await HiveHelper.clearUser();
+
+      // نروح لشاشة اللوجين
+      Get.offAllNamed('/login');
+
+      Get.snackbar(
+        'Sign Out',
+        'You have been signed out successfully.',
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      Get.snackbar(
+        'Sign Out Failed',
+        'Something went wrong, please try again.',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+  }
+
   static Future<bool> isFirstTime(String uid) async {
     return true;
   }
