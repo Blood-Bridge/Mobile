@@ -1,12 +1,8 @@
-import 'package:blood_bridge/core/services/notification_service.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive/hive.dart';
 
 // ── Keys ─────────────────────────────────────────────
-// نفس الـ box الموجود في main.dart
 class NotificationsKeys {
-  static const String box = 'settings'; // أو أي box موجود عندك
+  static const String box = 'settings';
   static const String emergencyAlerts = 'emergencyAlerts';
   static const String requestNotifications = 'requestNotifications';
   static const String donationReminders = 'donationReminders';
