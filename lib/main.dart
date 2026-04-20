@@ -30,7 +30,7 @@ Future<void> main() async {
   await Hive.openBox(HiveHelper.userBox);
   await Hive.openBox(HiveHelper.permissionsBox);
   await Hive.openBox('settings');
-
+  await Hive.openBox(HiveHelper.KEY_BOX_APP_LANGUAGE);
   await NotificationsService.init();
 
   FlutterError.onError = (FlutterErrorDetails details) {
