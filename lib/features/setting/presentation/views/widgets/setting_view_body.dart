@@ -7,6 +7,7 @@ import 'package:blood_bridge/features/setting/presentation/cubits/preferences_cu
 import 'package:blood_bridge/features/setting/presentation/cubits/privacy_cubit/cubit/privacy_cubit.dart';
 import 'package:blood_bridge/features/setting/presentation/cubits/privacy_cubit/cubit/privacy_state.dart';
 import 'package:blood_bridge/features/setting/presentation/views/widgets/setting_group.dart';
+import 'package:blood_bridge/firebase/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
@@ -175,7 +176,7 @@ class SettingViewBody extends StatelessWidget {
             ),
             child: InkWell(
               borderRadius: BorderRadius.circular(12),
-              onTap: () {},
+              onTap: () => _showSignOutDialog(context),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Row(
@@ -203,6 +204,39 @@ class SettingViewBody extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
+        ],
+      ),
+    );
+  }
+
+  void _showSignOutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        backgroundColor: AppColors.card,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Text('Sign Out', style: TextStyleHelper.h3(context)),
+        content: Text(
+          'Are you sure you want to sign out?',
+          style: TextStyleHelper.small(context),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('Cancel', style: TextStyleHelper.small(context)),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              FirebaseAuthHelper.signOutUser();
+            },
+            child: Text(
+              'Sign Out',
+              style: TextStyleHelper.small(
+                context,
+              ).copyWith(color: AppColors.primary, fontWeight: FontWeight.w600),
+            ),
+          ),
         ],
       ),
     );

@@ -20,6 +20,26 @@ class HiveHelper {
     }
   }
 
+  /// Deletes user token
+  static Future<void> clearToken() async {
+    try {
+      final box = await Hive.openBox(userBox);
+      await box.delete("token");
+    } catch (e) {
+      throw Exception('Failed to clear token: ${e.toString()}');
+    }
+  }
+
+  /// Deletes all user data
+  static Future<void> clearUser() async {
+    try {
+      final box = await Hive.openBox(userBox);
+      await box.clear(); // يمسح كل حاجة (token + email + userType)
+    } catch (e) {
+      throw Exception('Failed to clear user data: ${e.toString()}');
+    }
+  }
+
   /// Checks if onboarding was completed
   static bool checkOnBoardingValue() {
     try {
