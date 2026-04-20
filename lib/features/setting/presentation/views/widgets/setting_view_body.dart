@@ -2,6 +2,8 @@ import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/features/setting/presentation/cubits/language_cubit/cubit/language_cubit.dart';
 import 'package:blood_bridge/features/setting/presentation/cubits/notifications_cubit/cubit/notifications_cubit.dart';
 import 'package:blood_bridge/features/setting/presentation/cubits/notifications_cubit/cubit/notifications_state.dart';
+import 'package:blood_bridge/features/setting/presentation/cubits/privacy_cubit/cubit/privacy_cubit.dart';
+import 'package:blood_bridge/features/setting/presentation/cubits/privacy_cubit/cubit/privacy_state.dart';
 import 'package:blood_bridge/features/setting/presentation/views/widgets/setting_group.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,14 +21,12 @@ class SettingViewBody extends StatefulWidget {
 }
 
 class _SettingViewBodyState extends State<SettingViewBody> {
-  bool _locationSharing = true;
-  bool _profileVisibility = true;
   bool _darkMode = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 182, 99, 99),
+      backgroundColor: AppColors.bg,
       appBar: AppBar(
         backgroundColor: AppColors.bg,
         elevation: 0,
@@ -43,9 +43,10 @@ class _SettingViewBodyState extends State<SettingViewBody> {
       body: ListView(
         padding: const EdgeInsets.only(top: 8, bottom: 32),
         children: [
+          // ✅ Language
           const LanguageSelector(),
 
-          // ✅ Notifications - NotificationsCubit من main.dart
+          // ✅ Notifications
           BlocBuilder<NotificationsCubit, NotificationsState>(
             builder: (context, state) {
               return SettingsGroup(
@@ -80,24 +81,33 @@ class _SettingViewBodyState extends State<SettingViewBody> {
             },
           ),
 
-          // setState — تغييرات محلية
-          SettingsGroup(
-            sectionTitle: 'Privacy',
-            children: [
-              ToggleItem(
-                title: 'Location Sharing',
-                subtitle: 'For nearby matching',
-                value: _locationSharing,
-                onChanged: (val) => setState(() => _locationSharing = val),
-              ),
-              ToggleItem(
-                title: 'Profile Visibility',
-                subtitle: 'Show to other users',
-                value: _profileVisibility,
-                onChanged: (val) => setState(() => _profileVisibility = val),
-              ),
-            ],
+          // ✅ Privacy
+          BlocBuilder<PrivacyCubit, PrivacyState>(
+            builder: (context, state) {
+              return SettingsGroup(
+                sectionTitle: 'Privacy',
+                children: [
+                  ToggleItem(
+                    title: 'Location Sharing',
+                    subtitle: 'For nearby matching',
+                    value: state.locationSharing,
+                    onChanged: (val) =>
+                        context.read<PrivacyCubit>().toggleLocationSharing(val),
+                  ),
+                  ToggleItem(
+                    title: 'Profile Visibility',
+                    subtitle: 'Show to other users',
+                    value: state.profileVisibility,
+                    onChanged: (val) => context
+                        .read<PrivacyCubit>()
+                        .toggleProfileVisibility(val),
+                  ),
+                ],
+              );
+            },
           ),
+
+          // setState — Preferences محلية
           SettingsGroup(
             sectionTitle: 'Preferences',
             children: [
@@ -110,6 +120,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
               ArrowItem(title: 'Search Radius', subtitle: '5 km', onTap: () {}),
             ],
           ),
+
           SettingsGroup(
             sectionTitle: 'Support',
             children: [
@@ -119,7 +130,6 @@ class _SettingViewBodyState extends State<SettingViewBody> {
             ],
           ),
 
-          // ── FOOTER ──────────────────────────────────────────
           const SizedBox(height: 12),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),

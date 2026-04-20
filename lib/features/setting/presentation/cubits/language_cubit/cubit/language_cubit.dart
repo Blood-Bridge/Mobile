@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:blood_bridge/core/services/hive_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,21 +5,20 @@ import 'package:get/get.dart';
 
 import 'language_state.dart';
 
-final String defaultLocale = Platform.localeName;
-// final String defaultLocale = "ar";
+// ✅ نستخدم Flutter بدل Platform
+final Locale systemLocale = WidgetsBinding.instance.platformDispatcher.locale;
 
 class LanguageCubit extends Cubit<LanguageState> {
+  static String? get cachedLanguage => HiveHelper.getLanguage();
+
   static Locale _locale = (cachedLanguage == null)
-      ? (defaultLocale.substring(0, 2) == 'ar'
+      ? (systemLocale.languageCode == 'ar'
             ? const Locale('ar')
             : const Locale('en'))
       : Locale(cachedLanguage!);
 
-  static String? get currentLanguage => _locale.toString();
+  static String? get currentLanguage => _locale.languageCode;
 
-  static String? get cachedLanguage => HiveHelper.getLanguage();
-
-  // Passing an initial value (state) with a default 'Locale' to the super class.
   LanguageCubit()
     : super(
         SelectedLocale(
@@ -29,27 +26,22 @@ class LanguageCubit extends Cubit<LanguageState> {
         ),
       ) {
     if (cachedLanguage == null) {
-      HiveHelper.setLanguage(defaultLocale.substring(0, 2));
+      HiveHelper.setLanguage(_locale.languageCode);
     }
   }
 
-  // Once we call this method, the BlocBuilder<LanguageCubit>
-  // in the 'main.dart' will rebuild the entire app with
-  // the new emitted state that holds the 'ar' locale.
   void toArabic() {
-    Get.updateLocale(Locale("ar"));
+    Get.updateLocale(const Locale("ar"));
     HiveHelper.setLanguage('ar');
-    emit(SelectedLocale(_locale = const Locale('ar', '')));
+    emit(SelectedLocale(_locale = const Locale('ar')));
   }
 
-  // Same as the previous method, but with the 'en' locale.
   void toEnglish() {
-    Get.updateLocale(Locale("en"));
+    Get.updateLocale(const Locale("en"));
     HiveHelper.setLanguage('en');
-    emit(SelectedLocale(_locale = const Locale('en', '')));
+    emit(SelectedLocale(_locale = const Locale('en')));
   }
 
   static bool get isArabic => currentLanguage == 'ar';
-
   static bool get isEnglish => currentLanguage == 'en';
 }

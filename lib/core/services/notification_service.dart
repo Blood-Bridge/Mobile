@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class NotificationsService {
@@ -6,8 +7,10 @@ class NotificationsService {
   static final FlutterLocalNotificationsPlugin _plugin =
       FlutterLocalNotificationsPlugin();
 
-  // ── Init ─────────────────────────────────────────
   static Future<void> init() async {
+    // 🚫 يمنع الكراش على Web
+    if (kIsWeb) return;
+
     const android = AndroidInitializationSettings('@mipmap/ic_launcher');
     const ios = DarwinInitializationSettings();
 
@@ -16,13 +19,13 @@ class NotificationsService {
     );
   }
 
-  // ── إلغاء كل الإشعارات ───────────────────────────
   static Future<void> cancelAll() async {
+    if (kIsWeb) return;
     await _plugin.cancelAll();
   }
 
-  // ── إلغاء إشعار معين ─────────────────────────────
   static Future<void> cancel(int id) async {
+    if (kIsWeb) return;
     await _plugin.cancel(id: id);
   }
 }

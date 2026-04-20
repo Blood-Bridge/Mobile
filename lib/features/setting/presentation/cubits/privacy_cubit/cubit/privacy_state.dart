@@ -1,6 +1,12 @@
 import 'package:equatable/equatable.dart';
 
-// ── State ──────────────────────────────────────────
+// ── Keys ─────────────────────────────────────────────
+class PrivacyKeys {
+  static const String locationSharing = 'locationSharing';
+  static const String profileVisibility = 'profileVisibility';
+}
+
+// ── State ─────────────────────────────────────────────
 class PrivacyState extends Equatable {
   final bool locationSharing;
   final bool profileVisibility;
