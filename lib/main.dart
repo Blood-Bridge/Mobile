@@ -4,12 +4,11 @@ import 'package:blood_bridge/core/services/hive_helper.dart';
 import 'package:blood_bridge/core/services/notification_service.dart';
 
 import 'package:blood_bridge/core/utiles/app_colors.dart';
-import 'package:blood_bridge/features/connectivity_status/data/repositories/connectivity_status_repository_impl.dart';
+import 'package:blood_bridge/features/connectivity_status/data/repositories/connectivity_status_repository_mock.dart';
+// import 'package:blood_bridge/features/connectivity_status/data/repositories/connectivity_status_repository_impl.dart';
 import 'package:blood_bridge/features/connectivity_status/presentation/cubit/connectivity_status_cubit.dart';
 import 'package:blood_bridge/features/connectivity_status/presentation/widgets/connectivity_status_overlay.dart';
-import 'package:blood_bridge/features/hospital_inventory/presentation/views/hospital_inventory_view.dart';
 import 'package:blood_bridge/features/permissions/presntation/cubit/permissions_cubit.dart';
-import 'package:blood_bridge/features/profile/presentation/views/profile_view.dart';
 import 'package:blood_bridge/features/setting/presentation/cubits/Preferences_cubit/cubit/preferences_state.dart';
 import 'package:blood_bridge/features/setting/presentation/cubits/language_cubit/cubit/language_cubit.dart';
 import 'package:blood_bridge/features/setting/presentation/cubits/language_cubit/cubit/language_state.dart';
@@ -73,7 +72,7 @@ class MyApp extends StatelessWidget {
         // ConnectivityStatusRepositoryMock() during UI development.
         BlocProvider(
           create: (context) =>
-              ConnectivityStatusCubit(ConnectivityStatusRepositoryImpl())
+              ConnectivityStatusCubit(ConnectivityStatusRepositoryMock())
                 ..start(),
         ),
       ],
@@ -111,7 +110,7 @@ class MyApp extends StatelessWidget {
                 // "Location Disabled" تلقائي لو حصلت مشكلة.
                 builder: (context, child) =>
                     ConnectivityStatusOverlay(child: child!),
-                home: HospitalInventoryView(hospitalId: ''),
+                home: SettingView(),
               );
             },
           );
