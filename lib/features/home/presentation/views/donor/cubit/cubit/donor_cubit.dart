@@ -11,6 +11,9 @@ class DonorCubit extends Cubit<DonorState> {
   bool isLoading = false;
   bool isAvilable = true;
 
+  // Local cache — stores requests the donor accepted this session
+  final List<BloodRequestModel> _localAccepted = [];
+
   Future<void> changeAvilablity({required bool isAvailable}) async {
     emit(DonorsLoading());
     isLoading = true;
@@ -21,10 +24,11 @@ class DonorCubit extends Cubit<DonorState> {
         queryParameters: {"isAvailable": isAvailable},
       );
       await HiveHelper.setAvailability(isAvailable);
+      print(response.data.toString() + "gggg");
       emit(DonorsSuccess(response.data["data"]));
     } catch (e) {
       if (e is DioException) {
-        emit(DonorsError(e.response?.data["message"].toString() ?? "Error"));
+        emit(DonorsError(_extractError(e, "Error")));
       } else {
         emit(DonorsError("Unexpected error"));
       }
@@ -52,7 +56,7 @@ class DonorCubit extends Cubit<DonorState> {
       emit(DonorsSuccess(response.data["data"]));
     } catch (e) {
       if (e is DioException) {
-        emit(DonorsError(e.response?.data["message"].toString() ?? "Error"));
+        emit(DonorsError(_extractError(e, "Error")));
       } else {
         emit(DonorsError("Unexpected error"));
       }
@@ -73,7 +77,7 @@ class DonorCubit extends Cubit<DonorState> {
       emit(DonorsSuccess(donor));
     } catch (e) {
       if (e is DioException) {
-        emit(DonorsError(e.response?.data["message"].toString() ?? "Error"));
+        emit(DonorsError(_extractError(e, "Error")));
       } else {
         emit(DonorsError("Unexpected error"));
       }
@@ -89,7 +93,7 @@ class DonorCubit extends Cubit<DonorState> {
       emit(DonorsSuccess(response.data["data"]));
     } catch (e) {
       if (e is DioException) {
-        emit(DonorsError(e.response?.data["message"].toString() ?? "Error"));
+        emit(DonorsError(_extractError(e, "Error")));
       } else {
         emit(DonorsError("Unexpected error"));
       }
@@ -111,7 +115,7 @@ class DonorCubit extends Cubit<DonorState> {
       emit(DonorsSuccess([]));
     } catch (e) {
       if (e is DioException) {
-        emit(DonorsError(e.response?.data["message"].toString() ?? "Error"));
+        emit(DonorsError(_extractError(e, "Error")));
       } else {
         emit(DonorsError("Unexpected error"));
       }
@@ -122,10 +126,11 @@ class DonorCubit extends Cubit<DonorState> {
   int? _lastRequestId;
   int? get lastRequestId => _lastRequestId;
 
-  // =========================
-  // ✅ Accept Request — emits DonorAccepted so UI can switch to Deliveries tab
-  // =========================
-  Future<void> acceptRequest(int requestId, {bool fromMap = false}) async {
+  Future<void> acceptRequest(
+    int requestId, {
+    bool fromMap = false,
+    BloodRequestModel? requestModel,
+  }) async {
     _lastRequestId = requestId;
     emit(DonorsLoading());
     isLoading = true;
@@ -134,19 +139,18 @@ class DonorCubit extends Cubit<DonorState> {
         path: 'Donors/respond',
         body: {'requestId': requestId, 'isAccepted': true},
       );
+      // Save to local cache so Deliveries tab shows it immediately
+      if (requestModel != null) {
+        _localAccepted.removeWhere((r) => r.requestId == requestId);
+        _localAccepted.add(requestModel.copyWith(status: 'Accepted'));
+      }
       emit(DonorAccepted(requestId));
     } catch (e) {
       if (e is DioException) {
         if (fromMap) {
-          emit(
-            MapError(e.response?.data["message"].toString() ?? 'Accept failed'),
-          );
+          emit(MapError(_extractError(e, 'Accept failed')));
         } else {
-          emit(
-            DonorsError(
-              e.response?.data["message"].toString() ?? 'Accept failed',
-            ),
-          );
+          emit(DonorsError(_extractError(e, 'Accept failed')));
         }
       } else {
         emit(DonorsError('Unexpected error'));
@@ -169,15 +173,11 @@ class DonorCubit extends Cubit<DonorState> {
         path: "Donors/respond",
         body: {"requestId": requestId, "isAccepted": false},
       );
+      _localAccepted.removeWhere((r) => r.requestId == requestId);
       emit(DonorsSuccess({"cancelledRequestId": requestId}));
     } catch (e) {
       if (e is DioException) {
-        emit(
-          DonorsError(
-            e.response?.data["message"]?.toString() ??
-                "Error cancelling acceptance",
-          ),
-        );
+        emit(DonorsError(_extractError(e, "Error cancelling acceptance")));
       } else {
         emit(DonorsError("Unexpected error"));
       }
@@ -194,15 +194,11 @@ class DonorCubit extends Cubit<DonorState> {
         path: "Donors/on-the-way",
         body: {"requestId": requestId},
       );
+      _updateLocalStatus(requestId, 'OnTheWay');
       emit(DonorsSuccess({"onTheWayRequestId": requestId}));
     } catch (e) {
       if (e is DioException) {
-        emit(
-          DonorsError(
-            e.response?.data["message"]?.toString() ??
-                "Error marking as on the way",
-          ),
-        );
+        emit(DonorsError(_extractError(e, "Error marking as on the way")));
       } else {
         emit(DonorsError("Unexpected error"));
       }
@@ -219,14 +215,11 @@ class DonorCubit extends Cubit<DonorState> {
         path: "Donors/arrived",
         body: {"requestId": requestId},
       );
+      _updateLocalStatus(requestId, 'Arrived');
       emit(DonorsSuccess({"arrivedRequestId": requestId}));
     } catch (e) {
       if (e is DioException) {
-        emit(
-          DonorsError(
-            e.response?.data["message"]?.toString() ?? "Error marking arrival",
-          ),
-        );
+        emit(DonorsError(_extractError(e, "Error marking arrival")));
       } else {
         emit(DonorsError("Unexpected error"));
       }
@@ -243,15 +236,11 @@ class DonorCubit extends Cubit<DonorState> {
         path: "Donors/complete",
         body: {"requestId": requestId},
       );
+      _localAccepted.removeWhere((r) => r.requestId == requestId);
       emit(DonorsSuccess({"completedRequestId": requestId}));
     } catch (e) {
       if (e is DioException) {
-        emit(
-          DonorsError(
-            e.response?.data["message"]?.toString() ??
-                "Error completing donation",
-          ),
-        );
+        emit(DonorsError(_extractError(e, "Error completing donation")));
       } else {
         emit(DonorsError("Unexpected error"));
       }
@@ -259,71 +248,14 @@ class DonorCubit extends Cubit<DonorState> {
     isLoading = false;
   }
 
-  // =========================
-  // 🆕 getAcceptedRequests — fetches donor's accepted/in-progress requests
-  //    Primary: GET Donors/accepted-requests
-  //    Fallback: GET Requests/history filtered by active delivery statuses
-  // =========================
-  Future<void> getAcceptedRequests() async {
-    emit(DonorAcceptedRequestsLoading());
-    isLoading = true;
-    try {
-      final response = await DioHelper.getData(
-        path: 'Donors/accepted-requests',
-      );
-      final dynamic dataField = response.data?['data'];
-      List<dynamic> rawItems = [];
-      if (dataField is List) {
-        rawItems = dataField;
-      } else if (dataField is Map) {
-        rawItems = dataField['items'] as List<dynamic>? ?? [];
-      }
-      final items = rawItems
-          .map((e) => BloodRequestModel.fromJson(e as Map<String, dynamic>))
-          .toList();
-      emit(DonorAcceptedRequestsLoaded(items));
-    } on DioException catch (e) {
-      // ── Fallback: endpoint not yet on backend ──
-      debugPrint(
-        '⚠️  Donors/accepted-requests not found (${e.response?.statusCode}), using history fallback',
-      );
-      await _loadAcceptedFromHistory();
-    } catch (e) {
-      emit(DonorAcceptedRequestsError('Unexpected error: ${e.toString()}'));
-    }
-    isLoading = false;
-  }
+  /// Returns local cache of this session's accepted requests.
+  List<BloodRequestModel> getLocalAccepted() =>
+      List.unmodifiable(_localAccepted);
 
-  Future<void> _loadAcceptedFromHistory() async {
-    try {
-      final response = await DioHelper.getData(path: 'Requests/history');
-      final dynamic dataField = response.data?['data'];
-      List<dynamic> rawItems = [];
-      if (dataField is List) {
-        rawItems = dataField;
-      } else if (dataField is Map) {
-        rawItems = dataField['items'] as List<dynamic>? ?? [];
-      }
-      final items = rawItems
-          .map((e) => BloodRequestModel.fromJson(e as Map<String, dynamic>))
-          .where((req) {
-            final s = req.status
-                .toLowerCase()
-                .replaceAll('_', '')
-                .replaceAll(' ', '');
-            return s == 'accepted' || s == 'ontheway' || s == 'arrived';
-          })
-          .toList();
-      emit(DonorAcceptedRequestsLoaded(items));
-    } on DioException catch (e) {
-      emit(
-        DonorAcceptedRequestsError(
-          e.response?.data?['message']?.toString() ??
-              'Failed to load accepted requests',
-        ),
-      );
-    } catch (e) {
-      emit(DonorAcceptedRequestsError('Unexpected error: ${e.toString()}'));
+  void _updateLocalStatus(int requestId, String newStatus) {
+    final idx = _localAccepted.indexWhere((r) => r.requestId == requestId);
+    if (idx != -1) {
+      _localAccepted[idx] = _localAccepted[idx].copyWith(status: newStatus);
     }
   }
 
@@ -337,9 +269,7 @@ class DonorCubit extends Cubit<DonorState> {
       emit(DonorsSuccess(data));
     } catch (e) {
       if (e is DioException) {
-        final msg =
-            e.response?.data?['message']?.toString() ??
-            "Error loading leaderboard";
+        final msg = _extractError(e, "Error loading leaderboard");
         emit(DonorsError(msg));
       } else {
         emit(DonorsError("Unexpected error"));
@@ -360,12 +290,20 @@ class DonorCubit extends Cubit<DonorState> {
       }
     } catch (e) {
       if (e is DioException) {
-        emit(
-          DonorsError(e.response?.data?["message"] ?? "Failed to delete donor"),
-        );
+        emit(DonorsError(_extractError(e, "Failed to delete donor")));
       } else {
         emit(DonorsError("Unexpected error"));
       }
     }
+  }
+
+  /// Safely extracts error message from DioException response.
+  /// Handles cases where response.data is a String, Map, or null.
+  String _extractError(DioException e, String fallback) {
+    final data = e.response?.data;
+    if (data == null) return fallback;
+    if (data is Map) return data['message']?.toString() ?? fallback;
+    if (data is String && data.isNotEmpty) return data;
+    return fallback;
   }
 }
