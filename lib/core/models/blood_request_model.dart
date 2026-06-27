@@ -1,5 +1,7 @@
-/// Represents a blood request item returned by GET /api/Requests/active
-/// and GET /api/Requests/history.
+/// Represents a blood request item returned by:
+///   GET /api/Requests/active
+///   GET /api/Requests/history
+///   GET /api/Donors/accepted-requests   ← new endpoint
 class BloodRequestModel {
   final int requestId;
   final DateTime createdAt;
@@ -8,6 +10,12 @@ class BloodRequestModel {
   final int quantity;
   final int hospitalId;
 
+  // Optional fields that may be returned by Donors/accepted-requests
+  final String? urgencyLevel;
+  final String? patientName;
+  final double? hospitalLatitude;
+  final double? hospitalLongitude;
+
   const BloodRequestModel({
     required this.requestId,
     required this.createdAt,
@@ -15,6 +23,10 @@ class BloodRequestModel {
     required this.bloodType,
     required this.quantity,
     required this.hospitalId,
+    this.urgencyLevel,
+    this.patientName,
+    this.hospitalLatitude,
+    this.hospitalLongitude,
   });
 
   factory BloodRequestModel.fromJson(Map<String, dynamic> json) {
@@ -27,6 +39,10 @@ class BloodRequestModel {
       bloodType: json['bloodType'] as String? ?? '--',
       quantity: json['quantity'] as int? ?? 0,
       hospitalId: json['hospitalId'] as int? ?? 0,
+      urgencyLevel: json['urgencyLevel'] as String?,
+      patientName: json['patientName'] as String?,
+      hospitalLatitude: (json['hospitalLatitude'] as num?)?.toDouble(),
+      hospitalLongitude: (json['hospitalLongitude'] as num?)?.toDouble(),
     );
   }
 
@@ -54,7 +70,11 @@ class BloodRequestModel {
     return '${diff.inDays} d';
   }
 
-  BloodRequestModel copyWith({String? status}) {
+  BloodRequestModel copyWith({
+    String? status,
+    String? urgencyLevel,
+    String? patientName,
+  }) {
     return BloodRequestModel(
       requestId: requestId,
       createdAt: createdAt,
@@ -62,6 +82,10 @@ class BloodRequestModel {
       bloodType: bloodType,
       quantity: quantity,
       hospitalId: hospitalId,
+      urgencyLevel: urgencyLevel ?? this.urgencyLevel,
+      patientName: patientName ?? this.patientName,
+      hospitalLatitude: hospitalLatitude,
+      hospitalLongitude: hospitalLongitude,
     );
   }
 }

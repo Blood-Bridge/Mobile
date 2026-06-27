@@ -186,7 +186,10 @@ class ReceiverCubit extends Cubit<ReceiverState> {
     }
   }
 
-  Future<void> acceptDonor({required int requestId, required int donorId}) async {
+  Future<void> acceptDonor({
+    required int requestId,
+    required int donorId,
+  }) async {
     try {
       await DioHelper.postData(
         path: 'Requests/$requestId/accept-donor',
@@ -223,19 +226,23 @@ class ReceiverCubit extends Cubit<ReceiverState> {
     required String bloodType,
   }) async {
     emit(ReceiverLoading());
+
     try {
       final response = await DioHelper.postData(
         path: 'Requests/confirm-detection',
         body: {'requestId': requestId, 'bloodType': bloodType},
       );
-        if (response.statusCode == 200) {
-          emit(ReceiverConfirmDetectionSuccess());
-          // Refresh the active request list so the UI reflects the updated status
-          await loadActiveRequests();
-        } else {
+
+      if (response.statusCode == 200) {
+        emit(ReceiverConfirmDetectionSuccess());
+
+        // Refresh requests after confirmation
+        await loadActiveRequests();
+      } else {
         final msg = response.data is Map
             ? response.data['message']?.toString() ?? 'Confirmation failed'
             : 'Confirmation failed';
+
         emit(ReceiverError(msg));
       }
     } on DioException catch (e) {
@@ -245,30 +252,18 @@ class ReceiverCubit extends Cubit<ReceiverState> {
     }
   }
 
-
-      if (data is List && data.isNotEmpty) {
-        acceptedDonors[requestId] = data.first;
-      } else if (data is Map) {
-        acceptedDonors[requestId] = data;
-      } else {
-        acceptedDonors[requestId] = null;
-      }
-
-      emit(ReceiverLoaded(List.from(_requests)));
-    } catch (_) {
-      acceptedDonors[requestId] = null;
-    }
-  }
-
   Future<void> loadAcceptedRequests() async {
     emit(ReceiverLoading());
+
     try {
       final response = await DioHelper.getData(
         path: 'Donors/accepted-requests',
       );
 
       final dynamic dataField = response.data?['data'];
+
       List<dynamic> rawItems = [];
+
       if (dataField is List) {
         rawItems = dataField;
       } else if (dataField is Map) {
@@ -280,32 +275,40 @@ class ReceiverCubit extends Cubit<ReceiverState> {
           .toList();
 
       _requests = items;
+
       emit(ReceiverLoaded(items));
     } on DioException catch (e) {
-      // Fallback if the endpoint does not exist on this backend version yet.
-      // We will try fetching active requests and history, filtering by status.
       try {
         final response = await DioHelper.getData(path: 'Requests/history');
+
         final dynamic dataField = response.data?['data'];
+
         List<dynamic> rawItems = [];
+
         if (dataField is List) {
           rawItems = dataField;
         } else if (dataField is Map) {
           rawItems = dataField['items'] as List<dynamic>? ?? [];
         }
+
         final items = rawItems
             .map((e) => BloodRequestModel.fromJson(e as Map<String, dynamic>))
             .toList();
 
-        // Include accepted, ontheway, arrived
         _requests = items.where((req) {
           final s = req.status.toLowerCase();
-          return s == 'accepted' || s == 'ontheway' || s == 'on_the_way' || s == 'arrived';
+
+          return s == 'accepted' ||
+              s == 'ontheway' ||
+              s == 'on_the_way' ||
+              s == 'arrived';
         }).toList();
-        
+
         emit(ReceiverLoaded(List.from(_requests)));
       } catch (_) {
-        emit(ReceiverError(_extractError(e, 'Failed to load accepted requests')));
+        emit(
+          ReceiverError(_extractError(e, 'Failed to load accepted requests')),
+        );
       }
     } catch (e) {
       emit(ReceiverError('Unexpected error: ${e.toString()}'));

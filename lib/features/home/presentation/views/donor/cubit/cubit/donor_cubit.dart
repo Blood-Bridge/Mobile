@@ -1,3 +1,4 @@
+import 'package:blood_bridge/core/models/blood_request_model.dart';
 import 'package:blood_bridge/core/services/hive_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,6 +10,7 @@ class DonorCubit extends Cubit<DonorState> {
   DonorCubit() : super(DonorInitial());
   bool isLoading = false;
   bool isAvilable = true;
+
   Future<void> changeAvilablity({required bool isAvailable}) async {
     emit(DonorsLoading());
     isLoading = true;
@@ -19,8 +21,6 @@ class DonorCubit extends Cubit<DonorState> {
         queryParameters: {"isAvailable": isAvailable},
       );
       await HiveHelper.setAvailability(isAvailable);
-      print(response.data.toString() + "gggg");
-
       emit(DonorsSuccess(response.data["data"]));
     } catch (e) {
       if (e is DioException) {
@@ -60,9 +60,6 @@ class DonorCubit extends Cubit<DonorState> {
     isLoading = false;
   }
 
-  // =========================
-  // 📌 Get Donor By Id (via Admin)
-  // =========================
   Future<void> getDonorById(int id) async {
     emit(DonorsLoading());
     isLoading = true;
@@ -84,15 +81,11 @@ class DonorCubit extends Cubit<DonorState> {
     isLoading = false;
   }
 
-  // =========================
-  // 🤖 Match Donors (AI)
-  // =========================
   Future<void> matchDonors(int requestId) async {
     emit(DonorsLoading());
     isLoading = true;
     try {
       final response = await DioHelper.getData(path: "Donors/match/$requestId");
-
       emit(DonorsSuccess(response.data["data"]));
     } catch (e) {
       if (e is DioException) {
@@ -104,9 +97,6 @@ class DonorCubit extends Cubit<DonorState> {
     isLoading = false;
   }
 
-  // =========================
-  // ✅ Respond (Accept / Decline)
-  // =========================
   Future<void> respond({
     required int requestId,
     required bool isAccepted,
@@ -118,7 +108,6 @@ class DonorCubit extends Cubit<DonorState> {
         path: "Donors/respond",
         body: {"requestId": requestId, "isAccepted": isAccepted},
       );
-
       emit(DonorsSuccess([]));
     } catch (e) {
       if (e is DioException) {
@@ -130,10 +119,12 @@ class DonorCubit extends Cubit<DonorState> {
     isLoading = false;
   }
 
-  // --- Helper methods for UI actions ---
   int? _lastRequestId;
   int? get lastRequestId => _lastRequestId;
 
+  // =========================
+  // ✅ Accept Request — emits DonorAccepted so UI can switch to Deliveries tab
+  // =========================
   Future<void> acceptRequest(int requestId, {bool fromMap = false}) async {
     _lastRequestId = requestId;
     emit(DonorsLoading());
@@ -143,7 +134,7 @@ class DonorCubit extends Cubit<DonorState> {
         path: 'Donors/respond',
         body: {'requestId': requestId, 'isAccepted': true},
       );
-      emit(DonorAccepted(requestId)); // ← specific state for map to listen
+      emit(DonorAccepted(requestId));
     } catch (e) {
       if (e is DioException) {
         if (fromMap) {
@@ -233,8 +224,7 @@ class DonorCubit extends Cubit<DonorState> {
       if (e is DioException) {
         emit(
           DonorsError(
-            e.response?.data["message"]?.toString() ??
-                "Error marking arrival",
+            e.response?.data["message"]?.toString() ?? "Error marking arrival",
           ),
         );
       } else {
@@ -269,16 +259,81 @@ class DonorCubit extends Cubit<DonorState> {
     isLoading = false;
   }
 
+  // =========================
+  // 🆕 getAcceptedRequests — fetches donor's accepted/in-progress requests
+  //    Primary: GET Donors/accepted-requests
+  //    Fallback: GET Requests/history filtered by active delivery statuses
+  // =========================
+  Future<void> getAcceptedRequests() async {
+    emit(DonorAcceptedRequestsLoading());
+    isLoading = true;
+    try {
+      final response = await DioHelper.getData(
+        path: 'Donors/accepted-requests',
+      );
+      final dynamic dataField = response.data?['data'];
+      List<dynamic> rawItems = [];
+      if (dataField is List) {
+        rawItems = dataField;
+      } else if (dataField is Map) {
+        rawItems = dataField['items'] as List<dynamic>? ?? [];
+      }
+      final items = rawItems
+          .map((e) => BloodRequestModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+      emit(DonorAcceptedRequestsLoaded(items));
+    } on DioException catch (e) {
+      // ── Fallback: endpoint not yet on backend ──
+      debugPrint(
+        '⚠️  Donors/accepted-requests not found (${e.response?.statusCode}), using history fallback',
+      );
+      await _loadAcceptedFromHistory();
+    } catch (e) {
+      emit(DonorAcceptedRequestsError('Unexpected error: ${e.toString()}'));
+    }
+    isLoading = false;
+  }
+
+  Future<void> _loadAcceptedFromHistory() async {
+    try {
+      final response = await DioHelper.getData(path: 'Requests/history');
+      final dynamic dataField = response.data?['data'];
+      List<dynamic> rawItems = [];
+      if (dataField is List) {
+        rawItems = dataField;
+      } else if (dataField is Map) {
+        rawItems = dataField['items'] as List<dynamic>? ?? [];
+      }
+      final items = rawItems
+          .map((e) => BloodRequestModel.fromJson(e as Map<String, dynamic>))
+          .where((req) {
+            final s = req.status
+                .toLowerCase()
+                .replaceAll('_', '')
+                .replaceAll(' ', '');
+            return s == 'accepted' || s == 'ontheway' || s == 'arrived';
+          })
+          .toList();
+      emit(DonorAcceptedRequestsLoaded(items));
+    } on DioException catch (e) {
+      emit(
+        DonorAcceptedRequestsError(
+          e.response?.data?['message']?.toString() ??
+              'Failed to load accepted requests',
+        ),
+      );
+    } catch (e) {
+      emit(DonorAcceptedRequestsError('Unexpected error: ${e.toString()}'));
+    }
+  }
+
   Future<void> getLeaderboard() async {
     emit(DonorsLoading());
     isLoading = true;
-
     try {
       final response = await DioHelper.getData(path: "Donors/leaderboard");
-
       final data =
           response.data?['data']?['items'] ?? response.data?['items'] ?? [];
-
       emit(DonorsSuccess(data));
     } catch (e) {
       if (e is DioException) {
@@ -294,9 +349,6 @@ class DonorCubit extends Cubit<DonorState> {
     }
   }
 
-  // =========================
-  // 📌 Delete Donor (via Admin)
-  // =========================
   Future<void> deleteDonor(int id) async {
     emit(DonorsLoading());
     try {

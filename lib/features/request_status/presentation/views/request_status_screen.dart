@@ -7,9 +7,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
+/// Use this widget when navigating from a context that already has
+/// [RequestStatusCubit] in the tree (e.g. main.dart MultiBlocProvider).
+///
+/// If you navigate with Get.to() the inherited cubit is NOT passed to the
+/// new route automatically. Use [RequestStatusScreen.withOwnCubit] instead
+/// to create a fresh cubit for the route.
 class RequestStatusScreen extends StatefulWidget {
   final int requestId;
   const RequestStatusScreen({super.key, required this.requestId});
+
+  /// Navigate to this screen with its own [RequestStatusCubit].
+  /// Use this from DonorBody / RequestsContainer when calling Get.to().
+  static void navigate(int requestId) {
+    Get.to(
+      () => BlocProvider(
+        create: (_) => RequestStatusCubit()..getRequestStatus(requestId),
+        child: _RequestStatusBody(requestId: requestId),
+      ),
+    );
+  }
 
   @override
   State<RequestStatusScreen> createState() => _RequestStatusScreenState();
@@ -21,6 +38,17 @@ class _RequestStatusScreenState extends State<RequestStatusScreen> {
     super.initState();
     context.read<RequestStatusCubit>().getRequestStatus(widget.requestId);
   }
+
+  @override
+  Widget build(BuildContext context) =>
+      _RequestStatusBody(requestId: widget.requestId);
+}
+
+// ── Shared body (used by both routes) ────────────────────────────────────────
+
+class _RequestStatusBody extends StatelessWidget {
+  final int requestId;
+  const _RequestStatusBody({required this.requestId});
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +66,14 @@ class _RequestStatusScreenState extends State<RequestStatusScreen> {
           onPressed: () => Get.back(),
         ),
         title: Text('Request Status', style: TextStyleHelper.h1(context)),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () =>
+                context.read<RequestStatusCubit>().getRequestStatus(requestId),
+            tooltip: 'Refresh',
+          ),
+        ],
       ),
       body: BlocBuilder<RequestStatusCubit, RequestStatusState>(
         builder: (context, state) {
@@ -67,7 +103,7 @@ class _RequestStatusScreenState extends State<RequestStatusScreen> {
                     ElevatedButton(
                       onPressed: () => context
                           .read<RequestStatusCubit>()
-                          .getRequestStatus(widget.requestId),
+                          .getRequestStatus(requestId),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,
                         shape: RoundedRectangleBorder(
@@ -91,14 +127,8 @@ class _RequestStatusScreenState extends State<RequestStatusScreen> {
 
           if (state is RequestStatusLoaded) {
             final model = state.requestStatus;
-
-            // =============== DEBUG ===============
             debugPrint('🔥 STATUS FROM CUBIT: "${model.status}"');
             debugPrint('🔥 Current Index: ${model.currentIndex}');
-            debugPrint(
-              '🔥 is "Accepted" active? ${model.isStepActive("Accepted")}',
-            );
-            // =====================================
 
             final isCancelled = model.status.toLowerCase() == 'cancelled';
             final isExpired = model.status.toLowerCase() == 'expired';
@@ -106,7 +136,7 @@ class _RequestStatusScreenState extends State<RequestStatusScreen> {
             return RefreshIndicator(
               onRefresh: () async {
                 await context.read<RequestStatusCubit>().getRequestStatus(
-                  widget.requestId,
+                  requestId,
                 );
               },
               color: AppColors.primary,
@@ -116,6 +146,7 @@ class _RequestStatusScreenState extends State<RequestStatusScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // ── Current status card ──────────────────────────────
                     Container(
                       width: double.infinity,
                       padding: const EdgeInsets.all(20),
@@ -128,7 +159,7 @@ class _RequestStatusScreenState extends State<RequestStatusScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Request #${widget.requestId}',
+                            'Request #$requestId',
                             style: TextStyleHelper.h2(context),
                           ),
                           const SizedBox(height: 12),
@@ -186,10 +217,6 @@ class _RequestStatusScreenState extends State<RequestStatusScreen> {
                           final isCompleted = model.isStepCompleted(step);
                           final isActive = model.isStepActive(step);
 
-                          debugPrint(
-                            'Step $index: $step | Completed: $isCompleted | Active: $isActive',
-                          );
-
                           return _buildTimelineStep(
                             context: context,
                             stepTitle: _getStepTitle(step),
@@ -208,7 +235,6 @@ class _RequestStatusScreenState extends State<RequestStatusScreen> {
             );
           }
 
-          // ✅ الحل: أضف return default
           return const Center(child: CircularProgressIndicator());
         },
       ),
@@ -216,7 +242,7 @@ class _RequestStatusScreenState extends State<RequestStatusScreen> {
   }
 
   Widget _buildTerminalStateCard(BuildContext context, String status) {
-    final isCancelled = status == 'Cancelled';
+    final isCancelled = status.toLowerCase() == 'cancelled';
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
@@ -242,7 +268,7 @@ class _RequestStatusScreenState extends State<RequestStatusScreen> {
                 const SizedBox(height: 4),
                 Text(
                   isCancelled
-                      ? 'This blood request has been manually cancelled by the user and is no longer active.'
+                      ? 'This blood request has been manually cancelled and is no longer active.'
                       : 'This blood request expired because no compatible donors responded within the required timeframe.',
                   style: TextStyleHelper.small(
                     context,
