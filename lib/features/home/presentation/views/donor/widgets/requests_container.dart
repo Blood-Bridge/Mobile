@@ -1,10 +1,13 @@
+import 'package:blood_bridge/core/models/blood_request_model.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/core/widgets/custom_button.dart';
 import 'package:blood_bridge/features/home/presentation/views/donor/cubit/cubit/donor_cubit.dart';
 import 'package:blood_bridge/features/home/presentation/views/reciver/cubit/receiver_cubit.dart';
+import 'package:blood_bridge/features/map/presentation/cubit/map_cubit.dart';
 import 'package:blood_bridge/features/map/presentation/view/map_screen.dart';
 import 'package:blood_bridge/features/request_status/presentation/views/request_status_screen.dart';
+import 'package:blood_bridge/features/request_status/presentation/cubit/request_status_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,6 +27,7 @@ class RequestsContainer extends StatelessWidget {
     required this.requestId,
     required this.donorCubit,
     this.tabIndex = 0,
+    this.requestModel, // ← new optional param for local caching
   });
 
   final double height;
@@ -37,6 +41,7 @@ class RequestsContainer extends StatelessWidget {
   final int requestId;
   final DonorCubit donorCubit;
   final int tabIndex;
+  final BloodRequestModel? requestModel;
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +94,22 @@ class RequestsContainer extends StatelessWidget {
                       children: [
                         Text(bloodType, style: TextStyleHelper.h2(context)),
                         SizedBox(width: width * 0.03),
-                        _buildStatusBadge(context),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppColors.primary.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Text(
+                            sitiuation,
+                            style: TextStyleHelper.xs(
+                              context,
+                            ).copyWith(color: AppColors.primary),
+                          ),
+                        ),
                       ],
                     ),
                     Text(address, style: TextStyleHelper.small(context)),
@@ -119,34 +139,7 @@ class RequestsContainer extends StatelessWidget {
     );
   }
 
-  Widget _buildStatusBadge(BuildContext context) {
-    Color badgeColor = AppColors.primary;
-    if (sitiuation.toLowerCase() == 'ontheway' ||
-        sitiuation.toLowerCase() == 'on_the_way') {
-      badgeColor = Colors.blue;
-    } else if (sitiuation.toLowerCase() == 'arrived') {
-      badgeColor = const Color(0xFF27AE60);
-    } else if (sitiuation.toLowerCase() == 'completed') {
-      badgeColor = Colors.green;
-    }
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: badgeColor.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Text(
-        sitiuation,
-        style: TextStyleHelper.xs(context).copyWith(color: badgeColor),
-      ),
-    );
-  }
-
   Widget _buildActionButtons(BuildContext context) {
-    // ─────────────────────────────────────────────────────────────────────
-    // Tab 0 — Available Requests
-    // ─────────────────────────────────────────────────────────────────────
     if (tabIndex == 0) {
       return Column(
         children: [
@@ -158,7 +151,13 @@ class RequestsContainer extends StatelessWidget {
                   height: height * 0.06,
                   backgroundColor: AppColors.primary,
                   isEnabled: true,
-                  onPressed: () => donorCubit.acceptRequest(requestId),
+                  onPressed: () {
+                    // Pass requestModel so DonorCubit can cache it locally
+                    donorCubit.acceptRequest(
+                      requestId,
+                      requestModel: requestModel,
+                    );
+                  },
                 ),
               ),
               const SizedBox(width: 8),
@@ -168,7 +167,9 @@ class RequestsContainer extends StatelessWidget {
                   height: height * 0.06,
                   backgroundColor: AppColors.popover,
                   isEnabled: true,
-                  onPressed: () => donorCubit.rejectRequest(requestId),
+                  onPressed: () {
+                    donorCubit.rejectRequest(requestId);
+                  },
                 ),
               ),
             ],
@@ -183,37 +184,23 @@ class RequestsContainer extends StatelessWidget {
           ),
         ],
       );
-    }
-
-    // ─────────────────────────────────────────────────────────────────────
-    // Tab 1 — Deliveries (accepted / ontheway / arrived)
-    // ─────────────────────────────────────────────────────────────────────
-    if (tabIndex == 1) {
-      final situationNorm = sitiuation
+    } else if (tabIndex == 1) {
+      final situationLower = sitiuation
           .toLowerCase()
           .replaceAll('_', '')
           .replaceAll(' ', '');
+      String mainButtonText = 'Complete Donation';
+      Color mainButtonColor = Colors.green;
+      VoidCallback mainAction = () => donorCubit.completeDonation(requestId);
 
-      String mainButtonText;
-      Color mainButtonColor;
-      VoidCallback mainAction;
-
-      switch (situationNorm) {
-        case 'accepted':
-          mainButtonText = 'Mark On The Way';
-          mainButtonColor = AppColors.primary;
-          mainAction = () => donorCubit.markOnTheWay(requestId);
-          break;
-        case 'ontheway':
-          mainButtonText = 'Mark Arrived';
-          mainButtonColor = const Color(0xFF27AE60);
-          mainAction = () => donorCubit.markArrived(requestId);
-          break;
-        default:
-          // arrived → complete
-          mainButtonText = 'Complete Donation';
-          mainButtonColor = Colors.green;
-          mainAction = () => donorCubit.completeDonation(requestId);
+      if (situationLower == 'accepted') {
+        mainButtonText = 'Mark On The Way';
+        mainButtonColor = AppColors.primary;
+        mainAction = () => donorCubit.markOnTheWay(requestId);
+      } else if (situationLower == 'ontheway') {
+        mainButtonText = 'Mark Arrived';
+        mainButtonColor = const Color(0xFF27AE60);
+        mainAction = () => donorCubit.markArrived(requestId);
       }
 
       return Column(
@@ -230,7 +217,6 @@ class RequestsContainer extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8),
-              // Map button
               InkWell(
                 onTap: () => Get.to(() => const MapScreen()),
                 child: Container(
@@ -255,7 +241,43 @@ class RequestsContainer extends StatelessWidget {
                   height: height * 0.06,
                   backgroundColor: Colors.red.withOpacity(0.2),
                   isEnabled: true,
-                  onPressed: () => _showCancelDialog(context),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          backgroundColor: AppColors.card,
+                          title: Text(
+                            'Cancel Acceptance',
+                            style: TextStyleHelper.h3(context),
+                          ),
+                          content: Text(
+                            'Are you sure you want to cancel your donation acceptance for this request?',
+                            style: TextStyleHelper.small(context),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: const Text(
+                                'No',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                                donorCubit.cancelAcceptance(requestId);
+                              },
+                              child: const Text(
+                                'Yes, Cancel',
+                                style: TextStyle(color: Colors.red),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
                 ),
               ),
               const SizedBox(width: 8),
@@ -265,79 +287,51 @@ class RequestsContainer extends StatelessWidget {
                   height: height * 0.06,
                   backgroundColor: AppColors.popover.withOpacity(0.5),
                   isEnabled: true,
-                  // ✅ Uses navigate() to create a fresh cubit for the new route
-                  onPressed: () => RequestStatusScreen.navigate(requestId),
+                  onPressed: () {
+                    final statusCubit = RequestStatusCubit()
+                      ..getRequestStatus(requestId);
+                    Get.to(
+                      () => BlocProvider.value(
+                        value: statusCubit,
+                        child: RequestStatusScreen(requestId: requestId),
+                      ),
+                    );
+                  },
                 ),
               ),
             ],
           ),
         ],
       );
-    }
-
-    // ─────────────────────────────────────────────────────────────────────
-    // Tab 2 — Completed (read-only badge)
-    // ─────────────────────────────────────────────────────────────────────
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: Colors.green.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.check_circle, color: Colors.green, size: 20),
-          const SizedBox(width: 8),
-          Text(
-            'Donation Completed',
-            style: TextStyleHelper.small(
-              context,
-            ).copyWith(color: Colors.green, fontWeight: FontWeight.bold),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _showCancelDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (dialogCtx) {
-        return AlertDialog(
-          backgroundColor: AppColors.card,
-          title: Text('Cancel Acceptance', style: TextStyleHelper.h3(context)),
-          content: Text(
-            'Are you sure you want to cancel your donation acceptance for this request? '
-            'It will become available to other donors.',
-            style: TextStyleHelper.small(context),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(dialogCtx),
-              child: const Text('No', style: TextStyle(color: Colors.white)),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pop(dialogCtx);
-                donorCubit.cancelAcceptance(requestId);
-              },
-              child: const Text(
-                'Yes, Cancel',
-                style: TextStyle(color: Colors.red),
-              ),
+    } else {
+      return Container(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Colors.green.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.check_circle, color: Colors.green, size: 20),
+            const SizedBox(width: 8),
+            Text(
+              'Donation Completed',
+              style: TextStyleHelper.small(
+                context,
+              ).copyWith(color: Colors.green, fontWeight: FontWeight.bold),
             ),
           ],
-        );
-      },
-    );
+        ),
+      );
+    }
   }
 
   void _showDetailsDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (dialogCtx) {
+      builder: (context) {
         return AlertDialog(
           backgroundColor: AppColors.card,
           title: Text('Request Details', style: TextStyleHelper.h3(context)),
@@ -349,7 +343,7 @@ class RequestsContainer extends StatelessWidget {
               const Divider(color: AppColors.border),
               _buildDetailRow(
                 context,
-                'Status',
+                'Urgency',
                 sitiuation,
                 isUrgent: sitiuation == 'Critical' || sitiuation == 'Urgent',
               ),
@@ -365,7 +359,7 @@ class RequestsContainer extends StatelessWidget {
           ),
           actions: [
             TextButton(
-              onPressed: () => Navigator.pop(dialogCtx),
+              onPressed: () => Navigator.pop(context),
               child: Text('Close', style: TextStyle(color: AppColors.primary)),
             ),
           ],

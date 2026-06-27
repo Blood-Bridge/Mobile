@@ -30,7 +30,6 @@ class DonorBody extends StatefulWidget {
 }
 
 class _DonorBodyState extends State<DonorBody> {
-  // 0 = Available, 1 = Deliveries (accepted), 2 = Completed
   int _selectedTabIndex = 0;
 
   @override
@@ -41,14 +40,12 @@ class _DonorBodyState extends State<DonorBody> {
 
   void _loadTabRequests() {
     if (_selectedTabIndex == 0) {
-      // Available requests come from ReceiverCubit (all active requests)
       context.read<ReceiverCubit>().loadActiveRequests();
     } else if (_selectedTabIndex == 1) {
-      // Deliveries: requests THIS donor has accepted — use DonorCubit
-      context.read<DonorCubit>().getAcceptedRequests();
+      // Deliveries tab: no API call needed — reads from DonorCubit local cache
+      setState(() {}); // just rebuild to show local cache
     } else {
-      // Completed: from history filtered by status
-      context.read<ReceiverCubit>().loadHistory(status: 'Completed');
+      context.read<ReceiverCubit>().loadHistory();
     }
   }
 
@@ -89,126 +86,143 @@ class _DonorBodyState extends State<DonorBody> {
   Widget build(BuildContext context) {
     return BlocListener<DonorCubit, DonorState>(
       listener: (context, state) {
-        // ── Accept success → switch to Deliveries tab and load it ──
+        // ── Accept: switch to Deliveries tab ──────────────────────────────
         if (state is DonorAccepted) {
           showSnackBar(
             'Request Accepted!',
-            'You have accepted blood request #${state.requestId}. '
-                'Track it in the Deliveries tab.',
+            'You can track it in the Deliveries tab.',
             SnackbarType.success,
           );
-          setState(() {
-            _selectedTabIndex = 1;
-          });
-          context.read<DonorCubit>().getAcceptedRequests();
-          // Refresh map markers
+          setState(() => _selectedTabIndex = 1);
           try {
             context.read<MapCubit>().refreshMarkers();
           } catch (_) {}
           return;
         }
 
-        // ── Other DonorCubit success messages ──
+        // ── Other success actions ─────────────────────────────────────────
         if (state is DonorsSuccess) {
-          String title = 'Success!';
+          String title = 'Congratulations!';
           String message = 'Action completed successfully!';
 
           if (state.donors is Map) {
             final map = state.donors as Map;
             if (map.containsKey('completedRequestId')) {
-              title = 'Donation Completed 🎉';
-              message =
-                  'Thank you! Your donation has been marked as completed.';
+              message = 'Donation completed successfully!';
             } else if (map.containsKey('cancelledRequestId')) {
-              title = 'Acceptance Cancelled';
-              message = 'Your donation acceptance has been cancelled.';
+              title = 'Success';
+              message = 'Donation acceptance cancelled.';
             } else if (map.containsKey('onTheWayRequestId')) {
-              title = 'Status Updated';
+              title = 'Status Update';
               message = 'You are now marked as on the way!';
             } else if (map.containsKey('arrivedRequestId')) {
-              title = 'Arrived!';
-              message =
-                  'You have successfully marked your arrival at the hospital.';
+              title = 'Status Update';
+              message = 'You have successfully marked your arrival!';
             }
           }
 
           showSnackBar(title, message, SnackbarType.success);
-
-          // Refresh the current tab
-          _loadTabRequests();
-
-          // Refresh map markers
+          setState(() {}); // rebuild to reflect local cache changes
           try {
             context.read<MapCubit>().refreshMarkers();
           } catch (_) {}
         } else if (state is DonorsError) {
           showSnackBar('Error', state.message, SnackbarType.error);
-        } else if (state is DonorAcceptedRequestsError) {
-          showSnackBar('Error', state.message, SnackbarType.error);
         }
       },
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(widget.width * 0.05),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const DonationRecommendationCard(),
-              const SizedBox(height: 24),
-              Row(
+      child: BlocBuilder<ReceiverCubit, ReceiverState>(
+        builder: (context, receiverState) {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.all(widget.width * 0.05),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Nearby Requests', style: TextStyleHelper.h3(context)),
-                  const Spacer(),
-                  TextButton(
-                    onPressed: () => Get.to(() => const LeaderboardScreen()),
-                    child: Text(
-                      'Leaderboard',
-                      style: TextStyleHelper.small(
-                        context,
-                      ).copyWith(color: AppColors.primary),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  TextButton(
-                    onPressed: () => Get.to(() => const MapScreen()),
-                    child: Text(
-                      'Map',
-                      style: TextStyleHelper.small(
-                        context,
-                      ).copyWith(color: AppColors.primary),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  _buildTabButton(0, 'Available'),
-                  const SizedBox(width: 8),
-                  _buildTabButton(1, 'Deliveries'),
-                  const SizedBox(width: 8),
-                  _buildTabButton(2, 'Completed'),
-                ],
-              ),
-              const SizedBox(height: 16),
-
-              // ── Tab 0 & 2: driven by ReceiverCubit ──────────────────────
-              if (_selectedTabIndex == 0 || _selectedTabIndex == 2)
-                BlocBuilder<ReceiverCubit, ReceiverState>(
-                  builder: (context, state) {
-                    if (state is ReceiverLoading) {
-                      return const Center(
-                        child: Padding(
-                          padding: EdgeInsets.all(32),
-                          child: CircularProgressIndicator(),
+                  const DonationRecommendationCard(),
+                  const SizedBox(height: 24),
+                  Row(
+                    children: [
+                      Text(
+                        'Nearby Requests',
+                        style: TextStyleHelper.h3(context),
+                      ),
+                      const Spacer(),
+                      TextButton(
+                        onPressed: () =>
+                            Get.to(() => const LeaderboardScreen()),
+                        child: Text(
+                          'Leaderboard',
+                          style: TextStyleHelper.small(
+                            context,
+                          ).copyWith(color: AppColors.primary),
                         ),
-                      );
-                    }
-                    if (state is ReceiverError) {
-                      return _buildErrorView(state.message);
-                    }
-                    if (state is ReceiverLoaded) {
-                      final filtered = state.requests.where((req) {
+                      ),
+                      const SizedBox(width: 8),
+                      TextButton(
+                        onPressed: () => Get.to(() => const MapScreen()),
+                        child: Text(
+                          'Map',
+                          style: TextStyleHelper.small(
+                            context,
+                          ).copyWith(color: AppColors.primary),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      _buildTabButton(0, 'Available'),
+                      const SizedBox(width: 8),
+                      _buildTabButton(1, 'Deliveries'),
+                      const SizedBox(width: 8),
+                      _buildTabButton(2, 'Completed'),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+
+                  // ── Deliveries tab: local cache, no API ─────────────────
+                  if (_selectedTabIndex == 1) ...[
+                    _buildDeliveriesTab(),
+                  ]
+                  // ── Available & Completed: from ReceiverCubit ───────────
+                  else if (receiverState is ReceiverLoading)
+                    const Center(
+                      child: Padding(
+                        padding: EdgeInsets.all(32),
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  else if (receiverState is ReceiverError)
+                    Center(
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 24),
+                          Icon(
+                            Icons.error_outline,
+                            color: AppColors.textMuted,
+                            size: 40,
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            receiverState.message,
+                            style: TextStyleHelper.small(context),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 16),
+                          CustomButton(
+                            text: 'Retry',
+                            height: 44,
+                            backgroundColor: AppColors.primary,
+                            isEnabled: true,
+                            onPressed: () => _loadTabRequests(),
+                          ),
+                        ],
+                      ),
+                    )
+                  else if (receiverState is ReceiverLoaded) ...[
+                    (() {
+                      final filtered = receiverState.requests.where((req) {
                         final status = req.status.toLowerCase();
                         if (_selectedTabIndex == 0) {
                           return status == 'open' ||
@@ -219,72 +233,72 @@ class _DonorBodyState extends State<DonorBody> {
                         }
                       }).toList();
 
-                      return _buildRequestList(
-                        filtered,
-                        _selectedTabIndex == 0
-                            ? 'No active requests nearby'
-                            : 'No completed donations yet',
-                      );
-                    }
-                    return const SizedBox.shrink();
-                  },
-                ),
+                      if (filtered.isEmpty) {
+                        return Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(32),
+                            child: Text(
+                              _selectedTabIndex == 0
+                                  ? 'No active requests nearby'
+                                  : 'No completed donations yet',
+                              style: TextStyleHelper.small(context),
+                            ),
+                          ),
+                        );
+                      }
 
-              // ── Tab 1: Deliveries — driven by DonorCubit ────────────────
-              if (_selectedTabIndex == 1)
-                BlocBuilder<DonorCubit, DonorState>(
-                  builder: (context, state) {
-                    if (state is DonorAcceptedRequestsLoading ||
-                        state is DonorsLoading) {
-                      return const Center(
-                        child: Padding(
-                          padding: EdgeInsets.all(32),
-                          child: CircularProgressIndicator(),
-                        ),
+                      return ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: filtered.length,
+                        itemBuilder: (context, index) {
+                          final req = filtered[index];
+                          return RequestsContainer(
+                            height: widget.height,
+                            width: widget.width,
+                            isFirst: index == 0,
+                            bloodType: req.bloodTypeDisplay,
+                            sitiuation: req.status,
+                            address: 'Hospital #${req.hospitalId}',
+                            time: req.relativeTime,
+                            distance: '--',
+                            requestId: req.requestId,
+                            donorCubit: widget.cubit,
+                            tabIndex: _selectedTabIndex,
+                            requestModel: req,
+                          );
+                        },
+                        separatorBuilder: (context, index) =>
+                            SizedBox(height: widget.height * 0.03),
                       );
-                    }
-                    if (state is DonorAcceptedRequestsError) {
-                      return _buildErrorView(state.message);
-                    }
-                    if (state is DonorAcceptedRequestsLoaded) {
-                      return _buildRequestList(
-                        state.requests,
-                        'No active deliveries.\nAccept a request to see it here.',
-                      );
-                    }
-                    // While other DonorCubit actions are in progress show spinner
-                    return const Center(
-                      child: Padding(
-                        padding: EdgeInsets.all(32),
-                        child: CircularProgressIndicator(),
-                      ),
-                    );
-                  },
-                ),
-            ],
-          ),
-        ),
+                    }()),
+                  ],
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
 
-  Widget _buildRequestList(List<dynamic> filtered, String emptyMessage) {
-    if (filtered.isEmpty) {
+  Widget _buildDeliveriesTab() {
+    final accepted = widget.cubit.getLocalAccepted();
+
+    if (accepted.isEmpty) {
       return Center(
         child: Padding(
           padding: const EdgeInsets.all(32),
           child: Column(
             children: [
               Icon(
-                _selectedTabIndex == 1
-                    ? Icons.local_shipping_outlined
-                    : Icons.inbox_outlined,
+                Icons.local_shipping_outlined,
                 size: 48,
                 color: AppColors.textMuted,
               ),
               const SizedBox(height: 12),
               Text(
-                emptyMessage,
+                'No active deliveries.\nAccept a request to see it here.',
                 style: TextStyleHelper.small(context),
                 textAlign: TextAlign.center,
               ),
@@ -297,9 +311,9 @@ class _DonorBodyState extends State<DonorBody> {
     return ListView.separated(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: filtered.length,
+      itemCount: accepted.length,
       itemBuilder: (context, index) {
-        final req = filtered[index];
+        final req = accepted[index];
         return RequestsContainer(
           height: widget.height,
           width: widget.width,
@@ -311,36 +325,12 @@ class _DonorBodyState extends State<DonorBody> {
           distance: '--',
           requestId: req.requestId,
           donorCubit: widget.cubit,
-          tabIndex: _selectedTabIndex,
+          tabIndex: 1,
+          requestModel: req,
         );
       },
       separatorBuilder: (context, index) =>
           SizedBox(height: widget.height * 0.03),
-    );
-  }
-
-  Widget _buildErrorView(String message) {
-    return Center(
-      child: Column(
-        children: [
-          const SizedBox(height: 24),
-          Icon(Icons.error_outline, color: AppColors.textMuted, size: 40),
-          const SizedBox(height: 8),
-          Text(
-            message,
-            style: TextStyleHelper.small(context),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 16),
-          CustomButton(
-            text: 'Retry',
-            height: 44,
-            backgroundColor: AppColors.primary,
-            isEnabled: true,
-            onPressed: () => _loadTabRequests(),
-          ),
-        ],
-      ),
     );
   }
 }
