@@ -349,6 +349,10 @@ class _RequestStatusScreenState extends State<RequestStatusScreen> {
         return 'Searching Donors';
       case 'Accepted':
         return 'Donor Found';
+      case 'OnTheWay':
+        return 'Donor On The Way';
+      case 'Arrived':
+        return 'Donor Arrived';
       case 'Completed':
         return 'Donation Completed';
       default:
@@ -366,6 +370,10 @@ class _RequestStatusScreenState extends State<RequestStatusScreen> {
         return 'Active search initialized. Compatible donors in your governorate have been notified.';
       case 'Accepted':
         return 'A compatible donor has accepted your request. Details are being coordinated.';
+      case 'OnTheWay':
+        return 'The donor is currently on the way to the hospital.';
+      case 'Arrived':
+        return 'The donor has arrived at the hospital.';
       case 'Completed':
         return 'The donation process is finished successfully. Thank you for using Blood Bridge!';
       default:

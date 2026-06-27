@@ -237,6 +237,63 @@ class ReceiverCubit extends Cubit<ReceiverState> {
     }
   }
 
+  Future<void> loadAcceptedRequests() async {
+    emit(ReceiverLoading());
+    try {
+      final response = await DioHelper.getData(
+        path: 'Donors/accepted-requests',
+      );
+
+      final dynamic dataField = response.data?['data'];
+      List<dynamic> rawItems = [];
+      if (dataField is List) {
+        rawItems = dataField;
+      } else if (dataField is Map) {
+        rawItems = dataField['items'] as List<dynamic>? ?? [];
+      }
+
+      final items = rawItems
+          .map((e) => BloodRequestModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+
+      _requests = items;
+      emit(ReceiverLoaded(items));
+    } on DioException catch (e) {
+      // Fallback if the endpoint does not exist on this backend version yet.
+      // We will try fetching active requests and history, filtering by status.
+      try {
+        final response = await DioHelper.getData(path: 'Requests/history');
+        final dynamic dataField = response.data?['data'];
+        List<dynamic> rawItems = [];
+        if (dataField is List) {
+          rawItems = dataField;
+        } else if (dataField is Map) {
+          rawItems = dataField['items'] as List<dynamic>? ?? [];
+        }
+        final items = rawItems
+            .map((e) => BloodRequestModel.fromJson(e as Map<String, dynamic>))
+            .toList();
+
+        // Include accepted, ontheway, arrived
+        _requests = items.where((req) {
+          final s = req.status.toLowerCase();
+          return s == 'accepted' ||
+              s == 'ontheway' ||
+              s == 'on_the_way' ||
+              s == 'arrived';
+        }).toList();
+
+        emit(ReceiverLoaded(List.from(_requests)));
+      } catch (_) {
+        emit(
+          ReceiverError(_extractError(e, 'Failed to load accepted requests')),
+        );
+      }
+    } catch (e) {
+      emit(ReceiverError('Unexpected error: ${e.toString()}'));
+    }
+  }
+
   Future<void> fetchRequestStatus(int requestId) async {
     try {
       final resp = await DioHelper.getData(path: 'Requests/$requestId/status');

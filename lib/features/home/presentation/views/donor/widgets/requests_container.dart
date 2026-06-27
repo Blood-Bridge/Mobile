@@ -5,6 +5,7 @@ import 'package:blood_bridge/features/home/presentation/views/donor/cubit/cubit/
 import 'package:blood_bridge/features/home/presentation/views/reciver/cubit/receiver_cubit.dart';
 import 'package:blood_bridge/features/map/presentation/cubit/map_cubit.dart';
 import 'package:blood_bridge/features/map/presentation/view/map_screen.dart';
+import 'package:blood_bridge/features/request_status/presentation/views/request_status_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -177,33 +178,97 @@ class RequestsContainer extends StatelessWidget {
         ],
       );
     } else if (tabIndex == 1) {
-      // My Deliveries tab: Show Complete Donation & View Map buttons
-      return Row(
+      final situationLower = sitiuation.toLowerCase().replaceAll('_', '').replaceAll(' ', '');
+      String mainButtonText = 'Complete Donation';
+      Color mainButtonColor = Colors.green;
+      VoidCallback mainAction = () => donorCubit.completeDonation(requestId);
+
+      if (situationLower == 'accepted') {
+        mainButtonText = 'Mark On The Way';
+        mainButtonColor = AppColors.primary;
+        mainAction = () => donorCubit.markOnTheWay(requestId);
+      } else if (situationLower == 'ontheway') {
+        mainButtonText = 'Mark Arrived';
+        mainButtonColor = const Color(0xFF27AE60);
+        mainAction = () => donorCubit.markArrived(requestId);
+      }
+
+      return Column(
         children: [
-          Expanded(
-            child: CustomButton(
-              text: 'Complete Donation',
-              height: height * 0.06,
-              backgroundColor: Colors.green,
-              isEnabled: true,
-              onPressed: () {
-                donorCubit.completeDonation(requestId);
-              },
-            ),
-          ),
-          const SizedBox(width: 8),
-          InkWell(
-            onTap: () => Get.to(() => const MapScreen()),
-            child: Container(
-              height: height * 0.06,
-              width: height * 0.06,
-              decoration: BoxDecoration(
-                color: AppColors.popover,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: AppColors.border, width: 2),
+          Row(
+            children: [
+              Expanded(
+                child: CustomButton(
+                  text: mainButtonText,
+                  height: height * 0.06,
+                  backgroundColor: mainButtonColor,
+                  isEnabled: true,
+                  onPressed: mainAction,
+                ),
               ),
-              child: const Icon(Icons.map, color: Colors.white),
-            ),
+              const SizedBox(width: 8),
+              InkWell(
+                onTap: () => Get.to(() => const MapScreen()),
+                child: Container(
+                  height: height * 0.06,
+                  width: height * 0.06,
+                  decoration: BoxDecoration(
+                    color: AppColors.popover,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: AppColors.border, width: 2),
+                  ),
+                  child: const Icon(Icons.map, color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Expanded(
+                child: CustomButton(
+                  text: 'Cancel Acceptance',
+                  height: height * 0.06,
+                  backgroundColor: Colors.red.withOpacity(0.2),
+                  isEnabled: true,
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          backgroundColor: AppColors.card,
+                          title: Text('Cancel Acceptance', style: TextStyleHelper.h3(context)),
+                          content: Text('Are you sure you want to cancel your donation acceptance for this request?', style: TextStyleHelper.small(context)),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: const Text('No', style: TextStyle(color: Colors.white)),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                                donorCubit.cancelAcceptance(requestId);
+                              },
+                              child: const Text('Yes, Cancel', style: TextStyle(color: Colors.red)),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: CustomButton(
+                  text: 'View Status',
+                  height: height * 0.06,
+                  backgroundColor: AppColors.popover.withOpacity(0.5),
+                  isEnabled: true,
+                  onPressed: () => Get.to(() => RequestStatusScreen(requestId: requestId)),
+                ),
+              ),
+            ],
           ),
         ],
       );

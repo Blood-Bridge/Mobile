@@ -169,6 +169,81 @@ class DonorCubit extends Cubit<DonorState> {
     await respond(requestId: requestId, isAccepted: false);
   }
 
+  Future<void> cancelAcceptance(int requestId) async {
+    _lastRequestId = requestId;
+    emit(DonorsLoading());
+    isLoading = true;
+    try {
+      await DioHelper.postData(
+        path: "Donors/respond",
+        body: {"requestId": requestId, "isAccepted": false},
+      );
+      emit(DonorsSuccess({"cancelledRequestId": requestId}));
+    } catch (e) {
+      if (e is DioException) {
+        emit(
+          DonorsError(
+            e.response?.data["message"]?.toString() ??
+                "Error cancelling acceptance",
+          ),
+        );
+      } else {
+        emit(DonorsError("Unexpected error"));
+      }
+    }
+    isLoading = false;
+  }
+
+  Future<void> markOnTheWay(int requestId) async {
+    _lastRequestId = requestId;
+    emit(DonorsLoading());
+    isLoading = true;
+    try {
+      await DioHelper.postData(
+        path: "Donors/on-the-way",
+        body: {"requestId": requestId},
+      );
+      emit(DonorsSuccess({"onTheWayRequestId": requestId}));
+    } catch (e) {
+      if (e is DioException) {
+        emit(
+          DonorsError(
+            e.response?.data["message"]?.toString() ??
+                "Error marking as on the way",
+          ),
+        );
+      } else {
+        emit(DonorsError("Unexpected error"));
+      }
+    }
+    isLoading = false;
+  }
+
+  Future<void> markArrived(int requestId) async {
+    _lastRequestId = requestId;
+    emit(DonorsLoading());
+    isLoading = true;
+    try {
+      await DioHelper.postData(
+        path: "Donors/arrived",
+        body: {"requestId": requestId},
+      );
+      emit(DonorsSuccess({"arrivedRequestId": requestId}));
+    } catch (e) {
+      if (e is DioException) {
+        emit(
+          DonorsError(
+            e.response?.data["message"]?.toString() ??
+                "Error marking arrival",
+          ),
+        );
+      } else {
+        emit(DonorsError("Unexpected error"));
+      }
+    }
+    isLoading = false;
+  }
+
   Future<void> completeDonation(int requestId) async {
     _lastRequestId = requestId;
     emit(DonorsLoading());
