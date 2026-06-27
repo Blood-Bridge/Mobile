@@ -41,6 +41,8 @@ class _DonorBodyState extends State<DonorBody> {
   void _loadTabRequests() {
     if (_selectedTabIndex == 0) {
       context.read<ReceiverCubit>().loadActiveRequests();
+    } else if (_selectedTabIndex == 1) {
+      context.read<ReceiverCubit>().loadAcceptedRequests();
     } else {
       context.read<ReceiverCubit>().loadHistory();
     }
@@ -84,16 +86,28 @@ class _DonorBodyState extends State<DonorBody> {
     return BlocListener<DonorCubit, DonorState>(
       listener: (context, state) {
         if (state is DonorsSuccess) {
-          // Check if completion or accept/decline
-          final isCompletedAction =
-              state.donors is Map &&
-              (state.donors as Map).containsKey('completedRequestId');
+          String title = 'Congratulations!';
+          String message = 'Action completed successfully!';
+          
+          if (state.donors is Map) {
+            final map = state.donors as Map;
+            if (map.containsKey('completedRequestId')) {
+              message = 'Donation completed successfully!';
+            } else if (map.containsKey('cancelledRequestId')) {
+              title = 'Success';
+              message = 'Donation acceptance cancelled.';
+            } else if (map.containsKey('onTheWayRequestId')) {
+              title = 'Status Update';
+              message = 'You are now marked as on the way!';
+            } else if (map.containsKey('arrivedRequestId')) {
+              title = 'Status Update';
+              message = 'You have successfully marked your arrival!';
+            }
+          }
 
           showSnackBar(
-            'Congratulations!',
-            isCompletedAction
-                ? 'Donation completed successfully!'
-                : 'Action completed successfully!',
+            title,
+            message,
             SnackbarType.success,
           );
 
@@ -204,7 +218,10 @@ class _DonorBodyState extends State<DonorBody> {
                               status == 'analyzing';
                         } else if (_selectedTabIndex == 1) {
                           // Deliveries
-                          return status == 'accepted' || status == 'ontheway';
+                          return status == 'accepted' ||
+                              status == 'ontheway' ||
+                              status == 'on_the_way' ||
+                              status == 'arrived';
                         } else {
                           // Completed
                           return status == 'completed';

@@ -283,7 +283,16 @@ class _MapScreenBodyState extends State<MapScreenBody>
                       trackingEnabled: state.trackingEnabled,
                       onAccept: _onAccept,
                       onStop: _cubit.stopTracking,
-                      onArrived: _cubit.onArrived,
+                      onArrived: () {
+                        final selected = _cubit.state.selected;
+                        if (selected != null) {
+                          final reqId = int.tryParse(selected.id) ?? 0;
+                          if (reqId != 0) {
+                            context.read<DonorCubit>().markArrived(reqId);
+                          }
+                        }
+                        _cubit.onArrived();
+                      },
                     ),
                   ),
                 ],
