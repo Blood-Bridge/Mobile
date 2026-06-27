@@ -22,7 +22,9 @@ import '../widgets/language_selector.dart';
 import '../widgets/toggle_item.dart';
 
 class SettingViewBody extends StatefulWidget {
-  const SettingViewBody({super.key});
+  final bool isHospital;
+
+  const SettingViewBody({super.key, this.isHospital = false});
 
   @override
   State<SettingViewBody> createState() => _SettingViewBodyState();
@@ -487,123 +489,125 @@ class _SettingViewBodyState extends State<SettingViewBody> {
             top: 20,
             bottom: MediaQuery.of(ctx).viewInsets.bottom + 24,
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // handle
-              Center(
-                child: Container(
-                  width: 36,
-                  height: 4,
-                  margin: const EdgeInsets.only(bottom: 16),
-                  decoration: BoxDecoration(
-                    color: AppColors.border,
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                ),
-              ),
-              Text('Update Blood Inventory', style: TextStyleHelper.h3(ctx)),
-              const SizedBox(height: 4),
-              Text(
-                'Enter current units for each blood type',
-                style: TextStyleHelper.xs(
-                  ctx,
-                ).copyWith(color: AppColors.textMuted),
-              ),
-              const SizedBox(height: 16),
-              ..._inventoryControllers.entries.map((entry) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 44,
-                        height: 36,
-                        decoration: BoxDecoration(
-                          color: AppColors.primary.withOpacity(0.15),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Center(
-                          child: Text(
-                            _bloodLabels[entry.key] ?? entry.key,
-                            style: TextStyle(
-                              color: AppColors.primary,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 13,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: TextField(
-                          controller: entry.value,
-                          keyboardType: TextInputType.number,
-                          style: const TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: AppColors.bg,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: BorderSide(color: AppColors.border),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: BorderSide(color: AppColors.border),
-                            ),
-                            contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 12,
-                              vertical: 10,
-                            ),
-                            suffixText: 'units',
-                            suffixStyle: TextStyle(
-                              color: AppColors.textMuted,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              }),
-              const SizedBox(height: 8),
-              SizedBox(
-                width: double.infinity,
-                height: 48,
-                child: ElevatedButton(
-                  onPressed: _inventoryLoading
-                      ? null
-                      : () async {
-                          Navigator.pop(ctx);
-                          await _updateInventory();
-                        },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // handle
+                Center(
+                  child: Container(
+                    width: 36,
+                    height: 4,
+                    margin: const EdgeInsets.only(bottom: 16),
+                    decoration: BoxDecoration(
+                      color: AppColors.border,
+                      borderRadius: BorderRadius.circular(2),
                     ),
                   ),
-                  child: _inventoryLoading
-                      ? const SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                            strokeWidth: 2,
+                ),
+                Text('Update Blood Inventory', style: TextStyleHelper.h3(ctx)),
+                const SizedBox(height: 4),
+                Text(
+                  'Enter current units for each blood type',
+                  style: TextStyleHelper.xs(
+                    ctx,
+                  ).copyWith(color: AppColors.textMuted),
+                ),
+                const SizedBox(height: 16),
+                ..._inventoryControllers.entries.map((entry) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 44,
+                          height: 36,
+                          decoration: BoxDecoration(
+                            color: AppColors.primary.withOpacity(0.15),
+                            borderRadius: BorderRadius.circular(8),
                           ),
-                        )
-                      : const Text(
-                          'Save Inventory',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                          child: Center(
+                            child: Text(
+                              _bloodLabels[entry.key] ?? entry.key,
+                              style: TextStyle(
+                                color: AppColors.primary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                              ),
+                            ),
                           ),
                         ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: TextField(
+                            controller: entry.value,
+                            keyboardType: TextInputType.number,
+                            style: const TextStyle(color: Colors.white),
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: AppColors.bg,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(color: AppColors.border),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(color: AppColors.border),
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 12,
+                              ),
+                              suffixText: 'units',
+                              suffixStyle: TextStyle(
+                                color: AppColors.textMuted,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }),
+                const SizedBox(height: 8),
+                SizedBox(
+                  width: double.infinity,
+                  height: 48,
+                  child: ElevatedButton(
+                    onPressed: _inventoryLoading
+                        ? null
+                        : () async {
+                            Navigator.pop(ctx);
+                            await _updateInventory();
+                          },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: _inventoryLoading
+                        ? const SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 2,
+                            ),
+                          )
+                        : const Text(
+                            'Save Inventory',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -704,7 +708,6 @@ class _SettingViewBodyState extends State<SettingViewBody> {
   Widget build(BuildContext context) {
     final currentRole = HiveHelper.getUserRole();
     final isDonor = currentRole == 'Donor';
-    final isHospital = currentRole == 'Hospital';
 
     return MultiBlocListener(
       listeners: [
@@ -750,7 +753,8 @@ class _SettingViewBodyState extends State<SettingViewBody> {
           padding: const EdgeInsets.only(top: 8, bottom: 32),
           children: [
             const LanguageSelector(),
-            UserTypeSelector(),
+
+            widget.isHospital ? const SizedBox() : UserTypeSelector(),
             // ── Notifications (all users) ─────────────────────────────────
             BlocBuilder<NotificationsCubit, NotificationsState>(
               builder: (context, state) {
@@ -844,7 +848,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
             ),
 
             // ── Hospital Management ───────────────────────────────────────
-            if (isHospital)
+            if (widget.isHospital)
               SettingsGroup(
                 sectionTitle: 'Hospital Management',
                 children: [

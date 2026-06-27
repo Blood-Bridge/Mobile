@@ -1,11 +1,14 @@
+import 'package:blood_bridge/core/models/snackbar_type.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
+import 'package:blood_bridge/core/widgets/custom_snackbar.dart';
 import 'package:blood_bridge/features/matching/data/models/match_donor_model.dart';
 import 'package:blood_bridge/features/matching/presentation/cubit/match_cubit.dart';
 import 'package:blood_bridge/features/matching/presentation/cubit/match_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MatchedDonorsScreen extends StatefulWidget {
   final int requestId;
@@ -16,12 +19,36 @@ class MatchedDonorsScreen extends StatefulWidget {
 }
 
 class _MatchedDonorsScreenState extends State<MatchedDonorsScreen> {
-  bool _sortByScore = true; // true = score, false = distance
+  bool _sortByScore = true;
 
   @override
   void initState() {
     super.initState();
+    _loadData();
+  }
+
+  void _loadData() {
     context.read<MatchCubit>().getMatchedDonors(widget.requestId);
+  }
+
+  // Make actual phone call
+  Future<void> _makePhoneCall(String? phoneNumber) async {
+    if (phoneNumber == null || phoneNumber.isEmpty) {
+      showSnackBar('Error', 'No phone number available', SnackbarType.error);
+      return;
+    }
+
+    final Uri phoneUri = Uri.parse('tel:$phoneNumber');
+
+    try {
+      if (await canLaunchUrl(phoneUri)) {
+        await launchUrl(phoneUri, mode: LaunchMode.externalApplication);
+      } else {
+        showSnackBar('Error', 'Could not open phone app', SnackbarType.error);
+      }
+    } catch (e) {
+      showSnackBar('Error', 'Failed to make call', SnackbarType.error);
+    }
   }
 
   @override
@@ -32,12 +59,21 @@ class _MatchedDonorsScreenState extends State<MatchedDonorsScreen> {
         backgroundColor: AppColors.bg,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: AppColors.foreground, size: 18),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: AppColors.foreground,
+            size: 18,
+          ),
           onPressed: () => Get.back(),
         ),
         title: Text('Compatible Donors', style: TextStyleHelper.h1(context)),
       ),
-      body: BlocBuilder<MatchCubit, MatchState>(
+      body: BlocConsumer<MatchCubit, MatchState>(
+        listener: (context, state) {
+          if (state is MatchError) {
+            showSnackBar('Error', state.message, SnackbarType.error);
+          }
+        },
         builder: (context, state) {
           if (state is MatchLoading) {
             return const Center(child: CircularProgressIndicator());
@@ -46,27 +82,17 @@ class _MatchedDonorsScreenState extends State<MatchedDonorsScreen> {
           if (state is MatchError) {
             return Center(
               child: Padding(
-                padding: const EdgeInsets.all(24.0),
+                padding: const EdgeInsets.all(24),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.error_outline, size: 54, color: AppColors.primary),
+                    Icon(Icons.error_outline, size: 60, color: Colors.red),
                     const SizedBox(height: 16),
-                    Text(
-                      state.message,
-                      style: TextStyleHelper.body(context),
-                      textAlign: TextAlign.center,
-                    ),
+                    Text(state.message, textAlign: TextAlign.center),
                     const SizedBox(height: 24),
                     ElevatedButton(
-                      onPressed: () => context.read<MatchCubit>().getMatchedDonors(widget.requestId),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      child: const Text('Retry', style: TextStyle(color: Colors.white)),
+                      onPressed: _loadData,
+                      child: const Text('Retry'),
                     ),
                   ],
                 ),
@@ -79,31 +105,30 @@ class _MatchedDonorsScreenState extends State<MatchedDonorsScreen> {
 
             if (list.isEmpty) {
               return Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(32.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.people_outline, size: 72, color: AppColors.textMuted),
-                      const SizedBox(height: 20),
-                      Text(
-                        'No Compatible Donors Found',
-                        style: TextStyleHelper.h2(context),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'We couldn\'t find any compatible donors in your area at the moment. Try updating the urgency level or checking back shortly.',
-                        style: TextStyleHelper.small(context).copyWith(color: AppColors.textMuted),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.people_outline,
+                      size: 80,
+                      color: AppColors.textMuted,
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                      'No Compatible Donors Found',
+                      style: TextStyleHelper.h2(context),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Try again later',
+                      style: TextStyleHelper.small(context),
+                    ),
+                  ],
                 ),
               );
             }
 
-            // Perform sorting
+            // Sorting
             if (_sortByScore) {
               list.sort((a, b) => b.matchScore.compareTo(a.matchScore));
             } else {
@@ -113,43 +138,42 @@ class _MatchedDonorsScreenState extends State<MatchedDonorsScreen> {
             return Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '${list.length} potential matches found',
-                        style: TextStyleHelper.small(context).copyWith(color: AppColors.textMuted),
+                        '${list.length} potential matches',
+                        style: TextStyleHelper.small(context),
                       ),
-                      Row(
-                        children: [
-                          Icon(Icons.sort, size: 16, color: AppColors.textMuted),
-                          const SizedBox(width: 6),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _sortByScore = !_sortByScore;
-                              });
-                            },
-                            child: Text(
-                              _sortByScore ? 'Sort by Match Score' : 'Sort by Distance',
-                              style: TextStyleHelper.xs(context).copyWith(
+                      GestureDetector(
+                        onTap: () =>
+                            setState(() => _sortByScore = !_sortByScore),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.sort, size: 18),
+                            const SizedBox(width: 6),
+                            Text(
+                              _sortByScore
+                                  ? 'Sort by Score'
+                                  : 'Sort by Distance',
+                              style: TextStyleHelper.small(context).copyWith(
                                 color: AppColors.primary,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 ),
                 Expanded(
                   child: RefreshIndicator(
-                    onRefresh: () => context.read<MatchCubit>().getMatchedDonors(widget.requestId),
+                    onRefresh: () async => _loadData(),
                     color: AppColors.primary,
                     child: ListView.builder(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
                       itemCount: list.length,
                       itemBuilder: (context, index) {
                         final item = list[index];
@@ -165,13 +189,15 @@ class _MatchedDonorsScreenState extends State<MatchedDonorsScreen> {
                           child: Row(
                             children: [
                               CircleAvatar(
-                                radius: 24,
-                                backgroundColor: AppColors.primary.withOpacity(0.1),
+                                radius: 28,
+                                backgroundColor: AppColors.primary.withOpacity(
+                                  0.15,
+                                ),
                                 child: Text(
-                                  '${item.matchScore}%',
-                                  style: TextStyleHelper.small(context).copyWith(
-                                    color: AppColors.primary,
+                                  '${item.matchScore.toStringAsFixed(0)}%',
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.bold,
+                                    color: Colors.white,
                                   ),
                                 ),
                               ),
@@ -182,43 +208,29 @@ class _MatchedDonorsScreenState extends State<MatchedDonorsScreen> {
                                   children: [
                                     Text(
                                       item.name,
-                                      style: TextStyleHelper.body(context).copyWith(
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                      style: TextStyleHelper.body(
+                                        context,
+                                      ).copyWith(fontWeight: FontWeight.bold),
                                     ),
                                     const SizedBox(height: 4),
-                                    Row(
-                                      children: [
-                                        Icon(Icons.location_on, size: 14, color: AppColors.textMuted),
-                                        const SizedBox(width: 4),
-                                        Text(
-                                          '${item.distanceKm.toStringAsFixed(1)} km away',
-                                          style: TextStyleHelper.xs(context).copyWith(
-                                            color: AppColors.textMuted,
-                                          ),
-                                        ),
-                                      ],
+                                    Text(
+                                      '${item.distanceKm.toStringAsFixed(1)} km away',
+                                      style: TextStyleHelper.small(
+                                        context,
+                                      ).copyWith(color: AppColors.textMuted),
                                     ),
                                   ],
                                 ),
                               ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: AppColors.primary.withOpacity(0.1),
-                                  shape: BoxShape.circle,
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.phone,
+                                  color: Colors.green,
+                                  size: 28,
                                 ),
-                                child: IconButton(
-                                  icon: Icon(Icons.phone, color: AppColors.primary),
-                                  onPressed: () {
-                                    // Contact action
-                                    Get.snackbar(
-                                      'Contact Initiated',
-                                      'Sending donation request notification to ${item.name}...',
-                                      backgroundColor: AppColors.card,
-                                      colorText: Colors.white,
-                                    );
-                                  },
-                                ),
+                                onPressed: () => _makePhoneCall(
+                                  item.phonNumber,
+                                ), // Real call
                               ),
                             ],
                           ),
@@ -231,7 +243,7 @@ class _MatchedDonorsScreenState extends State<MatchedDonorsScreen> {
             );
           }
 
-          return const SizedBox();
+          return const Center(child: Text('No data'));
         },
       ),
     );

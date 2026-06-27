@@ -10,6 +10,7 @@ import 'package:blood_bridge/features/map/presentation/view/widgets/destination_
 import 'package:blood_bridge/features/map/presentation/view/widgets/error_banner.dart';
 import 'package:blood_bridge/features/map/presentation/view/widgets/map_marker.dart';
 import 'package:blood_bridge/features/map/presentation/view/widgets/pulse_dot.dart';
+import 'package:blood_bridge/features/map/presentation/view/widgets/req_marker.dart';
 import 'package:blood_bridge/features/map/presentation/view/widgets/topIcon_button.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
@@ -36,13 +37,16 @@ class _MapScreenBodyState extends State<MapScreenBody>
   void initState() {
     super.initState();
     _cubit = context.read<MapCubit>();
+
     _pulseController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1400),
     )..repeat();
+
     _confettiController = ConfettiController(
       duration: const Duration(seconds: 2),
     );
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _cubit.bootstrap();
     });
@@ -74,12 +78,144 @@ class _MapScreenBodyState extends State<MapScreenBody>
     await launchUrl(url, mode: LaunchMode.externalApplication);
   }
 
+  Future<void> _contactDonorWithNumber(String phone) async {
+    final url = Uri.parse('tel:$phone');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      showSnackBar('خطأ', 'تعذر الاتصال', SnackbarType.error);
+    }
+  }
+
+  void _showMarkerDetails(ReqMarker marker) {
+    final bool isReceiver =
+        _cubit.state.userRole == 'receiver' ||
+        _cubit.state.userRole == 'recipient' ||
+        _cubit.state.userRole == 'hospital';
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return Container(
+          height: MediaQuery.of(context).size.height * 0.45,
+          decoration: const BoxDecoration(
+            color: Color(0xFF0B0F14),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Container(
+                    width: 40,
+                    height: 5,
+                    decoration: BoxDecoration(
+                      color: Colors.white24,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  isReceiver ? "Donor Details" : "Request Details",
+                  style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                const Divider(color: Colors.white24, height: 30),
+
+                _buildDetailRow(Icons.person, "Name", marker.name ?? "Unknown"),
+                if (marker.bloodType != null)
+                  _buildDetailRow(
+                    Icons.bloodtype,
+                    "Blood Type",
+                    marker.bloodType!,
+                  ),
+                if (marker.phone != null)
+                  _buildDetailRow(Icons.phone, "Phone", marker.phone!),
+
+                const Spacer(),
+
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          _cubit.buildRouteTo(marker);
+                        },
+                        icon: const Icon(Icons.directions),
+                        label: const Text("Show Route"),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          side: const BorderSide(color: Colors.white54),
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    if (isReceiver && marker.phone != null)
+                      Expanded(
+                        child: ElevatedButton.icon(
+                          onPressed: () {
+                            Navigator.pop(context);
+                            _contactDonorWithNumber(marker.phone!);
+                          },
+                          icon: const Icon(Icons.phone),
+                          label: const Text("Call"),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green,
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(vertical: 14),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildDetailRow(IconData icon, String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        children: [
+          Icon(icon, color: Colors.white70, size: 26),
+          const SizedBox(width: 16),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: const TextStyle(color: Colors.white54, fontSize: 13),
+              ),
+              Text(
+                value,
+                style: const TextStyle(color: Colors.white, fontSize: 16),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<DonorCubit, DonorState>(
       listener: (context, donorState) {
         if (donorState is DonorAccepted) {
-          // Backend confirmed → now start tracking
           _cubit.startTrackingEvery15s();
         } else if (donorState is DonorsError) {
           showSnackBar('Error', donorState.message, SnackbarType.error);
@@ -88,7 +224,8 @@ class _MapScreenBodyState extends State<MapScreenBody>
       child: BlocConsumer<MapCubit, MapState>(
         listenWhen: (prev, curr) =>
             prev.arrivedCelebration != curr.arrivedCelebration ||
-            prev.navigateAfterArrived != curr.navigateAfterArrived,
+            prev.navigateAfterArrived != curr.navigateAfterArrived ||
+            prev.activeDonor != curr.activeDonor,
         listener: (context, state) {
           if (state.arrivedCelebration && !state.navigateAfterArrived) {
             _confettiController.play();
@@ -111,6 +248,19 @@ class _MapScreenBodyState extends State<MapScreenBody>
         },
         builder: (context, state) {
           final center = state.myLocation ?? const LatLng(30.0444, 31.2357);
+          final bool isReceiver =
+              state.userRole == 'receiver' ||
+              state.userRole == 'recipient' ||
+              state.userRole == 'hospital';
+
+          // Auto Route
+          if (isReceiver &&
+              state.activeDonor != null &&
+              state.routePoints.isEmpty) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              _cubit.buildRouteTo(state.activeDonor!);
+            });
+          }
 
           return Scaffold(
             backgroundColor: const Color(0xFF0B0F14),
@@ -122,7 +272,12 @@ class _MapScreenBodyState extends State<MapScreenBody>
                     options: MapOptions(
                       initialCenter: center,
                       initialZoom: 14,
-                      onTap: (_, __) => _cubit.clearSelection(),
+                      onTap: (_, __) {
+                        // لا يمسح الـ selection أثناء الـ Tracking
+                        if (!state.trackingEnabled) {
+                          _cubit.clearSelection();
+                        }
+                      },
                     ),
                     children: [
                       TileLayer(
@@ -131,24 +286,7 @@ class _MapScreenBodyState extends State<MapScreenBody>
                         subdomains: const ['a', 'b', 'c', 'd'],
                         userAgentPackageName: 'com.bloodbridge.fci',
                       ),
-                      if (state.myLocation != null &&
-                          _cubit.initialTarget == null)
-                        CircleLayer(
-                          circles: [
-                            CircleMarker(
-                              point: state.myLocation!,
-                              radius: state.radiusMeters,
-                              useRadiusInMeter: true,
-                              color: const Color(
-                                0xFF2F80ED,
-                              ).withValues(alpha: 0.10),
-                              borderColor: const Color(
-                                0xFF2F80ED,
-                              ).withValues(alpha: 0.35),
-                              borderStrokeWidth: 2,
-                            ),
-                          ],
-                        ),
+
                       if (state.routePoints.isNotEmpty)
                         PolylineLayer(
                           polylines: [
@@ -161,6 +299,7 @@ class _MapScreenBodyState extends State<MapScreenBody>
                             ),
                           ],
                         ),
+
                       MarkerLayer(
                         markers: [
                           if (state.myLocation != null)
@@ -170,6 +309,7 @@ class _MapScreenBodyState extends State<MapScreenBody>
                               height: 70,
                               child: PulseDot(controller: _pulseController),
                             ),
+
                           if (state.donorLocation != null)
                             Marker(
                               point: state.donorLocation!,
@@ -191,34 +331,59 @@ class _MapScreenBodyState extends State<MapScreenBody>
                                 ),
                               ),
                             ),
-                          ...state.visibleRequests.map((r) {
-                            final isSelected = state.selected == r;
-                            return Marker(
-                              point: r.point,
-                              width: isSelected ? 74 : 54,
-                              height: isSelected ? 90 : 54,
-                              child: isSelected
-                                  ? DestinationMarker(
-                                      color: r.color,
-                                      onTap: () async {
-                                        mapController.move(r.point, 14);
-                                        await _cubit.buildRouteTo(r);
-                                      },
-                                    )
-                                  : MapMarker(
-                                      color: r.color,
-                                      isSelected: isSelected,
-                                      onTap: () async {
-                                        mapController.move(r.point, 14);
-                                        await _cubit.buildRouteTo(r);
-                                      },
-                                    ),
-                            );
-                          }),
+
+                          // Receiver Mode: Active Donor Only
+                          if (isReceiver && state.activeDonor != null)
+                            Marker(
+                              point: state.activeDonor!.point,
+                              width: 74,
+                              height: 90,
+                              child: DestinationMarker(
+                                color: state.activeDonor!.color,
+                                onTap: () async {
+                                  mapController.move(
+                                    state.activeDonor!.point,
+                                    14,
+                                  );
+                                  await _cubit.buildRouteTo(state.activeDonor!);
+                                  _showMarkerDetails(state.activeDonor!);
+                                },
+                              ),
+                            ),
+
+                          // Donor Mode: All Requests
+                          if (!isReceiver)
+                            ...state.visibleRequests.map((r) {
+                              final isSelected = state.selected == r;
+                              return Marker(
+                                point: r.point,
+                                width: isSelected ? 74 : 54,
+                                height: isSelected ? 90 : 54,
+                                child: isSelected
+                                    ? DestinationMarker(
+                                        color: r.color,
+                                        onTap: () async {
+                                          mapController.move(r.point, 14);
+                                          await _cubit.buildRouteTo(r);
+                                          _showMarkerDetails(r);
+                                        },
+                                      )
+                                    : MapMarker(
+                                        color: r.color,
+                                        isSelected: isSelected,
+                                        onTap: () async {
+                                          mapController.move(r.point, 14);
+                                          await _cubit.buildRouteTo(r);
+                                          _showMarkerDetails(r);
+                                        },
+                                      ),
+                              );
+                            }),
                         ],
                       ),
                     ],
                   ),
+
                   Align(
                     alignment: Alignment.topCenter,
                     child: ConfettiWidget(
@@ -229,7 +394,9 @@ class _MapScreenBodyState extends State<MapScreenBody>
                       gravity: 0.2,
                     ),
                   ),
+
                   if (state.arrivedCelebration) const CelebrationOverlay(),
+
                   Positioned(
                     left: 16,
                     top: 16,
@@ -251,6 +418,7 @@ class _MapScreenBodyState extends State<MapScreenBody>
                       },
                     ),
                   ),
+
                   if (state.error != null)
                     Positioned(
                       left: 12,
@@ -258,19 +426,7 @@ class _MapScreenBodyState extends State<MapScreenBody>
                       top: 70,
                       child: ErrorBanner(text: state.error!),
                     ),
-                  if (state.selected != null && state.myLocation != null)
-                    Positioned(
-                      right: 16,
-                      top: 120,
-                      child: FloatingActionButton(
-                        heroTag: 'gmaps',
-                        onPressed: () => _openGoogleMaps(
-                          state.myLocation!,
-                          state.selected!.point,
-                        ),
-                        child: const Icon(Icons.directions),
-                      ),
-                    ),
+
                   Positioned(
                     left: 12,
                     right: 12,
@@ -284,6 +440,17 @@ class _MapScreenBodyState extends State<MapScreenBody>
                       onAccept: _onAccept,
                       onStop: _cubit.stopTracking,
                       onArrived: _cubit.onArrived,
+                      onContact: state.selected?.phone != null
+                          ? () =>
+                                _contactDonorWithNumber(state.selected!.phone!)
+                          : null,
+                      onNavigate:
+                          state.selected != null && state.myLocation != null
+                          ? () => _openGoogleMaps(
+                              state.myLocation!,
+                              state.selected!.point,
+                            )
+                          : null,
                     ),
                   ),
                 ],

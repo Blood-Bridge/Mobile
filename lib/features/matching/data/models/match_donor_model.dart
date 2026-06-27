@@ -7,6 +7,7 @@ class MatchDonorModel {
   final double distanceKm;
   final String? bloodType;
   final int? donationCount;
+  final String? phonNumber;
 
   MatchDonorModel({
     required this.userId,
@@ -15,6 +16,7 @@ class MatchDonorModel {
     required this.distanceKm,
     this.bloodType,
     this.donationCount,
+    this.phonNumber,
   });
 
   factory MatchDonorModel.fromJson(Map<String, dynamic> json) {
@@ -25,6 +27,7 @@ class MatchDonorModel {
       distanceKm: _toDouble(json['distanceKm']) ?? 0.0,
       bloodType: json['bloodType']?.toString(),
       donationCount: _toInt(json['donationCount']),
+      phonNumber: json['phonNumber']?.toString(),
     );
   }
 

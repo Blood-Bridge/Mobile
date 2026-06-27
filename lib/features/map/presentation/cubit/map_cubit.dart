@@ -31,7 +31,6 @@ class MapCubit extends Cubit<MapState> {
   final LatLng? initialTarget;
   final bool autoRouteOnOpen;
   final bool instantRouteOnOpen;
-
   final Future<void> Function(LatLng location)? onLocationUpdate;
 
   static const double radiusStepMeters = 1000;
@@ -39,86 +38,142 @@ class MapCubit extends Cubit<MapState> {
 
   Timer? _radiusTimer;
   Timer? _trackTimer;
-
   LatLng? _lastSentLocation;
+
+  void safeEmit(MapState newState) {
+    if (!isClosed) emit(newState);
+  }
 
   Future<void> bootstrap() async {
     await cacheService.init();
 
     final cached = cacheService.readCachedLocation();
-
     if (cached != null) {
-      emit(state.copyWith(myLocation: cached, clearError: true));
-
+      safeEmit(state.copyWith(myLocation: cached, clearError: true));
       _recalculateWithin();
     }
 
-    await Future.wait([initMyLocation(), fetchActiveRequests()]);
+    await Future.wait([initMyLocation(), fetchActiveData()]);
 
     if (state.myLocation != null && initialTarget == null) {
       startRadiusGrowth();
     }
   }
 
-  Future<void> fetchActiveRequests() async {
+  Future<void> fetchActiveData() async {
     try {
-      final role = HiveHelper.getUserRole()?.toLowerCase();
+      final role = HiveHelper.getUserRole()?.toLowerCase() ?? '';
+      final isReceiver =
+          role == 'receiver' || role == 'recipient' || role == 'hospital';
 
-      final isRecipient = role == 'recipient';
+      safeEmit(state.copyWith(userRole: role));
 
-      if (isRecipient) {
-        final response = await DioHelper.getData(
+      if (isReceiver) {
+        // جلب كل الـ Donors
+        final donorsResponse = await DioHelper.getData(
           path: 'Donors/get-all',
           queryParameters: {'pageSize': 50},
         );
 
-        final data = response.data['data'];
+        final donorsData = donorsResponse.data['data'] ?? [];
+        final List<dynamic> donorItems = donorsData is List
+            ? donorsData
+            : (donorsData['items'] ?? []);
 
-        List<dynamic> items = [];
-
-        if (data is List) {
-          items = data;
-        } else if (data is Map) {
-          items = data['items'] ?? [];
-        }
-
-        final markers = items.map((e) {
+        final donors = donorItems.map((e) {
           final id = e['donorId']?.toString() ?? '';
-
-          final bloodType = e['bloodType']?.toString() ?? '';
-
           final lat = (e['latitude'] as num?)?.toDouble() ?? 30.0444;
-
           final lng = (e['longitude'] as num?)?.toDouble() ?? 31.2357;
+          final phone = e['phoneNumber']?.toString();
+          final bloodType = e['bloodType']?.toString();
+          final name =
+              "${e['firstName']?.toString() ?? ''} ${e['lastName']?.toString() ?? ''}"
+                  .trim();
 
-          return ReqMarker(id, LatLng(lat, lng), Colors.blue, bloodType);
+          return ReqMarker(
+            id,
+            LatLng(lat, lng),
+            Colors.blue,
+            name.isNotEmpty ? name : "Donor",
+            phone: phone,
+            bloodType: bloodType,
+          );
         }).toList();
 
-        emit(state.copyWith(requests: markers));
+        // جلب الطلبات المقبولة + استخراج الـ Donor
+        ReqMarker? activeDonor;
+        try {
+          final acceptedResponse = await DioHelper.getData(
+            path: 'Requests/get-all-accepted',
+          );
 
-        _recalculateWithin();
+          print("📡 Accepted Requests Status: ${acceptedResponse.statusCode}");
+
+          final acceptedData = acceptedResponse.data?['data'];
+
+          List<dynamic> acceptedRequests = [];
+          if (acceptedData is List)
+            acceptedRequests = acceptedData;
+          else if (acceptedData is Map)
+            acceptedRequests = acceptedData['items'] as List? ?? [];
+
+          if (acceptedRequests.isNotEmpty) {
+            final firstAccepted = acceptedRequests.first;
+            final requestId = firstAccepted['requestId']?.toString();
+
+            print("🔍 Found Accepted Request ID: $requestId");
+
+            // جلب الـ Donor من خلال requestId
+            if (requestId != null) {
+              try {
+                final donorResp = await DioHelper.getData(
+                  path: 'Requests/$requestId/donors',
+                );
+                final donorData = donorResp.data?['data'];
+
+                if (donorData is List && donorData.isNotEmpty) {
+                  final donorInfo = donorData.first;
+                  final donorId = donorInfo['donorId']?.toString();
+
+                  if (donorId != null) {
+                    activeDonor = donors.cast<ReqMarker?>().firstWhere(
+                      (d) => d?.id == donorId,
+                      orElse: () => null,
+                    );
+                  }
+                }
+              } catch (e) {
+                debugPrint('Error fetching donor details: $e');
+              }
+            }
+          }
+        } catch (e) {
+          debugPrint('No active accepted donor: $e');
+        }
+
+        safeEmit(
+          state.copyWith(
+            visibleDonors: donors,
+            activeDonor: activeDonor,
+            hasActiveRequest: activeDonor != null,
+          ),
+        );
+
+        print("🔄 Active Donor Found: ${activeDonor != null ? 'YES' : 'NO'}");
       } else {
+        // Donor Mode
         final response = await DioHelper.getData(
           path: 'Requests/active',
           queryParameters: {'pageSize': 50},
         );
 
-        final data = response.data['data'];
-
-        List<dynamic> items = [];
-
-        if (data is List) {
-          items = data;
-        } else if (data is Map) {
-          items = data['items'] ?? [];
-        }
+        final data = response.data['data'] ?? [];
+        final List<dynamic> items = data is List ? data : (data['items'] ?? []);
 
         final markers = items.asMap().entries.map((entry) {
           final index = entry.key;
           final e = entry.value;
-
           final id = e['requestId']?.toString() ?? '';
-
           final status = e['status']?.toString() ?? '';
 
           return ReqMarker(
@@ -129,12 +184,13 @@ class MapCubit extends Cubit<MapState> {
           );
         }).toList();
 
-        emit(state.copyWith(requests: markers));
-
-        _recalculateWithin();
+        safeEmit(state.copyWith(requests: markers));
       }
+
+      _recalculateWithin();
     } catch (e) {
       debugPrint('Map Error: $e');
+      safeEmit(state.copyWith(error: 'Failed to load data'));
     }
   }
 
@@ -142,87 +198,91 @@ class MapCubit extends Cubit<MapState> {
     switch (status.toLowerCase()) {
       case 'pending':
       case 'open':
-      case 'analyzing':
         return const Color(0xFFFF3B30);
-
       case 'accepted':
         return const Color(0xFF34C759);
-
       case 'ontheway':
         return const Color(0xFF007AFF);
-
       default:
         return const Color(0xFF2A2F36);
     }
   }
 
   Future<void> initMyLocation() async {
-    emit(state.copyWith(isLoadingLocation: true, clearError: true));
-
+    safeEmit(state.copyWith(isLoadingLocation: true, clearError: true));
     try {
       final loc = await locationService.getCurrentLatLng();
-
       await cacheService.saveCachedLocation(loc);
-
-      emit(
+      safeEmit(
         state.copyWith(
           myLocation: loc,
           isLoadingLocation: false,
           clearError: true,
         ),
       );
-
       _recalculateWithin();
     } catch (e) {
-      emit(state.copyWith(isLoadingLocation: false, error: e.toString()));
+      safeEmit(state.copyWith(isLoadingLocation: false, error: e.toString()));
     }
   }
 
   void startRadiusGrowth() {
     _radiusTimer?.cancel();
-
     _radiusTimer = Timer.periodic(const Duration(seconds: 3), (_) {
       if (state.radiusMeters >= radiusMaxMeters) return;
-
       final nextRadius = (state.radiusMeters + radiusStepMeters).clamp(
         500.0,
         radiusMaxMeters,
       );
-
-      emit(state.copyWith(radiusMeters: nextRadius));
-
+      safeEmit(state.copyWith(radiusMeters: nextRadius));
       _recalculateWithin();
     });
   }
 
   void _recalculateWithin() {
     final me = state.myLocation;
-
     if (me == null) return;
 
-    final visible = state.requests.where((r) {
-      final distance = locationService.distanceBetween(me, r.point);
+    final isReceiver =
+        state.userRole == 'receiver' ||
+        state.userRole == 'recipient' ||
+        state.userRole == 'hospital';
 
-      return distance <= state.radiusMeters;
-    }).toList();
+    if (isReceiver) {
+      final visible = state.visibleDonors.where((d) {
+        final distance = locationService.distanceBetween(me, d.point);
+        return distance <= state.radiusMeters;
+      }).toList();
 
-    emit(state.copyWith(visibleRequests: visible, withinCount: visible.length));
+      safeEmit(
+        state.copyWith(visibleDonors: visible, withinCount: visible.length),
+      );
+    } else {
+      final visible = state.requests.where((r) {
+        final distance = locationService.distanceBetween(me, r.point);
+        return distance <= state.radiusMeters;
+      }).toList();
+
+      safeEmit(
+        state.copyWith(visibleRequests: visible, withinCount: visible.length),
+      );
+    }
   }
 
   Future<void> buildRouteTo(ReqMarker target) async {
     final me = state.myLocation;
-
     if (me == null) return;
 
-    emit(state.copyWith(selected: target, isRouting: true, clearError: true));
+    safeEmit(
+      state.copyWith(selected: target, isRouting: true, clearError: true),
+    );
 
     try {
       final result = await routingService.getDrivingRoute(
         from: me,
         to: target.point,
       );
-
-      emit(
+      safeEmit(
         state.copyWith(
           isRouting: false,
           routePoints: result.points,
@@ -231,39 +291,32 @@ class MapCubit extends Cubit<MapState> {
         ),
       );
     } catch (e) {
-      emit(state.copyWith(isRouting: false, error: 'Route error: $e'));
+      safeEmit(state.copyWith(isRouting: false, error: 'Route error: $e'));
     }
-  }
-
-  Future<void> refreshMarkers() async {
-    await fetchActiveRequests();
   }
 
   void startTrackingEvery15s() {
     _trackTimer?.cancel();
-
-    emit(state.copyWith(trackingEnabled: true, clearError: true));
+    safeEmit(state.copyWith(trackingEnabled: true, clearError: true));
 
     _trackTimer = Timer.periodic(const Duration(seconds: 15), (_) async {
+      if (isClosed) return;
       try {
         final loc = await locationService.getCurrentLatLng();
-
         await cacheService.saveCachedLocation(loc);
 
         if (_lastSentLocation == null ||
             locationService.distanceBetween(_lastSentLocation!, loc) > 50) {
           _lastSentLocation = loc;
-
           await _sendLocationToServer(loc);
-
-          if (onLocationUpdate != null) {
-            await onLocationUpdate!(loc);
-          }
+          if (onLocationUpdate != null) await onLocationUpdate!(loc);
         }
 
-        emit(state.copyWith(myLocation: loc, clearError: true));
+        if (isClosed) return;
+        safeEmit(state.copyWith(myLocation: loc, clearError: true));
       } catch (e) {
-        emit(state.copyWith(error: e.toString()));
+        if (isClosed) return;
+        safeEmit(state.copyWith(error: e.toString()));
       }
     });
   }
@@ -281,12 +334,11 @@ class MapCubit extends Cubit<MapState> {
 
   void stopTracking() {
     _trackTimer?.cancel();
-
-    emit(state.copyWith(trackingEnabled: false));
+    safeEmit(state.copyWith(trackingEnabled: false));
   }
 
   void clearSelection() {
-    emit(
+    safeEmit(
       state.copyWith(
         clearSelected: true,
         routePoints: [],
@@ -297,17 +349,9 @@ class MapCubit extends Cubit<MapState> {
   }
 
   String routeInfoText() {
-    if (state.myLocation == null) {
-      return 'Getting your location...';
-    }
-
-    if (state.isRouting) {
-      return 'Calculating route...';
-    }
-
-    if (state.selected == null) {
-      return 'Tap a marker to see route & ETA';
-    }
+    if (state.myLocation == null) return 'Getting your location...';
+    if (state.isRouting) return 'Calculating route...';
+    if (state.selected == null) return 'Tap a marker to see route & ETA';
 
     if (state.routeDistanceMeters == null ||
         state.routeDurationSeconds == null) {
@@ -315,9 +359,7 @@ class MapCubit extends Cubit<MapState> {
     }
 
     final mins = (state.routeDurationSeconds! / 60).round();
-
     final km = state.routeDistanceMeters! / 1000;
-
     return 'ETA: $mins min • Distance: ${km.toStringAsFixed(1)} km';
   }
 
@@ -325,13 +367,12 @@ class MapCubit extends Cubit<MapState> {
     if (state.selected == null) return;
 
     final km = (state.routeDistanceMeters ?? 0) / 1000;
-
     final mins = ((state.routeDurationSeconds ?? 0) / 60).round();
 
     _trackTimer?.cancel();
     _radiusTimer?.cancel();
 
-    emit(
+    safeEmit(
       state.copyWith(
         routePoints: [],
         trackingEnabled: false,
@@ -344,17 +385,16 @@ class MapCubit extends Cubit<MapState> {
     );
 
     await Future.delayed(const Duration(seconds: 3));
-
     if (isClosed) return;
-
-    emit(state.copyWith(navigateAfterArrived: true));
+    safeEmit(state.copyWith(navigateAfterArrived: true));
   }
 
   @override
   Future<void> close() {
     _radiusTimer?.cancel();
     _trackTimer?.cancel();
-
     return super.close();
   }
+
+  void refreshMarkers() => fetchActiveData();
 }

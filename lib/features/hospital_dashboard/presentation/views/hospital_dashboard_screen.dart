@@ -1,7 +1,7 @@
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/features/hospital_dashboard/presentation/cubit/hospital_dashboard_cubit.dart';
-import 'package:blood_bridge/features/hospital_dashboard/presentation/views/donors_map_screen.dart';
+import 'package:blood_bridge/features/map/presentation/view/map_screen.dart';
 import 'package:blood_bridge/features/setting/presentation/views/setting_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -81,59 +81,70 @@ class _ErrorView extends StatelessWidget {
 // ─────────────────────────────────────────────
 // Dashboard Content
 // ─────────────────────────────────────────────
+// ─────────────────────────────────────────────
+// Dashboard Content
+// ─────────────────────────────────────────────
 class _DashboardContent extends StatelessWidget {
   const _DashboardContent({required this.state});
   final HospitalDashboardState state;
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        _HospitalAppBar(),
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 16),
-                _SummaryRow(state: state),
-                const SizedBox(height: 24),
-                _SectionHeader(title: 'Blood Stock Overview'),
-                const SizedBox(height: 12),
-                _BloodStockGrid(inventory: state.bloodInventory),
-                const SizedBox(height: 24),
-                _SectionHeader(
-                  title: 'Active Requests',
-                  action: 'View All',
-                  onAction: () {},
-                ),
-                const SizedBox(height: 12),
-                _ActiveRequestsList(requests: state.activeRequests),
-                const SizedBox(height: 24),
-                _SectionHeader(
-                  title: 'Nearby Available Donors',
-                  action: 'Map View',
-                  onAction: () {
-                    final donors = context
-                        .read<HospitalDashboardCubit>()
-                        .state
-                        .nearbyDonors;
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => DonorsMapScreen(donors: donors),
-                      ),
-                    );
-                  },
-                ),
-                const SizedBox(height: 12),
-                _NearbyDonorsList(donors: state.nearbyDonors),
-                const SizedBox(height: 100),
-              ],
+    final cubit = context.read<HospitalDashboardCubit>();
+
+    return RefreshIndicator(
+      onRefresh: () async {
+        await cubit.fetchAll();
+      },
+      color: AppColors.primary,
+      backgroundColor: AppColors.card,
+      child: CustomScrollView(
+        physics: const AlwaysScrollableScrollPhysics(), // مهم جداً
+        slivers: [
+          _HospitalAppBar(),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 16),
+                  _SummaryRow(state: state),
+                  const SizedBox(height: 24),
+                  _SectionHeader(title: 'Blood Stock Overview'),
+                  const SizedBox(height: 12),
+                  _BloodStockGrid(inventory: state.bloodInventory),
+                  const SizedBox(height: 24),
+                  _SectionHeader(
+                    title: 'Active Requests',
+                    action: 'View All',
+                    onAction: () {},
+                  ),
+                  const SizedBox(height: 12),
+                  _ActiveRequestsList(requests: state.activeRequests),
+                  const SizedBox(height: 24),
+                  _SectionHeader(
+                    title: 'Nearby Available Donors',
+                    action: 'Map View',
+                    onAction: () {
+                      final donors = context
+                          .read<HospitalDashboardCubit>()
+                          .state
+                          .nearbyDonors;
+                      Navigator.of(
+                        context,
+                      ).push(MaterialPageRoute(builder: (_) => MapScreen()));
+                    },
+                  ),
+                  const SizedBox(height: 12),
+                  _NearbyDonorsList(donors: state.nearbyDonors),
+                  const SizedBox(height: 100),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -165,9 +176,11 @@ class _HospitalAppBar extends StatelessWidget {
         IconButton(
           icon: Icon(Icons.settings_outlined, color: AppColors.textMuted),
           onPressed: () {
-            Navigator.of(
-              context,
-            ).push(MaterialPageRoute(builder: (_) => const SettingView()));
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => const SettingView(isHospital: true),
+              ),
+            );
           },
         ),
       ],
