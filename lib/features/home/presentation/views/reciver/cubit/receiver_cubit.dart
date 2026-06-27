@@ -186,6 +186,38 @@ class ReceiverCubit extends Cubit<ReceiverState> {
     }
   }
 
+  Future<void> acceptDonor({required int requestId, required int donorId}) async {
+    try {
+      await DioHelper.postData(
+        path: 'Requests/$requestId/accept-donor',
+        body: {'donorId': donorId},
+      );
+      fetchAcceptedDonor(requestId);
+    } catch (e) {
+      emit(ReceiverError('Failed to accept donor'));
+    }
+  }
+
+  Future<void> fetchAcceptedDonor(int requestId) async {
+    try {
+      final resp = await DioHelper.getData(path: 'Requests/$requestId/donors');
+
+      final dynamic data = resp.data['data'];
+
+      if (data is List && data.isNotEmpty) {
+        acceptedDonors[requestId] = data.first;
+      } else if (data is Map) {
+        acceptedDonors[requestId] = data;
+      } else {
+        acceptedDonors[requestId] = null;
+      }
+
+      emit(ReceiverLoaded(List.from(_requests)));
+    } catch (_) {
+      acceptedDonors[requestId] = null;
+    }
+  }
+
   Future<void> confirmDetection({
     required int requestId,
     required String bloodType,
@@ -196,9 +228,11 @@ class ReceiverCubit extends Cubit<ReceiverState> {
         path: 'Requests/confirm-detection',
         body: {'requestId': requestId, 'bloodType': bloodType},
       );
-      if (response.statusCode == 200) {
-        emit(ReceiverConfirmDetectionSuccess());
-      } else {
+        if (response.statusCode == 200) {
+          emit(ReceiverConfirmDetectionSuccess());
+          // Refresh the active request list so the UI reflects the updated status
+          await loadActiveRequests();
+        } else {
         final msg = response.data is Map
             ? response.data['message']?.toString() ?? 'Confirmation failed'
             : 'Confirmation failed';
@@ -211,11 +245,6 @@ class ReceiverCubit extends Cubit<ReceiverState> {
     }
   }
 
-  Future<void> fetchAcceptedDonor(int requestId) async {
-    try {
-      final resp = await DioHelper.getData(path: 'Requests/$requestId/donors');
-
-      final dynamic data = resp.data['data'];
 
       if (data is List && data.isNotEmpty) {
         acceptedDonors[requestId] = data.first;
