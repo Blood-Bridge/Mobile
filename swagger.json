@@ -1,0 +1,1356 @@
+"Select a definition
+
+Blood Bridge API v1
+Blood Bridge API
+ v1 
+OAS 3.0
+/swagger/v1/swagger.json
+An intelligent platform for blood donation coordination using AI and GPS.
+
+
+Authorize
+Admin
+
+
+GET
+/api/Admin/donors
+Gets all donors, filtered by governorate (location).
+
+
+Parameters
+Try it out
+Name	Description
+governorate
+string
+(query)
+Available values : Cairo, Alexandria, Giza, Qalyubia, PortSaid, Suez, Gharbia, Dakahlia, Ismailia, Asyut, Fayoum, Sharqia, Aswan, Damietta, Minya, BeniSuef, Hurghada, Qena, Sohag, Luxor, Matrouh, NorthSinai, SouthSinai, NewValley, Beheira, KafrElSheikh, Monufia
+
+
+--
+bloodType
+string
+(query)
+Available values : OPositive, ONegative, APositive, ANegative, BPositive, BNegative, ABPositive, ABNegative
+
+
+--
+pageNumber
+integer($int32)
+(query)
+Default value : 1
+
+
+pageSize
+integer($int32)
+(query)
+Default value : 10
+
+
+api-version
+string
+(header)
+
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": {
+    "items": [
+      {
+        "donorId": 0,
+        "firstName": "string",
+        "lastName": "string",
+        "email": "string",
+        "bloodType": "OPositive",
+        "location": "string",
+        "phoneNumber": "string",
+        "lastDonationDate": "2026-06-19T08:46:24.935Z",
+        "weight": 0,
+        "medicalHistory": "string",
+        "dateOfBirth": "2026-06-19T08:46:24.935Z",
+        "latitude": 0,
+        "longitude": 0,
+        "createdAt": "2026-06-19T08:46:24.935Z"
+      }
+    ],
+    "totalRecords": 0,
+    "pageNumber": 0,
+    "pageSize": 0,
+    "totalPages": 0
+  },
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+
+GET
+/api/Admin/requests
+Gets all blood requests, filtered by governorate (based on request owner's location).
+
+
+Parameters
+Try it out
+Name	Description
+governorate
+string
+(query)
+Available values : Cairo, Alexandria, Giza, Qalyubia, PortSaid, Suez, Gharbia, Dakahlia, Ismailia, Asyut, Fayoum, Sharqia, Aswan, Damietta, Minya, BeniSuef, Hurghada, Qena, Sohag, Luxor, Matrouh, NorthSinai, SouthSinai, NewValley, Beheira, KafrElSheikh, Monufia
+
+
+--
+status
+string
+(query)
+Available values : Pending, Analyzing, Open, Accepted, Completed, Cancelled, Expired
+
+
+--
+pageNumber
+integer($int32)
+(query)
+Default value : 1
+
+
+pageSize
+integer($int32)
+(query)
+Default value : 10
+
+
+api-version
+string
+(header)
+
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": {
+    "items": [
+      {
+        "requestId": 0,
+        "createdAt": "2026-06-19T08:46:24.973Z",
+        "status": "Pending",
+        "bloodType": "OPositive",
+        "quantity": 0,
+        "hospitalId": 0
+      }
+    ],
+    "totalRecords": 0,
+    "pageNumber": 0,
+    "pageSize": 0,
+    "totalPages": 0
+  },
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+
+GET
+/api/Admin/donations
+Gets all donations, filtered by governorate (based on donor's location).
+
+
+Parameters
+Try it out
+Name	Description
+governorate
+string
+(query)
+Available values : Cairo, Alexandria, Giza, Qalyubia, PortSaid, Suez, Gharbia, Dakahlia, Ismailia, Asyut, Fayoum, Sharqia, Aswan, Damietta, Minya, BeniSuef, Hurghada, Qena, Sohag, Luxor, Matrouh, NorthSinai, SouthSinai, NewValley, Beheira, KafrElSheikh, Monufia
+
+
+--
+confirmationStatus
+string
+(query)
+Available values : Pending, DonorConfirmed, PatientConfirmed, Confirmed, Cancelled
+
+
+--
+pageNumber
+integer($int32)
+(query)
+Default value : 1
+
+
+pageSize
+integer($int32)
+(query)
+Default value : 10
+
+
+api-version
+string
+(header)
+
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": {
+    "items": [
+      {
+        "donationProcessId": 0,
+        "donorId": 0,
+        "bloodRequestId": 0,
+        "hospitalId": 0,
+        "donationDate": "2026-06-19T08:46:25.010Z",
+        "confirmationStatus": "string",
+        "createdAt": "2026-06-19T08:46:25.010Z"
+      }
+    ],
+    "totalRecords": 0,
+    "pageNumber": 0,
+    "pageSize": 0,
+    "totalPages": 0
+  },
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+
+GET
+/api/Admin/stats
+Gets a quick summary/statistics of the system for the admin dashboard.
+
+
+Parameters
+Try it out
+Name	Description
+governorate
+string
+(query)
+
+api-version
+string
+(header)
+
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": "string",
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+Auth
+
+
+POST
+/api/Auth/register
+Registers a new user (Donor or Hospital) into the system.
+
+
+Parameters
+Try it out
+Name	Description
+api-version
+string
+(header)
+
+Request body
+
+application/json
+The user registration data including personal info and credentials.
+
+Example Value
+Schema
+{
+  "firstName": "string",
+  "lastName": "string",
+  "email": "user@example.com",
+  "password": "czczczcz",
+  "confirmPassword": "string",
+  "latitude": 90,
+  "longitude": 180,
+  "phone": "string",
+  "bloodType": "OPositive",
+  "role": "Hospital",
+  "governorate": "string",
+  "donorRate": 5,
+  "nationalId": "string",
+  "weight": 300,
+  "medicalHistory": "string",
+  "dateOfBirth": "2026-06-19T08:46:25.052Z"
+}
+Responses
+Code	Description	Links
+200	
+User registered successfully.
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": "string",
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+400	
+Validation error or registration failure (e.g., email already exists).
+
+Media type
+
+application/json
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": "string",
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+
+POST
+/api/Auth/login
+Authenticates a user and returns a JWT token.
+
+
+Parameters
+Try it out
+Name	Description
+api-version
+string
+(header)
+
+Request body
+
+application/json
+The user's login credentials (email and password).
+
+Example Value
+Schema
+{
+  "email": "user@example.com",
+  "password": "stringst"
+}
+Responses
+Code	Description	Links
+200	
+Login successful, returns JWT token.
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": {
+    "token": "string",
+    "refreshToken": "string",
+    "role": "Hospital",
+    "userId": 0,
+    "expiration": "2026-06-19T08:46:25.094Z",
+    "refreshTokenExpiration": "2026-06-19T08:46:25.094Z",
+    "createdAt": "2026-06-19T08:46:25.094Z"
+  },
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+400	
+Missing email or password.
+
+Media type
+
+application/json
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": "string",
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+401	
+Invalid credentials.
+
+Media type
+
+application/json
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": "string",
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+
+POST
+/api/Auth/google
+Authenticates a user using Google Sign-In.
+
+
+Parameters
+Try it out
+Name	Description
+api-version
+string
+(header)
+
+Request body
+
+application/json
+The request containing the Google ID Token.
+
+Example Value
+Schema
+{
+  "idToken": "string"
+}
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": {
+    "token": "string",
+    "refreshToken": "string",
+    "role": "Hospital",
+    "userId": 0,
+    "expiration": "2026-06-19T08:46:25.133Z",
+    "refreshTokenExpiration": "2026-06-19T08:46:25.133Z",
+    "createdAt": "2026-06-19T08:46:25.133Z"
+  },
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+
+POST
+/api/Auth/logout
+Logs out the currently authenticated user.
+
+
+Parameters
+Try it out
+Name	Description
+api-version
+string
+(header)
+
+Responses
+Code	Description	Links
+200	
+Logout successful.
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": "string",
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+401	
+Unauthorized if no valid token is provided.
+
+Media type
+
+application/json
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": "string",
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+
+POST
+/api/Auth/forgot-password
+Sends a password reset request to the user's email.
+
+
+Parameters
+Try it out
+Name	Description
+api-version
+string
+(header)
+
+Request body
+
+application/json
+The forgot password request containing the user's email.
+
+Example Value
+Schema
+{
+  "email": "user@example.com"
+}
+Responses
+Code	Description	Links
+200	
+Password reset email sent successfully.
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": "string",
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+400	
+Email address is missing.
+
+Media type
+
+application/json
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": "string",
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+404	
+User with this email not found.
+
+Media type
+
+application/json
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": "string",
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+
+GET
+/api/Auth/check-email
+Checks whether an email is already registered.
+
+
+Parameters
+Try it out
+Name	Description
+email
+string
+(query)
+
+api-version
+string
+(header)
+
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": true,
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+400	
+Bad Request
+
+Media type
+
+application/json
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": "string",
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+
+POST
+/api/Auth/refresh-token
+Refreshes an expired access token using a valid refresh token.
+
+
+Parameters
+Try it out
+Name	Description
+api-version
+string
+(header)
+
+Request body
+
+application/json
+Example Value
+Schema
+{
+  "token": "string",
+  "refreshToken": "string"
+}
+Responses
+Code	Description	Links
+200	
+OK
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": {
+    "token": "string",
+    "refreshToken": "string",
+    "role": "Hospital",
+    "userId": 0,
+    "expiration": "2026-06-19T08:46:25.240Z",
+    "refreshTokenExpiration": "2026-06-19T08:46:25.240Z",
+    "createdAt": "2026-06-19T08:46:25.240Z"
+  },
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+400	
+Bad Request
+
+Media type
+
+application/json
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": "string",
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+401	
+Unauthorized
+
+Media type
+
+application/json
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": "string",
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+
+POST
+/api/Auth/reset-password
+Resets the user's password using a valid reset token.
+
+
+Donations
+
+
+GET
+/api/Donations/get-all
+Retrieves all blood donation records in the system.
+
+
+Parameters
+Try it out
+Name	Description
+pageNumber
+integer($int32)
+(query)
+Default value : 1
+
+
+pageSize
+integer($int32)
+(query)
+Default value : 10
+
+
+api-version
+string
+(header)
+
+Responses
+Code	Description	Links
+200	
+Returns the list of all donation records.
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": {
+    "items": [
+      {
+        "donationProcessId": 0,
+        "donorId": 0,
+        "bloodRequestId": 0,
+        "hospitalId": 0,
+        "donationDate": "2026-06-19T08:46:25.287Z",
+        "confirmationStatus": "string",
+        "createdAt": "2026-06-19T08:46:25.287Z"
+      }
+    ],
+    "totalRecords": 0,
+    "pageNumber": 0,
+    "pageSize": 0,
+    "totalPages": 0
+  },
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+401	
+Unauthorized if no valid token is provided.
+
+No links
+
+GET
+/api/Donations/get-by-id/{id}
+Retrieves a specific donation record by its unique identifier.
+
+
+Parameters
+Try it out
+Name	Description
+id *
+integer($int32)
+(path)
+The unique ID of the donation process.
+
+
+api-version
+string
+(header)
+
+Responses
+Code	Description	Links
+200	
+Returns the requested donation record.
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": {
+    "donationProcessId": 0,
+    "donorId": 0,
+    "bloodRequestId": 0,
+    "hospitalId": 0,
+    "donationDate": "2026-06-19T08:46:25.308Z",
+    "confirmationStatus": "string",
+    "createdAt": "2026-06-19T08:46:25.308Z"
+  },
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+404	
+If the donation record with the given ID is not found.
+
+Media type
+
+application/json
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": "string",
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+
+POST
+/api/Donations/create
+Registers a new donation record in the system.
+
+
+Note: The donor identity is automatically resolved from the authenticated user's context.
+
+Parameters
+Try it out
+Name	Description
+api-version
+string
+(header)
+
+Request body
+
+application/json
+The data required to create a new donation record.
+
+Example Value
+Schema
+{
+  "bloodRequestId": 2147483647,
+  "hospitalId": 2147483647,
+  "donationDate": "2026-06-19T08:46:25.336Z",
+  "confirmationStatus": "string"
+}
+Responses
+Code	Description	Links
+201	
+Donation record created successfully.
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": {
+    "donationProcessId": 0,
+    "donorId": 0,
+    "bloodRequestId": 0,
+    "hospitalId": 0,
+    "donationDate": "2026-06-19T08:46:25.344Z",
+    "confirmationStatus": "string",
+    "createdAt": "2026-06-19T08:46:25.344Z"
+  },
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+400	
+If the input data is invalid or the business logic fails.
+
+Media type
+
+application/json
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": "string",
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+
+PUT
+/api/Donations/update/{id}
+Updates an existing donation record's information.
+
+
+Parameters
+Try it out
+Name	Description
+id *
+integer($int32)
+(path)
+The unique ID of the donation record to update.
+
+
+api-version
+string
+(header)
+
+Request body
+
+application/json
+The updated data for the donation process.
+
+Example Value
+Schema
+{
+  "donationDate": "2026-06-19T08:46:25.380Z",
+  "confirmationStatus": "string"
+}
+Responses
+Code	Description	Links
+200	
+Donation record updated successfully.
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": {
+    "donationProcessId": 0,
+    "donorId": 0,
+    "bloodRequestId": 0,
+    "hospitalId": 0,
+    "donationDate": "2026-06-19T08:46:25.386Z",
+    "confirmationStatus": "string",
+    "createdAt": "2026-06-19T08:46:25.386Z"
+  },
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+400	
+If validation fails.
+
+No links
+404	
+If the donation record does not exist.
+
+Media type
+
+application/json
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": "string",
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+
+DELETE
+/api/Donations/delete/{id}
+Permanently deletes a donation record from the system.
+
+
+Parameters
+Try it out
+Name	Description
+id *
+integer($int32)
+(path)
+The unique ID of the donation record to delete.
+
+
+api-version
+string
+(header)
+
+Responses
+Code	Description	Links
+200	
+Donation record deleted successfully.
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": "string",
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+404	
+If the donation record with the given ID is not found.
+
+Media type
+
+application/json
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": "string",
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+
+POST
+/api/Donations/{id}/confirm
+Confirms a donation. Donor/patient can perform two-step confirmation, while the related hospital can finalize confirmation directly.
+
+
+Parameters
+Try it out
+Name	Description
+id *
+integer($int32)
+(path)
+The unique ID of the donation to confirm.
+
+
+api-version
+string
+(header)
+
+Responses
+Code	Description	Links
+200	
+Confirmation recorded successfully.
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": "string",
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+403	
+If the user is not the donor, patient, or related hospital of this donation.
+
+Media type
+
+application/json
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": "string",
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+404	
+If the donation record is not found.
+
+Media type
+
+application/json
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": "string",
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+Donors
+
+
+GET
+/api/Donors/get-all
+Retrieves all donors with optional filtering by blood type and location.
+
+
+Parameters
+Try it out
+Name	Description
+bloodType
+string
+(query)
+Optional: Filter donors by their blood type (e.g., A+, O-, etc.).
+
+Available values : OPositive, ONegative, APositive, ANegative, BPositive, BNegative, ABPositive, ABNegative
+
+
+--
+location
+string
+(query)
+Optional: Filter donors by their city or area.
+
+Available values : Cairo, Alexandria, Giza, Qalyubia, PortSaid, Suez, Gharbia, Dakahlia, Ismailia, Asyut, Fayoum, Sharqia, Aswan, Damietta, Minya, BeniSuef, Hurghada, Qena, Sohag, Luxor, Matrouh, NorthSinai, SouthSinai, NewValley, Beheira, KafrElSheikh, Monufia
+
+
+--
+pageNumber
+integer($int32)
+(query)
+Default value : 1
+
+
+pageSize
+integer($int32)
+(query)
+Default value : 10
+
+
+api-version
+string
+(header)
+
+Responses
+Code	Description	Links
+200	
+Returns the list of donors.
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": {
+    "items": [
+      {
+        "donorId": 0,
+        "firstName": "string",
+        "lastName": "string",
+        "email": "string",
+        "bloodType": "OPositive",
+        "location": "string",
+        "phoneNumber": "string",
+        "lastDonationDate": "2026-06-19T08:46:25.500Z",
+        "weight": 0,
+        "medicalHistory": "string",
+        "dateOfBirth": "2026-06-19T08:46:25.500Z",
+        "latitude": 0,
+        "longitude": 0,
+        "createdAt": "2026-06-19T08:46:25.500Z"
+      }
+    ],
+    "totalRecords": 0,
+    "pageNumber": 0,
+    "pageSize": 0,
+    "totalPages": 0
+  },
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+
+GET
+/api/Donors/get-by-id/{id}
+Retrieves details of a specific donor by their ID.
+
+
+Parameters
+Try it out
+Name	Description
+id *
+integer($int32)
+(path)
+The unique identifier of the donor.
+
+
+api-version
+string
+(header)
+
+Responses
+Code	Description	Links
+200	
+Returns the donor details.
+
+Media type
+
+application/json
+Controls Accept header.
+Example Value
+Schema
+{
+  "success": true,
+  "message": "string",
+  "data": {
+    "donorId": 0,
+    "firstName": "string",
+    "lastName": "string",
+    "email": "string",
+    "bloodType": "OPositive",
+    "location": "string",
+    "phoneNumber": "string",
+    "lastDonationDate": "2026-06-19T08:46:25.519Z",
+    "weight": 0,
+    "medicalHistory": "string",
+    "dateOfBirth": "2026-06-19T08:46:25.519Z",
+    "latitude": 0,
+    "longitude": 0,
+    "createdAt": "2026-06-19T08:46:25.519Z"
+  },
+  "errors": [
+    "string"
+  ],
+  "statusCode": 0
+}
+No links
+404	
+If the donor record

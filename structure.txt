@@ -1,0 +1,239 @@
+Folder PATH listing
+Volume serial number is 00000085 A3A5:6DD0
+D:\MOBILE\BLOOD_BRIDGE\LIB
+³   app_initializer.dart
+³   comments.txt
+³   constants.dart
+³   main.dart
+³   structure.txt
+³   test.dart
+³   
+ÃÄÄÄ.dart_tool
+³   ³   native_assets.yaml
+³   ³   
+³   ÀÄÄÄnative_assets
+ÃÄÄÄcore
+³   ÃÄÄÄmodels
+³   ³       snackbar_type.dart
+³   ³       user_role.dart
+³   ³       
+³   ÃÄÄÄservices
+³   ³       callback_dispatcher.dart
+³   ³       dio_helper.dart
+³   ³       hive_helper.dart
+³   ³       location_cache.dart
+³   ³       notification_service.dart
+³   ³       secure_storage_service.dart
+³   ³       text_style_helper.dart
+³   ³       
+³   ÃÄÄÄutiles
+³   ³       app_colors.dart
+³   ³       app_images.dart
+³   ³       extentions.dart
+³   ³       
+³   ÀÄÄÄwidgets
+³           blood_type_icon.dart
+³           custom_button.dart
+³           custom_loading_button.dart
+³           custom_snackbar.dart
+³           custom_textfield.dart
+³           google_button.dart
+³           
+ÃÄÄÄfeatures
+³   ÃÄÄÄadmin_dashboard
+³   ³   ÀÄÄÄpresentation
+³   ³       ÃÄÄÄcubit
+³   ³       ³       admin_dashboard_cubit.dart
+³   ³       ³       admin_dashboard_cubit.freezed.dart
+³   ³       ³       admin_dashboard_state.dart
+³   ³       ³       
+³   ³       ÀÄÄÄviews
+³   ³           ³   admin_dashboard_screen.dart
+³   ³           ³   backup_screen.dart
+³   ³           ³   language_settings_screen.dart
+³   ³           ³   system_logs_screen.dart
+³   ³           ³   
+³   ³           ÀÄÄÄwidgets
+³   ³                   admin_section.dart
+³   ³                   admin_setting_item.dart
+³   ³                   
+³   ÃÄÄÄauth
+³   ³   ÃÄÄÄdata
+³   ³   ³   ÀÄÄÄmodels
+³   ³   ³           login_response_model.dart
+³   ³   ³           login_response_model.freezed.dart
+³   ³   ³           login_response_model.g.dart
+³   ³   ³           register_model.dart
+³   ³   ³           register_model.freezed.dart
+³   ³   ³           register_model.g.dart
+³   ³   ³           
+³   ³   ÀÄÄÄpresentation
+³   ³       ÃÄÄÄcubit
+³   ³       ³       auth_cubit.dart
+³   ³       ³       auth_state.dart
+³   ³       ³       
+³   ³       ÀÄÄÄviews
+³   ³               login_screen.dart
+³   ³               sign_up_screen.dart
+³   ³               
+³   ÃÄÄÄhome
+³   ³   ÀÄÄÄpresentation
+³   ³       ÃÄÄÄdata
+³   ³       ³       donors_model.dart
+³   ³       ³       
+³   ³       ÀÄÄÄviews
+³   ³           ÃÄÄÄdonor
+³   ³           ³   ³   donor_screen.dart
+³   ³           ³   ³   
+³   ³           ³   ÃÄÄÄcubit
+³   ³           ³   ³   ÀÄÄÄcubit
+³   ³           ³   ³           donor_cubit.dart
+³   ³           ³   ³           donor_state.dart
+³   ³           ³   ³           
+³   ³           ³   ÀÄÄÄwidgets
+³   ³           ³           donor_appbar.dart
+³   ³           ³           donor_body.dart
+³   ³           ³           requests_container.dart
+³   ³           ³           
+³   ³           ÀÄÄÄreciver
+³   ³               ³   receiver_screen.dart
+³   ³               ³   
+³   ³               ÀÄÄÄwidgets
+³   ³                       active_requests_container.dart
+³   ³                       receiver_appbar.dart
+³   ³                       receiver_body.dart
+³   ³                       
+³   ÃÄÄÄhospital_dashboard
+³   ³   ÀÄÄÄpresentation
+³   ³       ÃÄÄÄcubit
+³   ³       ³       hospital_dashboard_cubit.dart
+³   ³       ³       hospital_dashboard_state.dart
+³   ³       ³       
+³   ³       ÀÄÄÄviews
+³   ³               hospital_dashboard_screen.dart
+³   ³               
+³   ÃÄÄÄmap
+³   ³   ÀÄÄÄpresentation
+³   ³       ÃÄÄÄcubit
+³   ³       ³       map_cubit.dart
+³   ³       ³       map_state.dart
+³   ³       ³       
+³   ³       ÃÄÄÄservices
+³   ³       ³       location_service.dart
+³   ³       ³       map_cache_service.dart
+³   ³       ³       routing_service.dart
+³   ³       ³       
+³   ³       ÀÄÄÄview
+³   ³           ³   map_screen.dart
+³   ³           ³   
+³   ³           ÀÄÄÄwidgets
+³   ³                   bottom_panel.dart
+³   ³                   celebration_overlay.dart
+³   ³                   destination_marker.dart
+³   ³                   error_banner.dart
+³   ³                   legend_dot.dart
+³   ³                   map_marker.dart
+³   ³                   map_screen_body.dart
+³   ³                   pulse_dot.dart
+³   ³                   req_marker.dart
+³   ³                   topIcon_button.dart
+³   ³                   
+³   ÃÄÄÄon_boarding
+³   ³   ÀÄÄÄpresentaion
+³   ³       ÀÄÄÄviews
+³   ³           ³   on_boarder_view.dart
+³   ³           ³   
+³   ³           ÀÄÄÄwidgets
+³   ³                   on_boarder_page_view.dart
+³   ³                   on_boarder_view_body.dart
+³   ³                   page_view_item.dart
+³   ³                   
+³   ÃÄÄÄpermissions
+³   ³   ÀÄÄÄpresntation
+³   ³       ÃÄÄÄcubit
+³   ³       ³       permissions_cubit.dart
+³   ³       ³       permissions_state.dart
+³   ³       ³       
+³   ³       ÀÄÄÄviews
+³   ³           ³   permissions_screen.dart
+³   ³           ³   
+³   ³           ÀÄÄÄwidgets
+³   ³                   permission_card.dart
+³   ³                   
+³   ÃÄÄÄsetting
+³   ³   ÀÄÄÄpresentation
+³   ³       ÃÄÄÄcubits
+³   ³       ³   ÃÄÄÄlanguage_cubit
+³   ³       ³   ³   ÀÄÄÄcubit
+³   ³       ³   ³           language_cubit.dart
+³   ³       ³   ³           language_state.dart
+³   ³       ³   ³           
+³   ³       ³   ÃÄÄÄnotifications_cubit
+³   ³       ³   ³   ÀÄÄÄcubit
+³   ³       ³   ³           notifications_cubit.dart
+³   ³       ³   ³           notifications_state.dart
+³   ³       ³   ³           
+³   ³       ³   ÀÄÄÄprivacy_cubit
+³   ³       ³       ÀÄÄÄcubit
+³   ³       ³               privacy_cubit.dart
+³   ³       ³               privacy_state.dart
+³   ³       ³               
+³   ³       ÀÄÄÄviews
+³   ³           ³   setting_view.dart
+³   ³           ³   
+³   ³           ÀÄÄÄwidgets
+³   ³                   arrow_item.dart
+³   ³                   custom_switch.dart
+³   ³                   language_selector.dart
+³   ³                   notification_section.dart
+³   ³                   privacy_section.dart
+³   ³                   section_header.dart
+³   ³                   setting_group.dart
+³   ³                   setting_view_body.dart
+³   ³                   toggle_item.dart
+³   ³                   
+³   ÃÄÄÄsplash
+³   ³   ÀÄÄÄpresentaion
+³   ³       ÀÄÄÄviews
+³   ³               splash_screen.dart
+³   ³               
+³   ÃÄÄÄuser_information
+³   ³   ÀÄÄÄpresentation
+³   ³       ÃÄÄÄcubit
+³   ³       ³       info_cubit.dart
+³   ³       ³       info_state.dart
+³   ³       ³       
+³   ³       ÀÄÄÄviews
+³   ³           ³   user_info_screen.dart
+³   ³           ³   
+³   ³           ÀÄÄÄwidgets
+³   ³                   custom_date_field.dart
+³   ³                   first_info_screen.dart
+³   ³                   info_body.dart
+³   ³                   second_info_screen.dart
+³   ³                   third_info_screen.dart
+³   ³                   user_info_appbar.dart
+³   ³                   
+³   ÀÄÄÄwelcome
+³       ÀÄÄÄpresentation
+³           ÀÄÄÄviews
+³               ³   welcome_view.dart
+³               ³   
+³               ÀÄÄÄwidgets
+³                       role_card.dart
+³                       welcome_view_body.dart
+³                       
+ÃÄÄÄfirebase
+³       firebase_auth.dart
+³       firebase_notification.dart
+³       
+ÃÄÄÄl10n
+³       app_ar.arb
+³       app_en.arb
+³       app_localizations.dart
+³       app_localizations_ar.dart
+³       app_localizations_en.dart
+³       
+ÀÄÄÄmain
+        main_screen.dart
+        
