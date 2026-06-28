@@ -1,4 +1,5 @@
 import 'package:blood_bridge/core/models/snackbar_type.dart';
+import 'package:blood_bridge/core/services/hive_helper.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/core/widgets/custom_button.dart';
@@ -20,13 +21,23 @@ class UserInfoScreen extends StatefulWidget {
 }
 
 class _UserInfoScreenState extends State<UserInfoScreen> {
+  // Shared controllers
   final TextEditingController nameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  // Donor / Recipient controllers
   final TextEditingController nationalIdController = TextEditingController();
   final TextEditingController weightController = TextEditingController();
   final TextEditingController medicalController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+
+  // Hospital controllers
+  final TextEditingController licenseController = TextEditingController();
+  final TextEditingController capacityController = TextEditingController();
+
+  bool get _isHospital => HiveHelper.getUserRole()!.toLowerCase() == 'hospital';
+
   @override
   void dispose() {
     nameController.dispose();
@@ -35,8 +46,51 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
     nationalIdController.dispose();
     weightController.dispose();
     medicalController.dispose();
-
+    licenseController.dispose();
+    capacityController.dispose();
     super.dispose();
+  }
+
+  void _onNext(InfoCubit cubit) {
+    if (!_formKey.currentState!.validate()) return;
+
+    if (_isHospital) {
+      // ── Hospital steps ────────────────────────────────────────────────
+      if (cubit.i == 0) {
+        cubit.hospitalFirstScreenValidate(
+          hospitalName: nameController.text.trim(),
+          licenseNumber: licenseController.text.trim(),
+        );
+      } else if (cubit.i == 1) {
+        cubit.secondScreenValidate(
+          phone: phoneController.text,
+          address: addressController.text,
+        );
+      } else {
+        cubit.hospitalThirdScreenValidate(capacityStr: capacityController.text);
+      }
+    } else {
+      // ── Donor / Recipient steps ───────────────────────────────────────
+      if (cubit.i == 0) {
+        cubit.firstScreenValidate(
+          name: nameController.text,
+          nationalId: nationalIdController.text,
+          dateOfBirth: cubit.dateOfBirth,
+        );
+      } else if (cubit.i == 1) {
+        cubit.secondScreenValidate(
+          phone: phoneController.text,
+          address: addressController.text,
+        );
+      } else {
+        cubit.thirdScreenValidate(
+          bloodType: cubit.bloodType,
+          city: cubit.city,
+          weight: cubit.weight,
+          medicalHistory: medicalController.text,
+        );
+      }
+    }
   }
 
   @override
@@ -87,6 +141,8 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                     nationalIdController: nationalIdController,
                     weightController: weightController,
                     medicalController: medicalController,
+                    licenseController: licenseController,
+                    capacityController: capacityController,
                     cubit: cubit,
                   ),
                 ),
@@ -99,7 +155,6 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                       top: BorderSide(color: AppColors.border, width: 2),
                     ),
                   ),
-
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -117,30 +172,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                                   text: cubit.i == 2 ? "Submit" : "Next",
                                   height: height * 0.07,
                                   width: width,
-                                  onPressed: () {
-                                    if (_formKey.currentState!.validate()) {
-                                      if (cubit.i == 0) {
-                                        cubit.firstScreenValidate(
-                                          name: nameController.text,
-                                          nationalId: nationalIdController.text,
-                                          dateOfBirth: cubit.dateOfBirth,
-                                        );
-                                      } else if (cubit.i == 1) {
-                                        cubit.secondScreenValidate(
-                                          phone: phoneController.text,
-                                          address: addressController.text,
-                                        );
-                                      } else if (cubit.i == 2) {
-                                        cubit.thirdScreenValidate(
-                                          bloodType: cubit.bloodType,
-                                          city: cubit.city,
-                                          weight: cubit.weight,
-                                          medicalHistory:
-                                              medicalController.text,
-                                        );
-                                      }
-                                    }
-                                  },
+                                  onPressed: () => _onNext(cubit),
                                 );
                         },
                       ),
