@@ -1,3 +1,4 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/models/snackbar_type.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/services/hive_helper.dart';
@@ -294,8 +295,8 @@ class _SettingViewBodyState extends State<SettingViewBody> {
                   TextFormField(
                     controller: nationalIdController,
                     style: const TextStyle(color: Colors.white),
-                    decoration: const InputDecoration(
-                      labelText: 'National ID',
+                    decoration: InputDecoration(
+                      labelText: context.l10n.nationalId,
                       labelStyle: TextStyle(color: Colors.grey, fontSize: 13),
                     ),
                     validator: (v) =>
@@ -306,8 +307,8 @@ class _SettingViewBodyState extends State<SettingViewBody> {
                     controller: weightController,
                     keyboardType: TextInputType.number,
                     style: const TextStyle(color: Colors.white),
-                    decoration: const InputDecoration(
-                      labelText: 'Weight (kg)',
+                    decoration: InputDecoration(
+                      labelText: context.l10n.weightKg,
                       labelStyle: TextStyle(color: Colors.grey, fontSize: 13),
                     ),
                     validator: (v) {
@@ -321,10 +322,10 @@ class _SettingViewBodyState extends State<SettingViewBody> {
                   TextFormField(
                     controller: medicalHistoryController,
                     style: const TextStyle(color: Colors.white),
-                    decoration: const InputDecoration(
-                      labelText: 'Medical History',
+                    decoration: InputDecoration(
+                      labelText: context.l10n.medicalHistory,
                       labelStyle: TextStyle(color: Colors.grey, fontSize: 13),
-                      hintText: 'None, diabetes, etc.',
+                      hintText: context.l10n.noneDiabetesEtc,
                       hintStyle: TextStyle(color: Colors.grey, fontSize: 11),
                     ),
                   ),
@@ -366,7 +367,10 @@ class _SettingViewBodyState extends State<SettingViewBody> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(dlgContext),
-              child: const Text('Cancel', style: TextStyle(color: Colors.grey)),
+              child: Text(
+                context.l10n.cancel,
+                style: TextStyle(color: Colors.grey),
+              ),
             ),
             ElevatedButton(
               onPressed: () {
@@ -393,8 +397,8 @@ class _SettingViewBodyState extends State<SettingViewBody> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,
               ),
-              child: const Text(
-                'Switch',
+              child: Text(
+                context.l10n.switchh,
                 style: TextStyle(color: Colors.white),
               ),
             ),
@@ -419,7 +423,10 @@ class _SettingViewBodyState extends State<SettingViewBody> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dlgContext),
-            child: const Text('Cancel', style: TextStyle(color: Colors.grey)),
+            child: Text(
+              context.l10n.cancel,
+              style: TextStyle(color: Colors.grey),
+            ),
           ),
           ElevatedButton(
             onPressed: () {
@@ -427,7 +434,10 @@ class _SettingViewBodyState extends State<SettingViewBody> {
               context.read<SwitchRoleCubit>().switchToRecipient();
             },
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
-            child: const Text('Switch', style: TextStyle(color: Colors.white)),
+            child: Text(
+              context.l10n.switchh,
+              style: TextStyle(color: Colors.white),
+            ),
           ),
         ],
       ),
@@ -452,7 +462,10 @@ class _SettingViewBodyState extends State<SettingViewBody> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dlgContext),
-            child: const Text('Cancel', style: TextStyle(color: Colors.grey)),
+            child: Text(
+              context.l10n.cancel,
+              style: TextStyle(color: Colors.grey),
+            ),
           ),
           ElevatedButton(
             onPressed: () {
@@ -460,8 +473,8 @@ class _SettingViewBodyState extends State<SettingViewBody> {
               context.read<DeleteAccountCubit>().deleteAccount();
             },
             style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-            child: const Text(
-              'Delete Permanently',
+            child: Text(
+              context.l10n.deletePermanently,
               style: TextStyle(color: Colors.white),
             ),
           ),
@@ -597,8 +610,8 @@ class _SettingViewBodyState extends State<SettingViewBody> {
                               strokeWidth: 2,
                             ),
                           )
-                        : const Text(
-                            'Save Inventory',
+                        : Text(
+                            context.l10n.saveInventory,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
@@ -762,7 +775,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
                   sectionTitle: 'Notifications',
                   children: [
                     ToggleItem(
-                      title: 'Emergency Alerts',
+                      title: context.l10n.emergencyAlerts,
                       subtitle: 'Critical blood requests',
                       value: state.emergencyAlerts,
                       onChanged: (val) => context
@@ -770,7 +783,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
                           .toggleEmergencyAlerts(val),
                     ),
                     ToggleItem(
-                      title: 'Request Notifications',
+                      title: context.l10n.requestNotifications,
                       subtitle: 'Standard blood requests',
                       value: state.requestNotifications,
                       onChanged: (val) => context
@@ -778,7 +791,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
                           .toggleRequestNotifications(val),
                     ),
                     ToggleItem(
-                      title: 'Donation Reminders',
+                      title: context.l10n.donationReminders,
                       subtitle: 'When eligible to donate again',
                       value: state.donationReminders,
                       onChanged: (val) => context
@@ -795,13 +808,13 @@ class _SettingViewBodyState extends State<SettingViewBody> {
               sectionTitle: 'Privacy',
               children: [
                 ToggleItem(
-                  title: 'Location Sharing',
+                  title: context.l10n.locationSharing,
                   subtitle: 'For nearby matching',
                   value: _locationSharing,
                   onChanged: (val) => setState(() => _locationSharing = val),
                 ),
                 ToggleItem(
-                  title: 'Profile Visibility',
+                  title: context.l10n.profileVisibility,
                   subtitle: 'Show to other users',
                   value: _profileVisibility,
                   onChanged: (val) => setState(() => _profileVisibility = val),
@@ -814,20 +827,20 @@ class _SettingViewBodyState extends State<SettingViewBody> {
               sectionTitle: 'Preferences',
               children: [
                 ToggleItem(
-                  title: 'Dark Mode',
+                  title: context.l10n.darkMode,
                   subtitle: 'Always on for eye comfort',
                   value: _darkMode,
                   onChanged: (val) => setState(() => _darkMode = val),
                 ),
                 ArrowItem(
-                  title: 'Search Radius',
+                  title: context.l10n.searchRadius,
                   subtitle: '$_searchRadius km',
                   onTap: _showSearchRadiusDialog,
                 ),
                 // Switch Role — Donor & Recipient only
                 if (isDonor || currentRole == 'Recipient')
                   ArrowItem(
-                    title: 'Current Role',
+                    title: context.l10n.currentRole,
                     subtitle: currentRole ?? 'None',
                     onTap: () {
                       if (isDonor) {
@@ -840,7 +853,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
                 // My Donations — Donor only
                 if (isDonor)
                   ArrowItem(
-                    title: 'My Donations',
+                    title: context.l10n.myDonations,
                     subtitle: 'View history & confirm status',
                     onTap: () => Get.toNamed('/donations'),
                   ),
@@ -853,14 +866,14 @@ class _SettingViewBodyState extends State<SettingViewBody> {
                 sectionTitle: 'Hospital Management',
                 children: [
                   ArrowItem(
-                    title: 'Blood Inventory',
+                    title: context.l10n.bloodInventory,
                     subtitle: 'Update blood stock levels',
                     onTap: _showInventorySheet,
                     icon: Icons.bloodtype_outlined,
                     iconColor: AppColors.primary,
                   ),
                   ArrowItem(
-                    title: 'Active Requests',
+                    title: context.l10n.activeRequests,
                     subtitle: 'View open blood requests',
                     onTap: _showActiveRequestsSheet,
                     icon: Icons.notifications_active_outlined,
@@ -873,12 +886,15 @@ class _SettingViewBodyState extends State<SettingViewBody> {
             SettingsGroup(
               sectionTitle: 'Support',
               children: [
-                ArrowItem(title: 'Help Center', onTap: _showHelpCenterDialog),
                 ArrowItem(
-                  title: 'Contact Support',
+                  title: context.l10n.helpCenter,
+                  onTap: _showHelpCenterDialog,
+                ),
+                ArrowItem(
+                  title: context.l10n.contactSupport,
                   onTap: _showContactSupportDialog,
                 ),
-                ArrowItem(title: 'About', onTap: _showAboutDialog),
+                ArrowItem(title: context.l10n.about, onTap: _showAboutDialog),
               ],
             ),
 
@@ -887,7 +903,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
             // Privacy Policy
             _BottomTile(
               icon: Icons.shield_outlined,
-              label: 'Privacy Policy',
+              label: context.l10n.privacyPolicy,
               color: AppColors.textMuted,
               onTap: _showPrivacyPolicyDialog,
             ),
@@ -895,7 +911,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
             // Sign Out
             _BottomTile(
               icon: Icons.logout,
-              label: 'Sign Out',
+              label: context.l10n.signOut,
               color: AppColors.primary,
               onTap: () => context.read<AuthCubit>().logout(context),
             ),
@@ -903,7 +919,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
             // Delete Account
             _BottomTile(
               icon: Icons.delete_forever,
-              label: 'Delete Account',
+              label: context.l10n.deleteAccount,
               color: Colors.red,
               onTap: _confirmDeleteAccount,
             ),

@@ -1,3 +1,4 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/features/request_status/data/models/request_status_model.dart';
@@ -78,8 +79,8 @@ class _RequestStatusScreenState extends State<RequestStatusScreen> {
                           vertical: 14,
                         ),
                       ),
-                      child: const Text(
-                        'Retry',
+                      child: Text(
+                        context.l10n.retry,
                         style: TextStyle(color: Colors.white),
                       ),
                     ),

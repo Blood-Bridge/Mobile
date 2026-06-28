@@ -1,3 +1,4 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/features/home/presentation/views/reciver/widgets/receiver_appbar.dart';
 import 'package:blood_bridge/features/home/presentation/views/reciver/widgets/receiver_body.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class ReceiverScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(width * 0.05),
               child: CustomButton(
-                text: 'Profile',
+                text: context.l10n.profile,
                 height: height * 0.06,
                 width: width,
                 backgroundColor: AppColors.popover,

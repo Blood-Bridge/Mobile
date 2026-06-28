@@ -1,4 +1,5 @@
 import 'package:blood_bridge/constants.dart';
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/core/widgets/blood_type_icon.dart';
@@ -61,7 +62,7 @@ class ThirdInfoScreen extends StatelessWidget {
         SizedBox(height: height * 0.01),
         CustomTextfield(
           prefixIcon: Icon(CupertinoIcons.bag),
-          text: "Enter weight",
+          text: context.l10n.enterWeight,
           controller: weightController,
           validator: cubit.weightValidator,
         ),
@@ -76,7 +77,7 @@ class ThirdInfoScreen extends StatelessWidget {
           controller: medicalController,
           style: TextStyle(color: AppColors.textMuted),
           decoration: InputDecoration(
-            hintText: "Enter your medical conditions",
+            hintText: context.l10n.enterYourMedicalConditions,
             filled: true,
             fillColor: AppColors.accent,
             border: OutlineInputBorder(

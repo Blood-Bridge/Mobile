@@ -1,3 +1,4 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/core/widgets/custom_button.dart';
 import 'package:blood_bridge/features/home/presentation/views/donor/cubit/cubit/donor_cubit.dart';
@@ -30,7 +31,7 @@ class DonorScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(width * 0.05),
                 child: CustomButton(
-                  text: 'Profile',
+                  text: context.l10n.profile,
                   height: height * 0.08,
                   width: width,
                   backgroundColor: AppColors.popover,

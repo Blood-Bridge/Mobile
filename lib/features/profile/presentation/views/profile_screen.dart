@@ -1,3 +1,4 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/features/profile/presentation/cubit/profile_cubit.dart';
@@ -19,7 +20,11 @@ class ProfileScreen extends StatelessWidget {
         backgroundColor: AppColors.bg,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: AppColors.foreground, size: 18),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: AppColors.foreground,
+            size: 18,
+          ),
           onPressed: () => Get.back(),
         ),
         title: Text('My Profile', style: TextStyleHelper.h1(context)),
@@ -46,9 +51,12 @@ class ProfileScreen extends StatelessWidget {
                   Text(state.error, style: TextStyleHelper.body(context)),
                   const SizedBox(height: 16),
                   ElevatedButton(
-                    onPressed: () => context.read<ProfileCubit>().fetchProfile(),
-                    style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
-                    child: const Text('Retry'),
+                    onPressed: () =>
+                        context.read<ProfileCubit>().fetchProfile(),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                    ),
+                    child: Text(context.l10n.retry),
                   ),
                 ],
               ),
@@ -58,7 +66,10 @@ class ProfileScreen extends StatelessWidget {
           if (state is ProfileLoaded) {
             final profile = state.profile;
             return SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: width * 0.05, vertical: 16),
+              padding: EdgeInsets.symmetric(
+                horizontal: width * 0.05,
+                vertical: 16,
+              ),
               child: Column(
                 children: [
                   // User avatar and badge
@@ -68,7 +79,11 @@ class ProfileScreen extends StatelessWidget {
                         CircleAvatar(
                           radius: 50,
                           backgroundColor: AppColors.primary.withOpacity(0.15),
-                          child: Icon(Icons.person, size: 50, color: AppColors.primary),
+                          child: Icon(
+                            Icons.person,
+                            size: 50,
+                            color: AppColors.primary,
+                          ),
                         ),
                         const SizedBox(height: 16),
                         Text(
@@ -82,7 +97,10 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 12),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 6,
+                          ),
                           decoration: BoxDecoration(
                             color: AppColors.primary,
                             borderRadius: BorderRadius.circular(20),
@@ -103,16 +121,35 @@ class ProfileScreen extends StatelessWidget {
                   // Blood Type Card
                   _buildProfileCard(
                     context,
-                    title: 'Medical Information',
+                    title: context.l10n.medicalInformation,
                     icon: Icons.medical_services_outlined,
                     children: [
-                      _buildInfoTile(context, 'Blood Type', profile.bloodType, isHighlight: true),
+                      _buildInfoTile(
+                        context,
+                        'Blood Type',
+                        profile.bloodType,
+                        isHighlight: true,
+                      ),
                       const Divider(color: AppColors.border),
-                      _buildInfoTile(context, 'Weight', '${profile.weight.toStringAsFixed(1)} kg'),
+                      _buildInfoTile(
+                        context,
+                        'Weight',
+                        '${profile.weight.toStringAsFixed(1)} kg',
+                      ),
                       const Divider(color: AppColors.border),
-                      _buildInfoTile(context, 'Date of Birth', profile.dateOfBirth.split('T').first),
+                      _buildInfoTile(
+                        context,
+                        'Date of Birth',
+                        profile.dateOfBirth.split('T').first,
+                      ),
                       const Divider(color: AppColors.border),
-                      _buildInfoTile(context, 'Medical History', profile.medicalHistory.isEmpty ? 'None reported' : profile.medicalHistory),
+                      _buildInfoTile(
+                        context,
+                        'Medical History',
+                        profile.medicalHistory.isEmpty
+                            ? 'None reported'
+                            : profile.medicalHistory,
+                      ),
                     ],
                   ),
                   const SizedBox(height: 16),
@@ -120,14 +157,22 @@ class ProfileScreen extends StatelessWidget {
                   // Contact Card
                   _buildProfileCard(
                     context,
-                    title: 'Personal Details',
+                    title: context.l10n.personalDetails,
                     icon: Icons.person_outline,
                     children: [
                       _buildInfoTile(context, 'Phone Number', profile.phone),
                       const Divider(color: AppColors.border),
-                      _buildInfoTile(context, 'Governorate', profile.governorate),
+                      _buildInfoTile(
+                        context,
+                        'Governorate',
+                        profile.governorate,
+                      ),
                       const Divider(color: AppColors.border),
-                      _buildInfoTile(context, 'National ID', profile.nationalId),
+                      _buildInfoTile(
+                        context,
+                        'National ID',
+                        profile.nationalId,
+                      ),
                     ],
                   ),
                 ],
@@ -162,10 +207,7 @@ class ProfileScreen extends StatelessWidget {
             children: [
               Icon(icon, color: AppColors.primary, size: 20),
               const SizedBox(width: 8),
-              Text(
-                title,
-                style: TextStyleHelper.h3(context),
-              ),
+              Text(title, style: TextStyleHelper.h3(context)),
             ],
           ),
           const SizedBox(height: 16),
@@ -175,14 +217,24 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoTile(BuildContext context, String label, String value, {bool isHighlight = false}) {
+  Widget _buildInfoTile(
+    BuildContext context,
+    String label,
+    String value, {
+    bool isHighlight = false,
+  }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label, style: TextStyleHelper.small(context).copyWith(color: AppColors.textMuted)),
+          Text(
+            label,
+            style: TextStyleHelper.small(
+              context,
+            ).copyWith(color: AppColors.textMuted),
+          ),
           const SizedBox(width: 16),
           Expanded(
             child: Text(

@@ -1,3 +1,4 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/core/widgets/custom_textfield.dart';
@@ -31,7 +32,7 @@ class FirstInfoScreen extends StatelessWidget {
         SizedBox(height: height * 0.01),
         CustomTextfield(
           prefixIcon: Icon(Icons.person),
-          text: "Enter your full name",
+          text: context.l10n.enterYourFullName,
           controller: nameController,
           validator: cubit.nameValidator,
         ),
@@ -40,13 +41,13 @@ class FirstInfoScreen extends StatelessWidget {
         SizedBox(height: height * 0.01),
         CustomTextfield(
           prefixIcon: Icon(Icons.credit_card),
-          text: "Enter national ID number",
+          text: context.l10n.enterNationalIdNumber,
           controller: nationalIDController,
           validator: cubit.nationalIdValidator,
         ),
         SizedBox(height: height * 0.04),
         CustomDateField(
-          label: "Date of Birth *",
+          label: context.l10n.dateOfBirth,
           onDateSelected: (date) {
             cubit.dateOfBirth = date;
           },

@@ -21,6 +21,7 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^9.1.1
   flutter_dotenv: ^6.0.0
+  flutter_gen: ^5.14.1
   flutter_local_notifications: ^21.0.0
   flutter_localizations:
     sdk: flutter

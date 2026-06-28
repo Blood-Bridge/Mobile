@@ -1,3 +1,4 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/features/setting/presentation/cubits/notifications_cubit/cubit/notifications_cubit.dart';
 import 'package:blood_bridge/features/setting/presentation/cubits/notifications_cubit/cubit/notifications_state.dart';
 import 'package:blood_bridge/features/setting/presentation/views/widgets/setting_group.dart';
@@ -16,14 +17,14 @@ class NotificationsSection extends StatelessWidget {
           sectionTitle: 'Notifications',
           children: [
             ToggleItem(
-              title: 'Emergency Alerts',
+              title: context.l10n.emergencyAlerts,
               subtitle: 'Critical blood requests',
               value: state.emergencyAlerts,
               onChanged: (val) =>
                   context.read<NotificationsCubit>().toggleEmergencyAlerts(val),
             ),
             ToggleItem(
-              title: 'Request Notifications',
+              title: context.l10n.requestNotifications,
               subtitle: 'Standard blood requests',
               value: state.requestNotifications,
               onChanged: (val) => context
@@ -31,7 +32,7 @@ class NotificationsSection extends StatelessWidget {
                   .toggleRequestNotifications(val),
             ),
             ToggleItem(
-              title: 'Donation Reminders',
+              title: context.l10n.donationReminders,
               subtitle: 'When eligible to donate again',
               value: state!.donationReminders,
               onChanged: (val) => context

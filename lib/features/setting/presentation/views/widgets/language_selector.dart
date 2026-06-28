@@ -1,3 +1,4 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/features/setting/presentation/cubits/language_cubit/cubit/language_cubit.dart';
 import 'package:blood_bridge/features/setting/presentation/cubits/language_cubit/cubit/language_state.dart';
@@ -36,13 +37,13 @@ class LanguageSelector extends StatelessWidget {
               Row(
                 children: [
                   _LangOption(
-                    label: 'English',
+                    label: context.l10n.english,
                     isSelected: isEnglish,
                     onTap: () => context.read<LanguageCubit>().toEnglish(),
                   ),
                   const SizedBox(width: 10),
                   _LangOption(
-                    label: 'العربية',
+                    label: context.l10n.text072,
                     isSelected: !isEnglish,
                     onTap: () => context.read<LanguageCubit>().toArabic(),
                   ),

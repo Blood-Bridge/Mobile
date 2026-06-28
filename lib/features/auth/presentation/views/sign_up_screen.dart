@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/models/snackbar_type.dart';
 import 'package:blood_bridge/core/models/user_role.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
@@ -78,7 +79,7 @@ class SignUpScreen extends StatelessWidget {
                     Container(
                       height: height * 0.076,
                       child: CustomTextfield(
-                        text: 'Email',
+                        text: context.l10n.email,
                         controller: emailController,
                         validator: cubit.emailValidator,
                       ),
@@ -89,7 +90,7 @@ class SignUpScreen extends StatelessWidget {
                     Container(
                       height: height * 0.076,
                       child: CustomTextfield(
-                        text: 'Password',
+                        text: context.l10n.password,
                         isPassword: true,
                         controller: passwordController,
                         validator: cubit.passwordValidator,
@@ -100,7 +101,7 @@ class SignUpScreen extends StatelessWidget {
                       builder: (context, state) {
                         return CustomLoadingButton(
                           isEnabled: cubit.isEnabled,
-                          text: 'Sign Up',
+                          text: context.l10n.signUp,
                           formKey: _formKey,
 
                           emailController: emailController,

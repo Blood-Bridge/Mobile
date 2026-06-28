@@ -1,3 +1,4 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/features/home/presentation/views/reciver/cubit/receiver_cubit.dart';
@@ -91,18 +92,27 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    widget.isEmergency ? 'Emergency Blood Request' : 'Request Blood',
+                    widget.isEmergency
+                        ? 'Emergency Blood Request'
+                        : 'Request Blood',
                     style: TextStyleHelper.h2(context).copyWith(
-                      color: widget.isEmergency ? AppColors.primary : Colors.white,
+                      color: widget.isEmergency
+                          ? AppColors.primary
+                          : Colors.white,
                     ),
                   ),
                   if (widget.isEmergency)
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 4,
+                      ),
                       decoration: BoxDecoration(
                         color: AppColors.primary.withOpacity(0.15),
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: AppColors.primary.withOpacity(0.3)),
+                        border: Border.all(
+                          color: AppColors.primary.withOpacity(0.3),
+                        ),
                       ),
                       child: Text(
                         'HIGH PRIORITY',
@@ -138,7 +148,9 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
                         margin: const EdgeInsets.symmetric(horizontal: 4),
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         decoration: BoxDecoration(
-                          color: isSelected ? color.withOpacity(0.2) : AppColors.muted,
+                          color: isSelected
+                              ? color.withOpacity(0.2)
+                              : AppColors.muted,
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
                             color: isSelected ? color : AppColors.border,
@@ -150,7 +162,9 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
                             level,
                             style: TextStyleHelper.small(context).copyWith(
                               color: isSelected ? color : AppColors.textMuted,
-                              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                              fontWeight: isSelected
+                                  ? FontWeight.bold
+                                  : FontWeight.normal,
                             ),
                           ),
                         ),
@@ -166,7 +180,10 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Blood Type Required', style: TextStyleHelper.small(context)),
+                        Text(
+                          'Blood Type Required',
+                          style: TextStyleHelper.small(context),
+                        ),
                         const SizedBox(height: 8),
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -183,11 +200,15 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
                               items: _bloodTypes.map((type) {
                                 return DropdownMenuItem(
                                   value: type,
-                                  child: Text(type, style: const TextStyle(color: Colors.white)),
+                                  child: Text(
+                                    type,
+                                    style: const TextStyle(color: Colors.white),
+                                  ),
                                 );
                               }).toList(),
                               onChanged: (val) {
-                                if (val != null) setState(() => _bloodType = val);
+                                if (val != null)
+                                  setState(() => _bloodType = val);
                               },
                             ),
                           ),
@@ -199,7 +220,10 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Quantity (Units)', style: TextStyleHelper.small(context)),
+                      Text(
+                        'Quantity (Units)',
+                        style: TextStyleHelper.small(context),
+                      ),
                       const SizedBox(height: 8),
                       Container(
                         decoration: BoxDecoration(
@@ -210,7 +234,11 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
                         child: Row(
                           children: [
                             IconButton(
-                              icon: const Icon(Icons.remove, color: Colors.white, size: 16),
+                              icon: const Icon(
+                                Icons.remove,
+                                color: Colors.white,
+                                size: 16,
+                              ),
                               onPressed: () {
                                 if (_quantity > 1) {
                                   setState(() => _quantity--);
@@ -219,12 +247,16 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
                             ),
                             Text(
                               '$_quantity',
-                              style: TextStyleHelper.small(context).copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: TextStyleHelper.small(
+                                context,
+                              ).copyWith(fontWeight: FontWeight.bold),
                             ),
                             IconButton(
-                              icon: const Icon(Icons.add, color: Colors.white, size: 16),
+                              icon: const Icon(
+                                Icons.add,
+                                color: Colors.white,
+                                size: 16,
+                              ),
                               onPressed: () {
                                 setState(() => _quantity++);
                               },
@@ -237,7 +269,10 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
                 ],
               ),
               const SizedBox(height: 20),
-              Text('Select Target Hospital', style: TextStyleHelper.small(context)),
+              Text(
+                'Select Target Hospital',
+                style: TextStyleHelper.small(context),
+              ),
               const SizedBox(height: 8),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -254,7 +289,10 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
                     items: _hospitals.map((hosp) {
                       return DropdownMenuItem<int>(
                         value: hosp['id'] as int,
-                        child: Text(hosp['name'] as String, style: const TextStyle(color: Colors.white)),
+                        child: Text(
+                          hosp['name'] as String,
+                          style: const TextStyle(color: Colors.white),
+                        ),
                       );
                     }).toList(),
                     onChanged: (val) {
@@ -264,7 +302,10 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
                 ),
               ),
               const SizedBox(height: 20),
-              Text('Medical Case Description', style: TextStyleHelper.small(context)),
+              Text(
+                'Medical Case Description',
+                style: TextStyleHelper.small(context),
+              ),
               const SizedBox(height: 8),
               TextFormField(
                 controller: _medicalReportController,
@@ -279,24 +320,36 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: AppColors.primary, width: 1.5),
+                    borderSide: BorderSide(
+                      color: AppColors.primary,
+                      width: 1.5,
+                    ),
                   ),
-                  hintText: 'Enter case details (e.g. post-operative care, accident, leukemia treatment...)',
-                  hintStyle: TextStyle(color: AppColors.textMuted, fontSize: 13),
+                  hintText: context
+                      .l10n
+                      .enterCaseDetailsEGPostOperativeCareAccidentLeukemiaTreatment,
+                  hintStyle: TextStyle(
+                    color: AppColors.textMuted,
+                    fontSize: 13,
+                  ),
                   contentPadding: const EdgeInsets.all(16),
                 ),
-                validator: (v) => v == null || v.trim().isEmpty ? 'Please enter case details' : null,
+                validator: (v) => v == null || v.trim().isEmpty
+                    ? 'Please enter case details'
+                    : null,
               ),
               const SizedBox(height: 32),
               BlocConsumer<ReceiverCubit, ReceiverState>(
                 listener: (context, state) {
                   if (state is ReceiverSubmitSuccess) {
                     Get.back();
-                    Get.to(() => DetectionConfirmationScreen(
-                          requestId: state.requestId,
-                          detectedBloodType: state.detectedBloodType,
-                          urgencyLevel: state.urgencyLevel,
-                        ));
+                    Get.to(
+                      () => DetectionConfirmationScreen(
+                        requestId: state.requestId,
+                        detectedBloodType: state.detectedBloodType,
+                        urgencyLevel: state.urgencyLevel,
+                      ),
+                    );
                   } else if (state is ReceiverError) {
                     Get.snackbar(
                       'Error',
@@ -317,16 +370,19 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
                           : () {
                               if (_formKey.currentState!.validate()) {
                                 context.read<ReceiverCubit>().submitRequest(
-                                      medicalReportText: _medicalReportController.text,
-                                      bloodType: _bloodType,
-                                      quantity: _quantity,
-                                      urgencyLevel: _urgencyLevel,
-                                      hospitalId: _hospitalId,
-                                    );
+                                  medicalReportText:
+                                      _medicalReportController.text,
+                                  bloodType: _bloodType,
+                                  quantity: _quantity,
+                                  urgencyLevel: _urgencyLevel,
+                                  hospitalId: _hospitalId,
+                                );
                               }
                             },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: widget.isEmergency ? AppColors.primary : AppColors.foreground,
+                        backgroundColor: widget.isEmergency
+                            ? AppColors.primary
+                            : AppColors.foreground,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16),
                         ),
@@ -334,7 +390,9 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
                       child: isLoading
                           ? const CircularProgressIndicator(color: Colors.white)
                           : Text(
-                              widget.isEmergency ? 'Submit Emergency Request' : 'Submit Request',
+                              widget.isEmergency
+                                  ? 'Submit Emergency Request'
+                                  : 'Submit Request',
                               style: TextStyleHelper.h3(context).copyWith(
                                 color: widget.isEmergency
                                     ? AppColors.primaryForeground

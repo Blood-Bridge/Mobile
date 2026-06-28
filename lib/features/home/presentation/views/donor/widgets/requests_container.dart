@@ -1,3 +1,4 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/core/widgets/custom_button.dart';
@@ -144,7 +145,7 @@ class RequestsContainer extends StatelessWidget {
             children: [
               Expanded(
                 child: CustomButton(
-                  text: 'Accept',
+                  text: context.l10n.accept,
                   height: height * 0.06,
                   backgroundColor: AppColors.primary,
                   isEnabled: true,
@@ -156,7 +157,7 @@ class RequestsContainer extends StatelessWidget {
               const SizedBox(width: 8),
               Expanded(
                 child: CustomButton(
-                  text: 'Decline',
+                  text: context.l10n.decline,
                   height: height * 0.06,
                   backgroundColor: AppColors.popover,
                   isEnabled: true,
@@ -169,7 +170,7 @@ class RequestsContainer extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           CustomButton(
-            text: 'View Details',
+            text: context.l10n.viewDetails,
             height: height * 0.06,
             isEnabled: true,
             backgroundColor: AppColors.popover.withOpacity(0.5),
@@ -178,7 +179,10 @@ class RequestsContainer extends StatelessWidget {
         ],
       );
     } else if (tabIndex == 1) {
-      final situationLower = sitiuation.toLowerCase().replaceAll('_', '').replaceAll(' ', '');
+      final situationLower = sitiuation
+          .toLowerCase()
+          .replaceAll('_', '')
+          .replaceAll(' ', '');
       String mainButtonText = 'Complete Donation';
       Color mainButtonColor = Colors.green;
       VoidCallback mainAction = () => donorCubit.completeDonation(requestId);
@@ -227,7 +231,7 @@ class RequestsContainer extends StatelessWidget {
             children: [
               Expanded(
                 child: CustomButton(
-                  text: 'Cancel Acceptance',
+                  text: context.l10n.cancelAcceptance,
                   height: height * 0.06,
                   backgroundColor: Colors.red.withOpacity(0.2),
                   isEnabled: true,
@@ -237,19 +241,31 @@ class RequestsContainer extends StatelessWidget {
                       builder: (context) {
                         return AlertDialog(
                           backgroundColor: AppColors.card,
-                          title: Text('Cancel Acceptance', style: TextStyleHelper.h3(context)),
-                          content: Text('Are you sure you want to cancel your donation acceptance for this request?', style: TextStyleHelper.small(context)),
+                          title: Text(
+                            'Cancel Acceptance',
+                            style: TextStyleHelper.h3(context),
+                          ),
+                          content: Text(
+                            'Are you sure you want to cancel your donation acceptance for this request?',
+                            style: TextStyleHelper.small(context),
+                          ),
                           actions: [
                             TextButton(
                               onPressed: () => Navigator.pop(context),
-                              child: const Text('No', style: TextStyle(color: Colors.white)),
+                              child: Text(
+                                context.l10n.no,
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
                             TextButton(
                               onPressed: () {
                                 Navigator.pop(context);
                                 donorCubit.cancelAcceptance(requestId);
                               },
-                              child: const Text('Yes, Cancel', style: TextStyle(color: Colors.red)),
+                              child: Text(
+                                context.l10n.yesCancel,
+                                style: TextStyle(color: Colors.red),
+                              ),
                             ),
                           ],
                         );
@@ -261,11 +277,12 @@ class RequestsContainer extends StatelessWidget {
               const SizedBox(width: 8),
               Expanded(
                 child: CustomButton(
-                  text: 'View Status',
+                  text: context.l10n.viewStatus,
                   height: height * 0.06,
                   backgroundColor: AppColors.popover.withOpacity(0.5),
                   isEnabled: true,
-                  onPressed: () => Get.to(() => RequestStatusScreen(requestId: requestId)),
+                  onPressed: () =>
+                      Get.to(() => RequestStatusScreen(requestId: requestId)),
                 ),
               ),
             ],
@@ -288,10 +305,9 @@ class RequestsContainer extends StatelessWidget {
             const SizedBox(width: 8),
             Text(
               'Donation Completed',
-              style: TextStyleHelper.small(context).copyWith(
-                color: Colors.green,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyleHelper.small(
+                context,
+              ).copyWith(color: Colors.green, fontWeight: FontWeight.bold),
             ),
           ],
         ),
@@ -312,7 +328,12 @@ class RequestsContainer extends StatelessWidget {
             children: [
               _buildDetailRow(context, 'Request ID', '#$requestId'),
               const Divider(color: AppColors.border),
-              _buildDetailRow(context, 'Urgency', sitiuation, isUrgent: sitiuation == 'Critical' || sitiuation == 'Urgent'),
+              _buildDetailRow(
+                context,
+                'Urgency',
+                sitiuation,
+                isUrgent: sitiuation == 'Critical' || sitiuation == 'Urgent',
+              ),
               const Divider(color: AppColors.border),
               _buildDetailRow(context, 'Blood Type', bloodType),
               const Divider(color: AppColors.border),
@@ -334,13 +355,23 @@ class RequestsContainer extends StatelessWidget {
     );
   }
 
-  Widget _buildDetailRow(BuildContext context, String label, String value, {bool isUrgent = false}) {
+  Widget _buildDetailRow(
+    BuildContext context,
+    String label,
+    String value, {
+    bool isUrgent = false,
+  }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: TextStyleHelper.small(context).copyWith(color: AppColors.textMuted)),
+          Text(
+            label,
+            style: TextStyleHelper.small(
+              context,
+            ).copyWith(color: AppColors.textMuted),
+          ),
           const SizedBox(width: 16),
           Expanded(
             child: Text(

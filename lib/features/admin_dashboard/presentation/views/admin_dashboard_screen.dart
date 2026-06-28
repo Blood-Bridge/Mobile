@@ -1,3 +1,4 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,8 +19,8 @@ class AdminDashboardScreen extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: const Color(0xFF0A0A0A),
           elevation: 0,
-          title: const Text(
-            'Admin Dashboard',
+          title: Text(
+            context.l10n.adminDashboard,
             style: TextStyle(
               color: Colors.white,
               fontSize: 24,
@@ -30,10 +31,7 @@ class AdminDashboardScreen extends StatelessWidget {
           centerTitle: false,
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(1.5),
-            child: Container(
-              color: const Color(0xFF262626),
-              height: 1.5,
-            ),
+            child: Container(color: const Color(0xFF262626), height: 1.5),
           ),
         ),
         body: const _AdminDashboardBody(),
@@ -60,11 +58,18 @@ class _AdminDashboardBodyState extends State<_AdminDashboardBody> {
     return BlocBuilder<AdminDashboardCubit, AdminDashboardState>(
       builder: (context, state) {
         if (state.isLoading) {
-          return const Center(child: CircularProgressIndicator(color: Color(0xFFC97777)));
+          return const Center(
+            child: CircularProgressIndicator(color: Color(0xFFC97777)),
+          );
         }
 
         if (state.error != null) {
-          return Center(child: Text('Error: ${state.error}', style: const TextStyle(color: Colors.red)));
+          return Center(
+            child: Text(
+              'Error: ${state.error}',
+              style: const TextStyle(color: Colors.red),
+            ),
+          );
         }
 
         return SingleChildScrollView(
@@ -83,7 +88,7 @@ class _AdminDashboardBodyState extends State<_AdminDashboardBody> {
                   AdminSettingItem(
                     icon: Icons.people_outline,
                     iconBgColor: const Color(0xFFFB2C36).withOpacity(0.2),
-                    title: 'Manage Donors',
+                    title: context.l10n.manageDonors,
                     subtitle: 'View, filter and delete donors',
                     hasArrow: true,
                     onTap: () => Get.toNamed('/admin/donors'),
@@ -91,7 +96,7 @@ class _AdminDashboardBodyState extends State<_AdminDashboardBody> {
                   AdminSettingItem(
                     icon: Icons.receipt_long_outlined,
                     iconBgColor: const Color(0xFFFFB020).withOpacity(0.2),
-                    title: 'Manage Requests',
+                    title: context.l10n.manageRequests,
                     subtitle: 'View, track and cancel blood requests',
                     hasArrow: true,
                     onTap: () => Get.toNamed('/admin/requests'),
@@ -99,7 +104,7 @@ class _AdminDashboardBodyState extends State<_AdminDashboardBody> {
                   AdminSettingItem(
                     icon: Icons.favorite_outline,
                     iconBgColor: const Color(0xFF00C950).withOpacity(0.2),
-                    title: 'Manage Donations',
+                    title: context.l10n.manageDonations,
                     subtitle: 'View and delete donation records',
                     hasArrow: true,
                     onTap: () => Get.toNamed('/admin/donations'),
@@ -114,7 +119,7 @@ class _AdminDashboardBodyState extends State<_AdminDashboardBody> {
                   AdminSettingItem(
                     icon: Icons.language,
                     iconBgColor: const Color(0xFF2B7FFF).withOpacity(0.2),
-                    title: 'System Language',
+                    title: context.l10n.systemLanguage,
                     subtitle: 'English',
                     hasArrow: true,
                     onTap: () => Get.toNamed('/admin/language'),
@@ -122,7 +127,7 @@ class _AdminDashboardBodyState extends State<_AdminDashboardBody> {
                   AdminSettingItem(
                     icon: Icons.timer_outlined,
                     iconBgColor: const Color(0xFFAD46FF).withOpacity(0.2),
-                    title: 'Session Timeout',
+                    title: context.l10n.sessionTimeout,
                     subtitle: '$_sessionTimeoutMinutes minutes',
                     hasArrow: true,
                     onTap: () => _showTimeoutDialog(),
@@ -137,26 +142,30 @@ class _AdminDashboardBodyState extends State<_AdminDashboardBody> {
                   AdminSettingItem(
                     icon: Icons.email_outlined,
                     iconBgColor: const Color(0xFF00C950).withOpacity(0.2),
-                    title: 'Email Notifications',
+                    title: context.l10n.emailNotifications,
                     subtitle: _emailNotifications ? 'Enabled' : 'Disabled',
                     trailing: _buildSwitch(
                       _emailNotifications,
                       (val) => setState(() {
                         _emailNotifications = val;
-                        _showSnackBar('Email notifications ${val ? "enabled" : "disabled"}');
+                        _showSnackBar(
+                          'Email notifications ${val ? "enabled" : "disabled"}',
+                        );
                       }),
                     ),
                   ),
                   AdminSettingItem(
                     icon: Icons.sms_outlined,
                     iconBgColor: const Color(0xFF2B7FFF).withOpacity(0.2),
-                    title: 'SMS Notifications',
+                    title: context.l10n.smsNotifications,
                     subtitle: _smsNotifications ? 'Enabled' : 'Disabled',
                     trailing: _buildSwitch(
                       _smsNotifications,
                       (val) => setState(() {
                         _smsNotifications = val;
-                        _showSnackBar('SMS notifications ${val ? "enabled" : "disabled"}');
+                        _showSnackBar(
+                          'SMS notifications ${val ? "enabled" : "disabled"}',
+                        );
                       }),
                     ),
                   ),
@@ -170,7 +179,7 @@ class _AdminDashboardBodyState extends State<_AdminDashboardBody> {
                   AdminSettingItem(
                     icon: Icons.backup_outlined,
                     iconBgColor: const Color(0xFF2B7FFF).withOpacity(0.2),
-                    title: 'Backup Database',
+                    title: context.l10n.backupDatabase,
                     subtitle: 'Manage backups & schedules',
                     hasArrow: true,
                     onTap: () => Get.toNamed('/admin/backup'),
@@ -178,7 +187,7 @@ class _AdminDashboardBodyState extends State<_AdminDashboardBody> {
                   AdminSettingItem(
                     icon: Icons.list_alt_outlined,
                     iconBgColor: const Color(0xFFFF6900).withOpacity(0.2),
-                    title: 'View System Logs',
+                    title: context.l10n.viewSystemLogs,
                     subtitle: 'Last 7 days',
                     hasArrow: true,
                     onTap: () => Get.toNamed('/admin/logs'),
@@ -188,13 +197,13 @@ class _AdminDashboardBodyState extends State<_AdminDashboardBody> {
               const SizedBox(height: 24),
 
               AdminSection(
-                title: 'DANGER ZONE',
+                title: context.l10n.dangerZone,
                 isDanger: true,
                 children: [
                   AdminSettingItem(
                     icon: Icons.build_circle_outlined,
                     iconBgColor: const Color(0xFFFF6900).withOpacity(0.2),
-                    title: 'Maintenance Mode',
+                    title: context.l10n.maintenanceMode,
                     subtitle: _maintenanceMode ? 'Enabled' : 'Disabled',
                     trailing: _buildSwitch(
                       _maintenanceMode,
@@ -212,7 +221,7 @@ class _AdminDashboardBodyState extends State<_AdminDashboardBody> {
                   AdminSettingItem(
                     icon: Icons.restart_alt_outlined,
                     iconBgColor: const Color(0xFFFB2C36).withOpacity(0.2),
-                    title: 'Reset System',
+                    title: context.l10n.resetSystem,
                     subtitle: 'Complete system reset',
                     titleColor: const Color(0xFFFF6467),
                     hasArrow: true,
@@ -235,9 +244,9 @@ class _AdminDashboardBodyState extends State<_AdminDashboardBody> {
                       borderRadius: BorderRadius.circular(16),
                     ),
                   ),
-                  child: const Text(
-                    'Refresh Data',
-                    style: TextStyle(
+                  child: Text(
+                    context.l10n.refreshData,
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -277,15 +286,40 @@ class _AdminDashboardBodyState extends State<_AdminDashboardBody> {
       crossAxisSpacing: 12,
       childAspectRatio: 1.5,
       children: [
-        _buildStatCard('Users', state.userCount.toString(), Icons.people, const Color(0xFF2B7FFF)),
-        _buildStatCard('Donors', state.donorCount.toString(), Icons.favorite, const Color(0xFFFB2C36)),
-        _buildStatCard('Hospitals', state.hospitalCount.toString(), Icons.local_hospital, const Color(0xFF00C950)),
-        _buildStatCard('Requests', state.totalRequests.toString(), Icons.bloodtype, const Color(0xFFFF6900)),
+        _buildStatCard(
+          'Users',
+          state.userCount.toString(),
+          Icons.people,
+          const Color(0xFF2B7FFF),
+        ),
+        _buildStatCard(
+          'Donors',
+          state.donorCount.toString(),
+          Icons.favorite,
+          const Color(0xFFFB2C36),
+        ),
+        _buildStatCard(
+          'Hospitals',
+          state.hospitalCount.toString(),
+          Icons.local_hospital,
+          const Color(0xFF00C950),
+        ),
+        _buildStatCard(
+          'Requests',
+          state.totalRequests.toString(),
+          Icons.bloodtype,
+          const Color(0xFFFF6900),
+        ),
       ],
     );
   }
 
-  Widget _buildStatCard(String title, String value, IconData icon, Color color) {
+  Widget _buildStatCard(
+    String title,
+    String value,
+    IconData icon,
+    Color color,
+  ) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -300,13 +334,24 @@ class _AdminDashboardBodyState extends State<_AdminDashboardBody> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(title, style: const TextStyle(color: Color(0xFF99A1AF), fontSize: 14, fontWeight: FontWeight.w500)),
+              Text(
+                title,
+                style: const TextStyle(
+                  color: Color(0xFF99A1AF),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
               Icon(icon, color: color.withOpacity(0.8), size: 20),
             ],
           ),
           Text(
             value,
-            style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ],
       ),
@@ -340,7 +385,10 @@ class _AdminDashboardBodyState extends State<_AdminDashboardBody> {
     Get.dialog(
       SimpleDialog(
         backgroundColor: const Color(0xFF121212),
-        title: const Text('Session Timeout', style: TextStyle(color: Colors.white)),
+        title: Text(
+          context.l10n.sessionTimeout,
+          style: TextStyle(color: Colors.white),
+        ),
         children: [15, 30, 60, 120].map((mins) {
           return SimpleDialogOption(
             onPressed: () {
@@ -367,15 +415,23 @@ class _AdminDashboardBodyState extends State<_AdminDashboardBody> {
     Get.dialog(
       AlertDialog(
         backgroundColor: const Color(0xFF121212),
-        title: const Text('Reset System', style: TextStyle(color: Color(0xFFFF6467))),
-        content: const Text(
-          'This will completely clear the system database and log files. This action CANNOT be undone.',
+        title: Text(
+          context.l10n.resetSystem,
+          style: TextStyle(color: Color(0xFFFF6467)),
+        ),
+        content: Text(
+          context
+              .l10n
+              .thisWillCompletelyClearTheSystemDatabaseAndLogFilesThisActio,
           style: TextStyle(color: Colors.white70),
         ),
         actions: [
           TextButton(
             onPressed: () => Get.back(),
-            child: const Text('Cancel', style: TextStyle(color: Colors.grey)),
+            child: Text(
+              context.l10n.cancel,
+              style: TextStyle(color: Colors.grey),
+            ),
           ),
           TextButton(
             onPressed: () async {
@@ -388,9 +444,18 @@ class _AdminDashboardBodyState extends State<_AdminDashboardBody> {
               );
               await Future.delayed(const Duration(seconds: 2));
               Get.back();
-              _showSnackBar('System database reset successfully', isWarning: true);
+              _showSnackBar(
+                'System database reset successfully',
+                isWarning: true,
+              );
             },
-            child: const Text('Reset Everything', style: TextStyle(color: Color(0xFFFF6467), fontWeight: FontWeight.bold)),
+            child: Text(
+              context.l10n.resetEverything,
+              style: TextStyle(
+                color: Color(0xFFFF6467),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ],
       ),

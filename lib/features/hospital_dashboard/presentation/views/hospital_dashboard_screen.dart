@@ -1,3 +1,4 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/features/hospital_dashboard/presentation/cubit/hospital_dashboard_cubit.dart';
@@ -70,7 +71,7 @@ class _ErrorView extends StatelessWidget {
           ElevatedButton(
             onPressed: onRetry,
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
-            child: const Text('Retry'),
+            child: Text(context.l10n.retry),
           ),
         ],
       ),
@@ -111,12 +112,12 @@ class _DashboardContent extends StatelessWidget {
                   const SizedBox(height: 16),
                   _SummaryRow(state: state),
                   const SizedBox(height: 24),
-                  _SectionHeader(title: 'Blood Stock Overview'),
+                  _SectionHeader(title: context.l10n.bloodStockOverview),
                   const SizedBox(height: 12),
                   _BloodStockGrid(inventory: state.bloodInventory),
                   const SizedBox(height: 24),
                   _SectionHeader(
-                    title: 'Active Requests',
+                    title: context.l10n.activeRequests,
                     action: 'View All',
                     onAction: () {},
                   ),
@@ -124,7 +125,7 @@ class _DashboardContent extends StatelessWidget {
                   _ActiveRequestsList(requests: state.activeRequests),
                   const SizedBox(height: 24),
                   _SectionHeader(
-                    title: 'Nearby Available Donors',
+                    title: context.l10n.nearbyAvailableDonors,
                     action: 'Map View',
                     onAction: () {
                       final donors = context
@@ -201,21 +202,21 @@ class _SummaryRow extends StatelessWidget {
       children: [
         Expanded(
           child: _SummaryCard(
-            label: 'Total Stock',
+            label: context.l10n.totalStock,
             value: '${state.availableBloodUnits} units',
           ),
         ),
         const SizedBox(width: 10),
         Expanded(
           child: _SummaryCard(
-            label: 'Active Requests',
+            label: context.l10n.activeRequests,
             value: state.pendingRequests.toString(),
           ),
         ),
         const SizedBox(width: 10),
         Expanded(
           child: _SummaryCard(
-            label: 'Available Donors',
+            label: context.l10n.availableDonors,
             value: state.activeDonors.toString(),
           ),
         ),

@@ -1,3 +1,4 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/core/widgets/custom_textfield.dart';
@@ -47,7 +48,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         backgroundColor: AppColors.bg,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: AppColors.foreground, size: 18),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: AppColors.foreground,
+            size: 18,
+          ),
           onPressed: () => Get.back(),
         ),
         title: Text('Reset Password', style: TextStyleHelper.h1(context)),
@@ -67,35 +72,40 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 ),
                 SizedBox(height: height * 0.04),
                 CustomTextfield(
-                  text: 'Email Address',
+                  text: context.l10n.emailAddress,
                   controller: _emailController,
-                  validator: (v) => v == null || v.isEmpty ? 'Email is required' : null,
+                  validator: (v) =>
+                      v == null || v.isEmpty ? 'Email is required' : null,
                 ),
                 SizedBox(height: height * 0.02),
                 CustomTextfield(
-                  text: 'Reset Token',
+                  text: context.l10n.resetToken,
                   controller: _tokenController,
-                  validator: (v) => v == null || v.isEmpty ? 'Token is required' : null,
+                  validator: (v) =>
+                      v == null || v.isEmpty ? 'Token is required' : null,
                 ),
                 SizedBox(height: height * 0.02),
                 CustomTextfield(
-                  text: 'New Password',
+                  text: context.l10n.newPassword,
                   controller: _passwordController,
                   isPassword: true,
                   validator: (v) {
                     if (v == null || v.isEmpty) return 'Password is required';
-                    if (v.length < 8) return 'Password must be at least 8 characters';
+                    if (v.length < 8)
+                      return 'Password must be at least 8 characters';
                     return null;
                   },
                 ),
                 SizedBox(height: height * 0.02),
                 CustomTextfield(
-                  text: 'Confirm New Password',
+                  text: context.l10n.confirmNewPassword,
                   controller: _confirmPasswordController,
                   isPassword: true,
                   validator: (v) {
-                    if (v == null || v.isEmpty) return 'Confirm password is required';
-                    if (v != _passwordController.text) return 'Passwords do not match';
+                    if (v == null || v.isEmpty)
+                      return 'Confirm password is required';
+                    if (v != _passwordController.text)
+                      return 'Passwords do not match';
                     return null;
                   },
                 ),
@@ -112,11 +122,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                             : () {
                                 if (_formKey.currentState!.validate()) {
                                   context.read<AuthCubit>().resetPassword(
-                                        email: _emailController.text,
-                                        token: _tokenController.text,
-                                        newPassword: _passwordController.text,
-                                        confirmPassword: _confirmPasswordController.text,
-                                      );
+                                    email: _emailController.text,
+                                    token: _tokenController.text,
+                                    newPassword: _passwordController.text,
+                                    confirmPassword:
+                                        _confirmPasswordController.text,
+                                  );
                                 }
                               },
                         style: ElevatedButton.styleFrom(
@@ -126,12 +137,14 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           ),
                         ),
                         child: isLoading
-                            ? const CircularProgressIndicator(color: Colors.white)
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
                             : Text(
                                 'Reset Password',
-                                style: TextStyleHelper.h3(context).copyWith(
-                                  color: AppColors.primaryForeground,
-                                ),
+                                style: TextStyleHelper.h3(
+                                  context,
+                                ).copyWith(color: AppColors.primaryForeground),
                               ),
                       ),
                     );

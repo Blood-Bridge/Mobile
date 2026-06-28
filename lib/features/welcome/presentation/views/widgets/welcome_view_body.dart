@@ -1,3 +1,4 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/models/user_role.dart';
 import 'package:blood_bridge/core/services/hive_helper.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
@@ -112,7 +113,7 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody> {
                   duration: const Duration(milliseconds: 400),
                   child: RoleCard(
                     icon: SvgPicture.asset(Assets.imagesBloodTypeIcon),
-                    title: 'Donate Blood',
+                    title: context.l10n.donateBlood,
                     subtitle: 'Help save lives by donating blood',
                     isSelected: selectedRole == UserRole.donor,
                     onTap: () => _onRoleTap(UserRole.donor),
@@ -121,7 +122,7 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody> {
 
                 RoleCard(
                   icon: SvgPicture.asset(Assets.imagesFavoriteIcon),
-                  title: 'Request Blood',
+                  title: context.l10n.requestBlood,
                   subtitle: 'Find donors in your area',
                   isSelected: selectedRole == UserRole.recipient,
                   onTap: () => _onRoleTap(UserRole.recipient),
@@ -129,7 +130,7 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody> {
 
                 RoleCard(
                   icon: SvgPicture.asset(Assets.imagesHospitalIcon),
-                  title: 'Hospital',
+                  title: context.l10n.hospital,
                   subtitle: 'Manage blood requests',
                   isSelected: selectedRole == UserRole.hospital,
                   onTap: () => _onRoleTap(UserRole.hospital),

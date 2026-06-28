@@ -13,6 +13,7 @@ import 'package:blood_bridge/features/recommendations/presentation/widgets/donat
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:blood_bridge/core/l10n_ext.dart';
 
 class DonorBody extends StatefulWidget {
   const DonorBody({
@@ -88,7 +89,7 @@ class _DonorBodyState extends State<DonorBody> {
         if (state is DonorsSuccess) {
           String title = 'Congratulations!';
           String message = 'Action completed successfully!';
-          
+
           if (state.donors is Map) {
             final map = state.donors as Map;
             if (map.containsKey('completedRequestId')) {
@@ -105,11 +106,7 @@ class _DonorBodyState extends State<DonorBody> {
             }
           }
 
-          showSnackBar(
-            title,
-            message,
-            SnackbarType.success,
-          );
+          showSnackBar(title, message, SnackbarType.success);
 
           // Refresh requests
           _loadTabRequests();
@@ -198,7 +195,7 @@ class _DonorBodyState extends State<DonorBody> {
                           ),
                           const SizedBox(height: 16),
                           CustomButton(
-                            text: 'Retry',
+                            text: context.l10n.retry,
                             height: 44,
                             backgroundColor: AppColors.primary,
                             isEnabled: true,
