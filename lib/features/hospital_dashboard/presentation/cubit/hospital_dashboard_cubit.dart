@@ -21,27 +21,27 @@ class HospitalDashboardCubit extends Cubit<HospitalDashboardState> {
     }
   }
 
-  // ── 1. Blood Inventory (PUT) ─────────────────────────────
+  // ── 1. Blood Inventory ─────────────────────────────
   Future<void> _fetchInventory() async {
     try {
-      final response = await DioHelper.putData(
-        path: 'Hospital/inventory',
-        body: {},
-      );
+      final response = await DioHelper.getData(path: 'Hospital/inventory');
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
+      if (response.statusCode == 200) {
         final raw = response.data?['data'];
 
-        final list = raw is List
-            ? raw
-            : (raw is Map ? (raw['items'] ?? []) : []);
+        final list = raw is List ? raw : [];
 
         final items = list
             .whereType<Map<String, dynamic>>()
             .map(BloodInventoryItem.fromMap)
             .toList();
 
-        final total = items.fold<int>(0, (sum, item) => sum + item.units);
+        final total = items.fold<int>(
+          0,
+          (sum, item) => sum + (item.units ?? 0),
+        );
+
+        print('✅ Inventory Loaded: ${items.length} items'); // للdebug
 
         emit(state.copyWith(bloodInventory: items, availableBloodUnits: total));
       }

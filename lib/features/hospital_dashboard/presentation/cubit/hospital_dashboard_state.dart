@@ -5,11 +5,11 @@ part of 'hospital_dashboard_cubit.dart';
 // ─────────────────────────────────────────────
 
 class BloodInventoryItem {
-  final String key;       // e.g. "OPositive"
-  final String label;     // e.g. "O+"
+  final String key; // e.g. "OPositive"
+  final String label; // e.g. "O+"
   final int units;
-  final String? status;   // "Normal" | "Low Stock" | "Critical"
-  final String trend;     // "up" | "down" | "flat"
+  final String? status; // "Normal" | "Low Stock" | "Critical"
+  final String trend; // "up" | "down" | "flat"
 
   const BloodInventoryItem({
     required this.key,
@@ -58,7 +58,7 @@ class BloodInventoryItem {
 class ActiveRequest {
   final String id;
   final String bloodType;
-  final String urgency;   // "Critical" | "Urgent" | "Normal"
+  final String urgency; // "Critical" | "Urgent" | "Normal"
   final String timeAgo;
   final int donorCount;
 
@@ -74,27 +74,42 @@ class ActiveRequest {
     return ActiveRequest(
       id: map['id']?.toString() ?? '',
       bloodType: _formatBloodType(map['bloodType']?.toString() ?? ''),
-      urgency: _formatUrgency(map['urgencyLevel']?.toString() ?? map['urgency']?.toString() ?? 'Normal'),
-      timeAgo: _formatTime(map['createdAt']?.toString() ?? map['requestDate']?.toString()),
-      donorCount: _toInt(map['matchedDonors'] ?? map['donorCount'] ?? map['donors']),
+      urgency: _formatUrgency(
+        map['urgencyLevel']?.toString() ??
+            map['urgency']?.toString() ??
+            'Normal',
+      ),
+      timeAgo: _formatTime(
+        map['createdAt']?.toString() ?? map['requestDate']?.toString(),
+      ),
+      donorCount: _toInt(
+        map['matchedDonors'] ?? map['donorCount'] ?? map['donors'],
+      ),
     );
   }
 
   static String _formatBloodType(String raw) {
     const map = {
-      'OPositive': 'O+', 'ONegative': 'O−',
-      'APositive': 'A+', 'ANegative': 'A−',
-      'BPositive': 'B+', 'BNegative': 'B−',
-      'ABPositive': 'AB+', 'ABNegative': 'AB−',
+      'OPositive': 'O+',
+      'ONegative': 'O−',
+      'APositive': 'A+',
+      'ANegative': 'A−',
+      'BPositive': 'B+',
+      'BNegative': 'B−',
+      'ABPositive': 'AB+',
+      'ABNegative': 'AB−',
     };
     return map[raw] ?? raw;
   }
 
   static String _formatUrgency(String raw) {
     switch (raw.toLowerCase()) {
-      case 'critical': return 'Critical';
-      case 'urgent':   return 'Urgent';
-      default:         return 'Normal';
+      case 'critical':
+        return 'Critical';
+      case 'urgent':
+        return 'Urgent';
+      default:
+        return 'Normal';
     }
   }
 
@@ -104,7 +119,8 @@ class ActiveRequest {
       final dt = DateTime.parse(iso).toLocal();
       final diff = DateTime.now().difference(dt);
       if (diff.inMinutes < 60) return '${diff.inMinutes} min ago';
-      if (diff.inHours < 24) return '${diff.inHours} hour${diff.inHours > 1 ? 's' : ''} ago';
+      if (diff.inHours < 24)
+        return '${diff.inHours} hour${diff.inHours > 1 ? 's' : ''} ago';
       return '${diff.inDays} day${diff.inDays > 1 ? 's' : ''} ago';
     } catch (_) {
       return '';
@@ -145,10 +161,14 @@ class NearbyDonor {
 
   factory NearbyDonor.fromMap(Map<String, dynamic> map) {
     const btMap = {
-      'OPositive': 'O+', 'ONegative': 'O−',
-      'APositive': 'A+', 'ANegative': 'A−',
-      'BPositive': 'B+', 'BNegative': 'B−',
-      'ABPositive': 'AB+', 'ABNegative': 'AB−',
+      'OPositive': 'O+',
+      'ONegative': 'O−',
+      'APositive': 'A+',
+      'ANegative': 'A−',
+      'BPositive': 'B+',
+      'BNegative': 'B−',
+      'ABPositive': 'AB+',
+      'ABNegative': 'AB−',
     };
     final rawBt = map['bloodType']?.toString() ?? '';
     return NearbyDonor(

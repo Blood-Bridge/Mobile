@@ -17,7 +17,6 @@ class ReceiverCubit extends Cubit<ReceiverState> {
 
   int getMatchesCount(int requestId) => matchesCounts[requestId] ?? 0;
 
-  /// استخرج رسالة الخطأ بأمان من أي نوع response
   String _extractError(DioException e, String fallback) {
     final data = e.response?.data;
     if (data is Map) return data['message']?.toString() ?? fallback;
@@ -25,20 +24,33 @@ class ReceiverCubit extends Cubit<ReceiverState> {
     return fallback;
   }
 
+  void safeEmit(ReceiverState newState) {
+    if (!isClosed) emit(newState);
+  }
+
+  /// جلب عدد المتطابقين
   Future<void> fetchMatchesCount(int requestId) async {
     try {
       final response = await DioHelper.getData(path: 'Donors/match/$requestId');
 
-      final dynamic dataField = response.data['data'];
+      final dynamic dataField = response.data?['data'];
+      int count = 0;
 
-      matchesCounts[requestId] = dataField is List ? dataField.length : 0;
+      if (dataField is List) {
+        count = dataField.length;
+      } else if (dataField is Map<String, dynamic>) {
+        final donorsList = dataField['donors'] as List<dynamic>? ?? [];
+        count = donorsList.length;
+      }
 
-      emit(ReceiverLoaded(List.from(_requests)));
-    } on DioException {
+      matchesCounts[requestId] = count;
+      print("✅ Matches Count for Request $requestId = $count");
+
+      safeEmit(ReceiverLoaded(List.from(_requests)));
+    } catch (e) {
       matchesCounts[requestId] = 0;
-      emit(ReceiverLoaded(List.from(_requests)));
-    } catch (_) {
-      matchesCounts[requestId] = 0;
+      print("❌ Matches Count Error for $requestId: $e");
+      safeEmit(ReceiverLoaded(List.from(_requests)));
     }
   }
 
@@ -63,19 +75,20 @@ class ReceiverCubit extends Cubit<ReceiverState> {
           .toList();
 
       _requests = items;
-      emit(ReceiverLoaded(items));
+      safeEmit(ReceiverLoaded(items));
 
+      // جلب Matches Count + Accepted Donor لكل الطلبات
       for (final req in items) {
-        if (req.status == 'Accepted') {
+        final statusLower = req.status?.toLowerCase() ?? '';
+        if (statusLower == 'accepted' || statusLower == 'completed') {
           fetchAcceptedDonor(req.requestId);
-        } else if (req.status != 'Completed' && req.status != 'Cancelled') {
-          fetchMatchesCount(req.requestId);
         }
+        fetchMatchesCount(req.requestId); // مهم: لكل الطلبات
       }
     } on DioException catch (e) {
-      emit(ReceiverError(_extractError(e, 'Failed to load history')));
+      safeEmit(ReceiverError(_extractError(e, 'Failed to load history')));
     } catch (e) {
-      emit(ReceiverError('Unexpected error: ${e.toString()}'));
+      safeEmit(ReceiverError('Unexpected error: ${e.toString()}'));
     }
   }
 
@@ -107,19 +120,21 @@ class ReceiverCubit extends Cubit<ReceiverState> {
           .toList();
 
       _requests = items;
-      emit(ReceiverLoaded(items));
+      safeEmit(ReceiverLoaded(items));
 
       for (final req in items) {
-        if (req.status == 'Accepted') {
+        final statusLower = req.status?.toLowerCase() ?? '';
+        if (statusLower == 'accepted' || statusLower == 'completed') {
           fetchAcceptedDonor(req.requestId);
-        } else if (req.status != 'Completed' && req.status != 'Cancelled') {
-          fetchMatchesCount(req.requestId);
         }
+        fetchMatchesCount(req.requestId);
       }
     } on DioException catch (e) {
-      emit(ReceiverError(_extractError(e, 'Failed to load requests')));
+      safeEmit(
+        ReceiverError(_extractError(e, 'Failed to load active requests')),
+      );
     } catch (e) {
-      emit(ReceiverError('Unexpected error: ${e.toString()}'));
+      safeEmit(ReceiverError('Unexpected error: ${e.toString()}'));
     }
   }
 
@@ -154,10 +169,7 @@ class ReceiverCubit extends Cubit<ReceiverState> {
           ),
         );
       } else {
-        final msg = response.data is Map
-            ? response.data['message']?.toString() ?? 'Submission failed'
-            : 'Submission failed';
-        emit(ReceiverError(msg));
+        emit(ReceiverError('Submission failed'));
       }
     } on DioException catch (e) {
       emit(ReceiverError(_extractError(e, 'Submission failed')));
@@ -174,14 +186,14 @@ class ReceiverCubit extends Cubit<ReceiverState> {
 
       if (response.statusCode == 200 || response.statusCode == 204) {
         _requests.removeWhere((e) => e.requestId == requestId);
-
         acceptedDonors.remove(requestId);
         requestStatuses.remove(requestId);
         matchesCounts.remove(requestId);
 
-        emit(ReceiverLoaded(List.from(_requests)));
+        safeEmit(ReceiverLoaded(List.from(_requests)));
       }
     } on DioException catch (e) {
+<<<<<<< HEAD
       emit(ReceiverError(_extractError(e, 'Cancel failed')));
     }
   }
@@ -218,6 +230,9 @@ class ReceiverCubit extends Cubit<ReceiverState> {
       emit(ReceiverLoaded(List.from(_requests)));
     } catch (_) {
       acceptedDonors[requestId] = null;
+=======
+      safeEmit(ReceiverError(_extractError(e, 'Cancel failed')));
+>>>>>>> af8f4df78a9888ef9c50bafab98289044af4a7c6
     }
   }
 
@@ -232,6 +247,7 @@ class ReceiverCubit extends Cubit<ReceiverState> {
         path: 'Requests/confirm-detection',
         body: {'requestId': requestId, 'bloodType': bloodType},
       );
+<<<<<<< HEAD
 
       if (response.statusCode == 200) {
         emit(ReceiverConfirmDetectionSuccess());
@@ -244,14 +260,41 @@ class ReceiverCubit extends Cubit<ReceiverState> {
             : 'Confirmation failed';
 
         emit(ReceiverError(msg));
+=======
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        safeEmit(ReceiverConfirmDetectionSuccess());
+      } else {
+        safeEmit(ReceiverError('Confirmation failed'));
+>>>>>>> af8f4df78a9888ef9c50bafab98289044af4a7c6
       }
     } on DioException catch (e) {
-      emit(ReceiverError(_extractError(e, 'Confirmation failed')));
+      safeEmit(ReceiverError(_extractError(e, 'Confirmation failed')));
     } catch (_) {
-      emit(const ReceiverError('Unexpected error'));
+      safeEmit(const ReceiverError('Unexpected error'));
     }
   }
 
+<<<<<<< HEAD
+=======
+  Future<void> fetchAcceptedDonor(int requestId) async {
+    try {
+      final resp = await DioHelper.getData(path: 'Requests/$requestId/donors');
+      final dynamic data = resp.data?['data'];
+
+      if (data is List && data.isNotEmpty) {
+        acceptedDonors[requestId] = data.first;
+      } else if (data is Map) {
+        acceptedDonors[requestId] = data;
+      } else {
+        acceptedDonors[requestId] = null;
+      }
+      safeEmit(ReceiverLoaded(List.from(_requests)));
+    } catch (_) {
+      acceptedDonors[requestId] = null;
+    }
+  }
+
+>>>>>>> af8f4df78a9888ef9c50bafab98289044af4a7c6
   Future<void> loadAcceptedRequests() async {
     emit(ReceiverLoading());
 
@@ -297,7 +340,10 @@ class ReceiverCubit extends Cubit<ReceiverState> {
 
         _requests = items.where((req) {
           final s = req.status.toLowerCase();
+<<<<<<< HEAD
 
+=======
+>>>>>>> af8f4df78a9888ef9c50bafab98289044af4a7c6
           return s == 'accepted' ||
               s == 'ontheway' ||
               s == 'on_the_way' ||
@@ -318,16 +364,9 @@ class ReceiverCubit extends Cubit<ReceiverState> {
   Future<void> fetchRequestStatus(int requestId) async {
     try {
       final resp = await DioHelper.getData(path: 'Requests/$requestId/status');
-
-      final dynamic data = resp.data['data'];
-
-      if (data is String) {
-        requestStatuses[requestId] = data;
-      } else {
-        requestStatuses[requestId] = 'Pending';
-      }
-
-      emit(ReceiverLoaded(List.from(_requests)));
+      final dynamic data = resp.data?['data'];
+      requestStatuses[requestId] = data is String ? data : 'Pending';
+      safeEmit(ReceiverLoaded(List.from(_requests)));
     } catch (_) {
       requestStatuses[requestId] = 'Pending';
     }

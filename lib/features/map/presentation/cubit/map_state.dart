@@ -5,6 +5,10 @@ class MapState {
   final LatLng? myLocation;
   final bool isLoadingLocation;
   final String? error;
+  final ReqMarker? activeDonor; // أو activeRequest
+  final bool hasActiveRequest;
+  final String? userRole;
+  final List<dynamic> visibleDonors;
 
   final List<ReqMarker> requests;
   final List<ReqMarker> visibleRequests;
@@ -50,9 +54,14 @@ class MapState {
     this.finalDistanceKm,
     this.finalDurationMin,
     this.donorLocation,
+    this.userRole,
+    this.visibleDonors = const [],
+    this.activeDonor,
+    this.hasActiveRequest = false,
   });
 
-  factory MapState.initial({LatLng? donorLocation}) => MapState(donorLocation: donorLocation);
+  factory MapState.initial({LatLng? donorLocation}) =>
+      MapState(donorLocation: donorLocation);
 
   MapState copyWith({
     LatLng? myLocation,
@@ -76,6 +85,10 @@ class MapState {
     double? finalDistanceKm,
     int? finalDurationMin,
     LatLng? donorLocation,
+    String? userRole,
+    List<dynamic>? visibleDonors,
+    ReqMarker? activeDonor,
+    bool? hasActiveRequest,
   }) {
     return MapState(
       myLocation: myLocation ?? this.myLocation,
@@ -100,6 +113,10 @@ class MapState {
       finalDistanceKm: finalDistanceKm ?? this.finalDistanceKm,
       finalDurationMin: finalDurationMin ?? this.finalDurationMin,
       donorLocation: donorLocation ?? this.donorLocation,
+      userRole: userRole ?? this.userRole,
+      visibleDonors: visibleDonors ?? this.visibleDonors,
+      activeDonor: activeDonor ?? this.activeDonor,
+      hasActiveRequest: hasActiveRequest ?? this.hasActiveRequest,
     );
   }
 }

@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:blood_bridge/features/map/presentation/view/widgets/legend_dot.dart';
 import 'package:blood_bridge/core/services/hive_helper.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +12,11 @@ class BottomPanel extends StatelessWidget {
   final VoidCallback onAccept;
   final VoidCallback onStop;
   final VoidCallback onArrived;
+  final VoidCallback? onContact; // جديد
+  final VoidCallback? onNavigate; // جديد
 
   const BottomPanel({
+    super.key,
     required this.withinCount,
     required this.km,
     required this.infoText,
@@ -23,11 +25,17 @@ class BottomPanel extends StatelessWidget {
     required this.onAccept,
     required this.onStop,
     required this.onArrived,
+    this.onContact,
+    this.onNavigate,
   });
 
   @override
   Widget build(BuildContext context) {
-    final isRecipient = HiveHelper.getUserRole() == 'recipient';
+    final String userRole = HiveHelper.getUserRole() ?? '';
+    final bool isReceiver =
+        userRole == 'receiver' ||
+        userRole == 'recipient' ||
+        userRole == 'hospital';
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(24),
@@ -44,7 +52,7 @@ class BottomPanel extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Row(
-                children: isRecipient
+                children: isReceiver
                     ? const [
                         LegendDot(color: Colors.blue),
                         SizedBox(width: 8),
@@ -56,7 +64,10 @@ class BottomPanel extends StatelessWidget {
                     : const [
                         LegendDot(color: Color(0xFFE58B93)),
                         SizedBox(width: 8),
-                        Text("Critical", style: TextStyle(color: Colors.white70)),
+                        Text(
+                          "Critical",
+                          style: TextStyle(color: Colors.white70),
+                        ),
                         SizedBox(width: 16),
                         LegendDot(color: Color(0xFFF6B400)),
                         SizedBox(width: 8),
@@ -64,10 +75,15 @@ class BottomPanel extends StatelessWidget {
                         SizedBox(width: 16),
                         LegendDot(color: Color(0xFF77B47C)),
                         SizedBox(width: 8),
-                        Text("Available", style: TextStyle(color: Colors.white70)),
+                        Text(
+                          "Available",
+                          style: TextStyle(color: Colors.white70),
+                        ),
                       ],
               ),
+
               const SizedBox(height: 14),
+
               Container(
                 padding: const EdgeInsets.all(14),
                 decoration: BoxDecoration(
@@ -87,7 +103,7 @@ class BottomPanel extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "$withinCount ${isRecipient ? 'donors' : 'requests'} within $km km",
+                            "$withinCount ${isReceiver ? 'donors' : 'requests'} within $km km",
                             style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
@@ -104,61 +120,105 @@ class BottomPanel extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 12),
-              if (hasSelection && !isRecipient)
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: trackingEnabled ? null : onAccept,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF2F80ED),
-                              foregroundColor: Colors.white,
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(14),
-                              ),
-                            ),
-                            child: Text(
-                              trackingEnabled ? "Tracking..." : "Accept",
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        if (trackingEnabled)
+
+              const SizedBox(height: 16),
+
+              if (hasSelection)
+                isReceiver
+                    ? Row(
+                        children: [
                           Expanded(
-                            child: ElevatedButton(
-                              onPressed: onArrived,
+                            child: ElevatedButton.icon(
+                              onPressed: onContact,
+                              icon: const Icon(Icons.phone),
+                              label: const Text("Contact"),
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF27AE60),
+                                backgroundColor: Colors.green,
                                 foregroundColor: Colors.white,
                                 padding: const EdgeInsets.symmetric(
-                                  vertical: 12,
+                                  vertical: 14,
                                 ),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(14),
                                 ),
                               ),
-                              child: const Text("Arrived"),
                             ),
                           ),
-                      ],
-                    ),
-                    if (trackingEnabled) ...[
-                      const SizedBox(height: 10),
-                      IconButton(
-                        onPressed: onStop,
-                        icon: const Icon(
-                          Icons.stop_circle,
-                          color: Colors.white70,
-                          size: 30,
-                        ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: ElevatedButton.icon(
+                              onPressed: onNavigate,
+                              icon: const Icon(Icons.directions),
+                              label: const Text("Navigate"),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFF2F80ED),
+                                foregroundColor: Colors.white,
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 14,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(14),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    : Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: ElevatedButton(
+                                  onPressed: trackingEnabled ? null : onAccept,
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xFF2F80ED),
+                                    foregroundColor: Colors.white,
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 14,
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(14),
+                                    ),
+                                  ),
+                                  child: Text(
+                                    trackingEnabled ? "Tracking..." : "Accept",
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              if (trackingEnabled)
+                                Expanded(
+                                  child: ElevatedButton(
+                                    onPressed: onArrived,
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0xFF27AE60),
+                                      foregroundColor: Colors.white,
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 14,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(14),
+                                      ),
+                                    ),
+                                    child: const Text("Arrived"),
+                                  ),
+                                ),
+                            ],
+                          ),
+                          if (trackingEnabled) ...[
+                            const SizedBox(height: 12),
+                            IconButton(
+                              onPressed: onStop,
+                              icon: const Icon(
+                                Icons.stop_circle_outlined,
+                                color: Colors.white70,
+                                size: 32,
+                              ),
+                            ),
+                          ],
+                        ],
                       ),
-                    ],
-                  ],
-                ),
             ],
           ),
         ),

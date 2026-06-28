@@ -41,8 +41,8 @@ class _ActiveRequestsContainerState extends State<ActiveRequestsContainer> {
   @override
   void initState() {
     super.initState();
-
-    if (widget.situation == 'Accepted' || widget.situation == 'Completed') {
+    if (widget.situation.toLowerCase() == 'accepted' ||
+        widget.situation.toLowerCase() == 'completed') {
       context.read<ReceiverCubit>().fetchAcceptedDonor(widget.requestId);
     }
   }
@@ -52,36 +52,35 @@ class _ActiveRequestsContainerState extends State<ActiveRequestsContainer> {
     return BlocBuilder<ReceiverCubit, ReceiverState>(
       builder: (context, state) {
         final cubit = context.read<ReceiverCubit>();
-
         final donor = cubit.acceptedDonors[widget.requestId];
-
         final int matchesCount = cubit.getMatchesCount(widget.requestId);
 
         return Container(
           width: double.infinity,
           constraints: BoxConstraints(minHeight: widget.height * 0.27),
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: AppColors.card,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: widget.situation == 'Cancelled'
+              color: widget.situation.toLowerCase() == 'cancelled'
                   ? Colors.red
-                  : widget.situation == 'Accepted' ||
-                        widget.situation == 'Completed'
+                  : (widget.situation.toLowerCase() == 'accepted' ||
+                        widget.situation.toLowerCase() == 'completed')
                   ? AppColors.likeprimary
                   : AppColors.border,
               width: 2,
             ),
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    height: widget.height * 0.08,
-                    width: widget.height * 0.08,
+                    height: widget.height * 0.09,
+                    width: widget.height * 0.09,
                     decoration: BoxDecoration(
                       color: AppColors.primary.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(12),
@@ -89,93 +88,95 @@ class _ActiveRequestsContainerState extends State<ActiveRequestsContainer> {
                     child: Center(
                       child: Text(
                         widget.bloodType,
-                        style: TextStyleHelper.h2(
-                          context,
-                        ).copyWith(color: AppColors.primary),
+                        style: TextStyleHelper.h2(context).copyWith(
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
-
-                  SizedBox(width: widget.width * 0.03),
-
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      GestureDetector(
-                        onTap: () => Get.to(
-                          () =>
-                              RequestStatusScreen(requestId: widget.requestId),
-                        ),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 2,
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        GestureDetector(
+                          onTap: () => Get.to(
+                            () => RequestStatusScreen(
+                              requestId: widget.requestId,
+                            ),
                           ),
-                          decoration: BoxDecoration(
-                            color: widget.situation == 'Cancelled'
-                                ? Colors.red.withOpacity(0.1)
-                                : AppColors.primary.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(8),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              color:
+                                  widget.situation.toLowerCase() == 'cancelled'
+                                  ? Colors.red.withOpacity(0.1)
+                                  : AppColors.primary.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  widget.situation,
+                                  style: TextStyleHelper.small(context)
+                                      .copyWith(
+                                        color:
+                                            widget.situation.toLowerCase() ==
+                                                'cancelled'
+                                            ? Colors.red
+                                            : AppColors.primary,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                ),
+                                const SizedBox(width: 6),
+                                const Icon(Icons.arrow_forward_ios, size: 12),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        GestureDetector(
+                          onTap: () => Get.to(
+                            () => MatchedDonorsScreen(
+                              requestId: widget.requestId,
+                            ),
                           ),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
+                              const Icon(
+                                Icons.people,
+                                size: 18,
+                                color: AppColors.primary,
+                              ),
+                              const SizedBox(width: 6),
                               Text(
-                                widget.situation,
-                                style: TextStyleHelper.xs(context).copyWith(
-                                  color: widget.situation == 'Cancelled'
-                                      ? Colors.red
-                                      : AppColors.primary,
+                                '$matchesCount Matches found',
+                                style: TextStyleHelper.small(context).copyWith(
+                                  color: AppColors.primary,
                                   fontWeight: FontWeight.bold,
+                                  decoration: TextDecoration.underline,
                                 ),
                               ),
-                              const SizedBox(width: 4),
-                              const Icon(Icons.arrow_forward_ios, size: 10),
                             ],
                           ),
                         ),
-                      ),
-
-                      const SizedBox(height: 6),
-
-                      GestureDetector(
-                        onTap: () => Get.to(
-                          () =>
-                              MatchedDonorsScreen(requestId: widget.requestId),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(
-                              Icons.people,
-                              size: 16,
-                              color: AppColors.primary,
-                            ),
-                            const SizedBox(width: 6),
-                            Text(
-                              '$matchesCount Matches found',
-                              style: TextStyleHelper.small(context).copyWith(
-                                color: AppColors.primary,
-                                fontWeight: FontWeight.bold,
-                                decoration: TextDecoration.underline,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-
-                  const Spacer(),
-
-                  Row(
+                  Column(
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.access_time,
                         size: 16,
                         color: AppColors.textMuted,
                       ),
-                      const SizedBox(width: 4),
+                      const SizedBox(height: 4),
                       Text(
                         '${widget.time} ago',
                         style: TextStyleHelper.xs(context),
@@ -185,14 +186,14 @@ class _ActiveRequestsContainerState extends State<ActiveRequestsContainer> {
                 ],
               ),
 
-              const SizedBox(height: 16),
+              const SizedBox(height: 20),
 
-              /// ACCEPTED
-              if (widget.situation == 'Accepted' ||
-                  widget.situation == 'Completed') ...[
+              // Accepted Section
+              if (widget.situation.toLowerCase() == 'accepted' ||
+                  widget.situation.toLowerCase() == 'completed') ...[
                 Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.all(12),
+                  padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
                     color: AppColors.popover,
                     borderRadius: BorderRadius.circular(14),
@@ -202,10 +203,7 @@ class _ActiveRequestsContainerState extends State<ActiveRequestsContainer> {
                     children: [
                       Row(
                         children: [
-                          Icon(
-                            Icons.check_circle_outline,
-                            color: AppColors.success,
-                          ),
+                          Icon(Icons.check_circle, color: AppColors.success),
                           const SizedBox(width: 8),
                           Text(
                             'Donor Confirmed',
@@ -215,43 +213,48 @@ class _ActiveRequestsContainerState extends State<ActiveRequestsContainer> {
                           ),
                         ],
                       ),
-
+                      const SizedBox(height: 12),
                       if (donor != null) ...[
-                        const SizedBox(height: 8),
-                        const Divider(),
-                        const SizedBox(height: 8),
-
                         Text(
-                          'Name: ${donor['firstName']} ${donor['lastName']}',
+                          'Name: ${donor['firstName'] ?? ''} ${donor['lastName'] ?? ''}',
+                          style: TextStyleHelper.small(context),
                         ),
-
-                        Text('Blood Type: ${donor['bloodType']}'),
-
-                        Text('Phone: ${donor['phoneNumber']}'),
+                        const SizedBox(height: 4),
+                        Text(
+                          'Blood Type: ${donor['bloodType'] ?? 'N/A'}',
+                          style: TextStyleHelper.small(context),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'Phone: ${donor['phoneNumber'] ?? 'No number'}',
+                          style: TextStyleHelper.small(context),
+                        ),
                       ] else
-                        const Center(
-                          child: CircularProgressIndicator(strokeWidth: 2),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 8),
+                          child: Center(
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          ),
                         ),
                     ],
                   ),
                 ),
 
-                const SizedBox(height: 12),
+                const SizedBox(height: 16),
 
                 Row(
                   children: [
                     Expanded(
                       child: InkWell(
-                        onTap: () async {
-                          if (donor != null) {
-                            final url = Uri.parse(
-                              'tel:${donor['phoneNumber']}',
-                            );
-                            await launchUrl(url);
+                        onTap: () {
+                          if (donor != null && donor['phoneNumber'] != null) {
+                            launchUrl(Uri.parse('tel:${donor['phoneNumber']}'));
+                          } else {
+                            Get.snackbar('Error', 'No phone number available');
                           }
                         },
                         child: Container(
-                          height: widget.height * 0.07,
+                          height: 52,
                           decoration: BoxDecoration(
                             color: AppColors.primary,
                             borderRadius: BorderRadius.circular(14),
@@ -263,16 +266,17 @@ class _ActiveRequestsContainerState extends State<ActiveRequestsContainer> {
                               SizedBox(width: 8),
                               Text(
                                 'Contact Donor',
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ],
                           ),
                         ),
                       ),
                     ),
-
                     const SizedBox(width: 12),
-
                     InkWell(
                       onTap: () {
                         if (donor != null &&
@@ -286,26 +290,30 @@ class _ActiveRequestsContainerState extends State<ActiveRequestsContainer> {
                               ),
                             ),
                           );
+                        } else {
+                          Get.snackbar('Error', 'Location not available');
                         }
                       },
                       child: Container(
-                        width: widget.height * 0.07,
-                        height: widget.height * 0.07,
+                        width: 52,
+                        height: 52,
                         decoration: BoxDecoration(
                           color: AppColors.popover,
                           borderRadius: BorderRadius.circular(14),
                           border: Border.all(color: AppColors.border, width: 2),
                         ),
-                        child: const Icon(Icons.location_on_outlined),
+                        child: const Icon(
+                          Icons.location_on_outlined,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ],
                 ),
               ]
-              /// CANCELLED
-              else if (widget.situation == 'Cancelled') ...[
+              // Cancelled
+              else if (widget.situation.toLowerCase() == 'cancelled') ...[
                 Container(
-                  width: double.infinity,
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     color: Colors.red.withOpacity(0.1),
@@ -327,24 +335,20 @@ class _ActiveRequestsContainerState extends State<ActiveRequestsContainer> {
                   ),
                 ),
               ]
-              /// PENDING
+              // Pending / Other
               else ...[
-                LinearProgressIndicator(
-                  value: 0.5,
-                  backgroundColor: AppColors.border,
-                  color: AppColors.primary,
-                  borderRadius: BorderRadius.circular(8),
+                const LinearProgressIndicator(
+                  value: 0.6,
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
                 ),
-
-                const SizedBox(height: 12),
-
+                const SizedBox(height: 16),
                 Row(
                   children: [
                     Expanded(
                       child: InkWell(
                         onTap: () => Get.to(() => const MapScreen()),
                         child: Container(
-                          height: widget.height * 0.07,
+                          height: 52,
                           decoration: BoxDecoration(
                             color: AppColors.popover,
                             borderRadius: BorderRadius.circular(14),
@@ -364,27 +368,26 @@ class _ActiveRequestsContainerState extends State<ActiveRequestsContainer> {
                         ),
                       ),
                     ),
-
                     const SizedBox(width: 12),
-
                     Expanded(
                       child: InkWell(
-                        onTap: () {
-                          context.read<ReceiverCubit>().cancelRequest(
-                            widget.requestId,
-                          );
-                        },
+                        onTap: () => context
+                            .read<ReceiverCubit>()
+                            .cancelRequest(widget.requestId),
                         child: Container(
-                          height: widget.height * 0.07,
+                          height: 52,
                           decoration: BoxDecoration(
-                            color: Colors.red.withOpacity(.1),
+                            color: Colors.red.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(14),
                             border: Border.all(color: Colors.red, width: 2),
                           ),
                           child: const Center(
                             child: Text(
                               'Cancel Request',
-                              style: TextStyle(color: Colors.red),
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
