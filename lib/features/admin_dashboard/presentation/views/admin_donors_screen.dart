@@ -73,7 +73,10 @@ class _AdminDonorsScreenState extends State<AdminDonorsScreen> {
           ),
           onPressed: () => Get.back(),
         ),
-        title: Text('Manage Donors', style: TextStyleHelper.h1(context)),
+        title: Text(
+          context.l10n.adminDonors,
+          style: TextStyleHelper.h1(context),
+        ),
       ),
       body: Column(
         children: [
@@ -90,7 +93,7 @@ class _AdminDonorsScreenState extends State<AdminDonorsScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Filters',
+                  context.l10n.filters,
                   style: TextStyleHelper.small(
                     context,
                   ).copyWith(fontWeight: FontWeight.bold),
@@ -110,7 +113,7 @@ class _AdminDonorsScreenState extends State<AdminDonorsScreen> {
                           child: DropdownButton<String>(
                             value: _selectedBloodType,
                             hint: Text(
-                              'Blood Type',
+                              context.l10n.bloodType,
                               style: TextStyle(
                                 color: AppColors.textMuted,
                                 fontSize: 13,
@@ -153,7 +156,7 @@ class _AdminDonorsScreenState extends State<AdminDonorsScreen> {
                           child: DropdownButton<String>(
                             value: _selectedGovernorate,
                             hint: Text(
-                              'Governorate',
+                              context.l10n.governorate,
                               style: TextStyle(
                                 color: AppColors.textMuted,
                                 fontSize: 13,
@@ -197,7 +200,7 @@ class _AdminDonorsScreenState extends State<AdminDonorsScreen> {
                         context.read<DonorCubit>().getAllDonors();
                       },
                       child: Text(
-                        'Clear Filters',
+                        context.l10n.clearFilters,
                         style: TextStyle(
                           color: AppColors.primary,
                           fontWeight: FontWeight.bold,
@@ -289,7 +292,7 @@ class _AdminDonorsScreenState extends State<AdminDonorsScreen> {
                         ),
                         SizedBox(height: 16),
                         Text(
-                          'No donors found matching criteria',
+                          context.l10n.noDonorsFound,
                           style: TextStyleHelper.bodyMuted(context),
                         ),
                       ],
@@ -340,7 +343,7 @@ class _AdminDonorsScreenState extends State<AdminDonorsScreen> {
                               children: [
                                 Text(
                                   donorName.isEmpty
-                                      ? 'Donor #$donorId'
+                                      ? '${context.l10n.donor} #$donorId'
                                       : donorName,
                                   style: TextStyleHelper.small(
                                     context,
@@ -366,18 +369,18 @@ class _AdminDonorsScreenState extends State<AdminDonorsScreen> {
                                 AlertDialog(
                                   backgroundColor: AppColors.card,
                                   title: Text(
-                                    'Delete Donor',
+                                    context.l10n.deleteDonor,
                                     style: TextStyleHelper.h3(context),
                                   ),
                                   content: Text(
-                                    'Are you sure you want to delete this donor from the system?',
+                                    context.l10n.deleteDonorConfirmation,
                                     style: TextStyleHelper.small(context),
                                   ),
                                   actions: [
                                     TextButton(
                                       onPressed: () => Get.back(),
                                       child: Text(
-                                        'Cancel',
+                                        context.l10n.cancel,
                                         style: TextStyle(
                                           color: AppColors.textMuted,
                                         ),
@@ -391,7 +394,7 @@ class _AdminDonorsScreenState extends State<AdminDonorsScreen> {
                                         );
                                       },
                                       child: Text(
-                                        'Delete',
+                                        context.l10n.delete,
                                         style: TextStyle(
                                           color: AppColors.primary,
                                           fontWeight: FontWeight.bold,

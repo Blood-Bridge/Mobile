@@ -1,3 +1,4 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/features/donations/data/models/donation_model.dart';
@@ -74,36 +75,62 @@ class _EditDonationScreenState extends State<EditDonationScreen> {
         backgroundColor: AppColors.bg,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: AppColors.foreground, size: 18),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: AppColors.foreground,
+            size: 18,
+          ),
           onPressed: () => Get.back(),
         ),
-        title: Text('Edit Donation Log', style: TextStyleHelper.h1(context)),
+        title: Text(
+          context.l10n.editDonation,
+          style: TextStyleHelper.h1(context),
+        ),
       ),
       body: BlocConsumer<DonationsCubit, DonationsState>(
         listener: (context, state) {
           if (state is DonationUpdateSuccess) {
             Get.back();
-            Get.snackbar('Success', 'Donation updated successfully',
-                backgroundColor: Colors.green, colorText: Colors.white);
-            context.read<DonationsCubit>().fetchDonationById(widget.donation.donationProcessId);
+            Get.snackbar(
+              'Success',
+              'Donation updated successfully',
+              backgroundColor: Colors.green,
+              colorText: Colors.white,
+            );
+            context.read<DonationsCubit>().fetchDonationById(
+              widget.donation.donationProcessId,
+            );
           } else if (state is DonationsError) {
-            Get.snackbar('Error', state.message,
-                backgroundColor: Colors.red, colorText: Colors.white);
+            Get.snackbar(
+              'Error',
+              state.message,
+              backgroundColor: Colors.red,
+              colorText: Colors.white,
+            );
           }
         },
         builder: (context, state) {
           final isLoading = state is DonationsLoading;
           return SafeArea(
             child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: width * 0.05, vertical: 16),
+              padding: EdgeInsets.symmetric(
+                horizontal: width * 0.05,
+                vertical: 16,
+              ),
               child: Form(
                 key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Donation Process #${widget.donation.donationProcessId}', style: TextStyleHelper.h3(context)),
+                    Text(
+                      '${context.l10n.donation} #${widget.donation.donationProcessId}',
+                      style: TextStyleHelper.h3(context),
+                    ),
                     SizedBox(height: height * 0.03),
-                    Text('Confirmation Status', style: TextStyleHelper.small(context)),
+                    Text(
+                      context.l10n.confirmationStatus,
+                      style: TextStyleHelper.small(context),
+                    ),
                     const SizedBox(height: 8),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -120,22 +147,32 @@ class _EditDonationScreenState extends State<EditDonationScreen> {
                           items: _statuses.map((status) {
                             return DropdownMenuItem(
                               value: status,
-                              child: Text(status, style: const TextStyle(color: Colors.white)),
+                              child: Text(
+                                status,
+                                style: const TextStyle(color: Colors.white),
+                              ),
                             );
                           }).toList(),
                           onChanged: (val) {
-                            if (val != null) setState(() => _confirmationStatus = val);
+                            if (val != null)
+                              setState(() => _confirmationStatus = val);
                           },
                         ),
                       ),
                     ),
                     SizedBox(height: height * 0.03),
-                    Text('Donation Date', style: TextStyleHelper.small(context)),
+                    Text(
+                      context.l10n.donationDate,
+                      style: TextStyleHelper.small(context),
+                    ),
                     const SizedBox(height: 8),
                     InkWell(
                       onTap: () => _selectDate(context),
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 16,
+                        ),
                         decoration: BoxDecoration(
                           color: AppColors.card,
                           borderRadius: BorderRadius.circular(12),
@@ -145,10 +182,20 @@ class _EditDonationScreenState extends State<EditDonationScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              _selectedDate.toLocal().toString().split(' ').first,
-                              style: const TextStyle(color: Colors.white, fontSize: 16),
+                              _selectedDate
+                                  .toLocal()
+                                  .toString()
+                                  .split(' ')
+                                  .first,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
                             ),
-                            Icon(Icons.calendar_today, color: AppColors.primary),
+                            Icon(
+                              Icons.calendar_today,
+                              color: AppColors.primary,
+                            ),
                           ],
                         ),
                       ),
@@ -162,10 +209,10 @@ class _EditDonationScreenState extends State<EditDonationScreen> {
                             ? null
                             : () {
                                 context.read<DonationsCubit>().updateDonation(
-                                      id: widget.donation.donationProcessId,
-                                      donationDate: _selectedDate,
-                                      confirmationStatus: _confirmationStatus,
-                                    );
+                                  id: widget.donation.donationProcessId,
+                                  donationDate: _selectedDate,
+                                  confirmationStatus: _confirmationStatus,
+                                );
                               },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.primary,
@@ -174,12 +221,14 @@ class _EditDonationScreenState extends State<EditDonationScreen> {
                           ),
                         ),
                         child: isLoading
-                            ? const CircularProgressIndicator(color: Colors.white)
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
                             : Text(
-                                'Save Changes',
-                                style: TextStyleHelper.h3(context).copyWith(
-                                  color: Colors.white,
-                                ),
+                                context.l10n.updateDonation,
+                                style: TextStyleHelper.h3(
+                                  context,
+                                ).copyWith(color: Colors.white),
                               ),
                       ),
                     ),

@@ -123,7 +123,9 @@ class _MapScreenBodyState extends State<MapScreenBody>
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  isReceiver ? "Donor Details" : "Request Details",
+                  isReceiver
+                      ? context.l10n.donorDetails
+                      : context.l10n.requestDetails,
                   style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -436,7 +438,7 @@ class _MapScreenBodyState extends State<MapScreenBody>
                     child: BottomPanel(
                       withinCount: state.withinCount,
                       km: (state.radiusMeters / 1000).round(),
-                      infoText: _cubit.routeInfoText(),
+                      infoText: _cubit.routeInfoText(context),
                       hasSelection: state.selected != null,
                       trackingEnabled: state.trackingEnabled,
                       onAccept: _onAccept,

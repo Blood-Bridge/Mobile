@@ -1,3 +1,4 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/features/recommendations/presentation/cubit/recommendation_cubit.dart';
@@ -9,10 +10,12 @@ class DonationRecommendationCard extends StatefulWidget {
   const DonationRecommendationCard({super.key});
 
   @override
-  State<DonationRecommendationCard> createState() => _DonationRecommendationCardState();
+  State<DonationRecommendationCard> createState() =>
+      _DonationRecommendationCardState();
 }
 
-class _DonationRecommendationCardState extends State<DonationRecommendationCard> {
+class _DonationRecommendationCardState
+    extends State<DonationRecommendationCard> {
   @override
   void initState() {
     super.initState();
@@ -38,7 +41,8 @@ class _DonationRecommendationCardState extends State<DonationRecommendationCard>
 
         if (state is RecommendationError) {
           // If the error message is about "No donation history", show a friendly prompt
-          final isNoHistory = state.message.toLowerCase().contains('history') ||
+          final isNoHistory =
+              state.message.toLowerCase().contains('history') ||
               state.message.toLowerCase().contains('no donation');
 
           return Container(
@@ -62,15 +66,19 @@ class _DonationRecommendationCardState extends State<DonationRecommendationCard>
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'AI Recommendation',
-                        style: TextStyleHelper.body(context).copyWith(fontWeight: FontWeight.bold),
+                        context.l10n.aiRecommendation,
+                        style: TextStyleHelper.body(
+                          context,
+                        ).copyWith(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         isNoHistory
-                            ? 'Complete your first donation to receive AI-optimized schedules!'
+                            ? context.l10n.completeFirstDonation
                             : state.message,
-                        style: TextStyleHelper.xs(context).copyWith(color: AppColors.textMuted),
+                        style: TextStyleHelper.xs(
+                          context,
+                        ).copyWith(color: AppColors.textMuted),
                       ),
                     ],
                   ),
@@ -87,10 +95,7 @@ class _DonationRecommendationCardState extends State<DonationRecommendationCard>
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [
-                  AppColors.card,
-                  AppColors.primary.withOpacity(0.08),
-                ],
+                colors: [AppColors.card, AppColors.primary.withOpacity(0.08)],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
@@ -121,7 +126,7 @@ class _DonationRecommendationCardState extends State<DonationRecommendationCard>
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'AI Best Donation Slot',
+                        context.l10n.aiRecommendation,
                         style: TextStyleHelper.body(context).copyWith(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
@@ -129,21 +134,30 @@ class _DonationRecommendationCardState extends State<DonationRecommendationCard>
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        'Based on analysis, the best time to donate is:',
-                        style: TextStyleHelper.xs(context).copyWith(color: AppColors.textMuted),
+                        context.l10n.bestDonationTime,
+                        style: TextStyleHelper.xs(
+                          context,
+                        ).copyWith(color: AppColors.textMuted),
                       ),
                       const SizedBox(height: 8),
                       Row(
                         children: [
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 4,
+                            ),
                             decoration: BoxDecoration(
                               color: AppColors.primary.withOpacity(0.15),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Row(
                               children: [
-                                const Icon(Icons.calendar_today, size: 12, color: Colors.white70),
+                                const Icon(
+                                  Icons.calendar_today,
+                                  size: 12,
+                                  color: Colors.white70,
+                                ),
                                 const SizedBox(width: 4),
                                 Text(
                                   rec.bestDay,
@@ -157,14 +171,21 @@ class _DonationRecommendationCardState extends State<DonationRecommendationCard>
                           ),
                           const SizedBox(width: 8),
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 4,
+                            ),
                             decoration: BoxDecoration(
                               color: AppColors.primary.withOpacity(0.15),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Row(
                               children: [
-                                const Icon(Icons.access_time, size: 12, color: Colors.white70),
+                                const Icon(
+                                  Icons.access_time,
+                                  size: 12,
+                                  color: Colors.white70,
+                                ),
                                 const SizedBox(width: 4),
                                 Text(
                                   rec.formattedHour,

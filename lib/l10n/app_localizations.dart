@@ -67,8 +67,8 @@ abstract class AppLocalizations {
 
   final String localeName;
 
-  static AppLocalizations? of(BuildContext context) {
-    return Localizations.of<AppLocalizations>(context, AppLocalizations);
+  static AppLocalizations of(BuildContext context) {
+    return Localizations.of<AppLocalizations>(context, AppLocalizations)!;
   }
 
   static const LocalizationsDelegate<AppLocalizations> delegate =
@@ -689,13 +689,13 @@ abstract class AppLocalizations {
   /// Used in lib\features\setting\presentation\views\widgets\user_type_switcher.dart line 89
   ///
   /// In en, this message translates to:
-  /// **'إلغاء'**
+  /// **'Cancel'**
   String get text100;
 
   /// Used in lib\features\setting\presentation\views\widgets\user_type_switcher.dart line 104
   ///
   /// In en, this message translates to:
-  /// **'تأكيد'**
+  /// **'Confirm'**
   String get text101;
 
   /// Used in lib\features\user_information\presentation\views\widgets\second_info_screen.dart line 31
@@ -749,7 +749,7 @@ abstract class AppLocalizations {
   /// Used in lib\features\setting\presentation\views\widgets\user_type_switcher.dart line 84
   ///
   /// In en, this message translates to:
-  /// **'سيتم تنفيذ نموذج إدخال البيانات هنا (Weight, DOB, etc.)'**
+  /// **'(Weight, DOB, etc.)'**
   String get weightDobEtc;
 
   /// Used in lib\features\setting\presentation\views\widgets\setting_view_body.dart line 310
@@ -763,6 +763,558 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Yes, Cancel'**
   String get yesCancel;
+
+  /// No description provided for @continuewithGoogle.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Google'**
+  String get continuewithGoogle;
+
+  /// No description provided for @filters.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get filters;
+
+  /// No description provided for @status.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get status;
+
+  /// No description provided for @governorate.
+  ///
+  /// In en, this message translates to:
+  /// **'Governorate'**
+  String get governorate;
+
+  /// No description provided for @clearFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Filters'**
+  String get clearFilters;
+
+  /// No description provided for @search.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get search;
+
+  /// No description provided for @noDonationsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No donations match the selected filters.'**
+  String get noDonationsFound;
+
+  /// No description provided for @donation.
+  ///
+  /// In en, this message translates to:
+  /// **'Donation'**
+  String get donation;
+
+  /// No description provided for @areYouSureYouWantToDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this donation?'**
+  String get areYouSureYouWantToDelete;
+
+  /// No description provided for @adminDonors.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Donors'**
+  String get adminDonors;
+
+  /// No description provided for @bloodType.
+  ///
+  /// In en, this message translates to:
+  /// **'Blood Type'**
+  String get bloodType;
+
+  /// No description provided for @noDonorsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No donors found matching criteria'**
+  String get noDonorsFound;
+
+  /// No description provided for @deleteDonor.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Donor'**
+  String get deleteDonor;
+
+  /// No description provided for @deleteDonorConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this donor?'**
+  String get deleteDonorConfirmation;
+
+  /// No description provided for @login.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get login;
+
+  /// No description provided for @joinBloodBridgeToSaveLives.
+  ///
+  /// In en, this message translates to:
+  /// **'Join Blood Bridge to save lives'**
+  String get joinBloodBridgeToSaveLives;
+
+  /// No description provided for @forgotPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot password?'**
+  String get forgotPassword;
+
+  /// No description provided for @orContinueWith.
+  ///
+  /// In en, this message translates to:
+  /// **'Or continue with'**
+  String get orContinueWith;
+
+  /// No description provided for @dontHaveAnAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account?'**
+  String get dontHaveAnAccount;
+
+  /// No description provided for @resetPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Password'**
+  String get resetPassword;
+
+  /// No description provided for @askForToken.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the reset token sent to your email along with your new password.'**
+  String get askForToken;
+
+  /// No description provided for @alreadyHaveAnAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account?'**
+  String get alreadyHaveAnAccount;
+
+  /// No description provided for @createDonation.
+  ///
+  /// In en, this message translates to:
+  /// **'Provide donation details to initiate verification and confirmation.'**
+  String get createDonation;
+
+  /// No description provided for @hospitalIdRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Hospital ID is required'**
+  String get hospitalIdRequired;
+
+  /// No description provided for @logDonation.
+  ///
+  /// In en, this message translates to:
+  /// **'Log Donation'**
+  String get logDonation;
+
+  /// No description provided for @donationConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Donation Confirmation'**
+  String get donationConfirmation;
+
+  /// No description provided for @donationc.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Donation details for Process'**
+  String get donationc;
+
+  /// No description provided for @confirmDonation.
+  ///
+  /// In en, this message translates to:
+  /// **'Tapping the button below indicates verification of successful donor collection and recipient delivery of blood units.'**
+  String get confirmDonation;
+
+  /// No description provided for @confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
+
+  /// No description provided for @donationId.
+  ///
+  /// In en, this message translates to:
+  /// **'Donation ID'**
+  String get donationId;
+
+  /// No description provided for @noData.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading details...'**
+  String get noData;
+
+  /// No description provided for @areYouSureYouWantToDeleteThisDonationLogRecord.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this donation log record?'**
+  String get areYouSureYouWantToDeleteThisDonationLogRecord;
+
+  /// No description provided for @noDonationHistoryFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No donation history found'**
+  String get noDonationHistoryFound;
+
+  /// No description provided for @pullToRefresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Pull to refresh'**
+  String get pullToRefresh;
+
+  /// No description provided for @editDonation.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Donation'**
+  String get editDonation;
+
+  /// No description provided for @confirmationStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmation Status'**
+  String get confirmationStatus;
+
+  /// No description provided for @donationDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Donation Date'**
+  String get donationDate;
+
+  /// No description provided for @updateDonation.
+  ///
+  /// In en, this message translates to:
+  /// **'Save changes'**
+  String get updateDonation;
+
+  /// No description provided for @donorDashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready to save lives?'**
+  String get donorDashboard;
+
+  /// No description provided for @available.
+  ///
+  /// In en, this message translates to:
+  /// **'Available to Donate'**
+  String get available;
+
+  /// No description provided for @unavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Unavailable to Donate'**
+  String get unavailable;
+
+  /// No description provided for @nearbyRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'Nearby Requests'**
+  String get nearbyRequests;
+
+  /// No description provided for @leaderboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Leaderboard'**
+  String get leaderboard;
+
+  /// No description provided for @map.
+  ///
+  /// In en, this message translates to:
+  /// **'Map'**
+  String get map;
+
+  /// No description provided for @noActiveRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'No Active Requests'**
+  String get noActiveRequests;
+
+  /// No description provided for @noCompletedDonations.
+  ///
+  /// In en, this message translates to:
+  /// **'No Completed Donations'**
+  String get noCompletedDonations;
+
+  /// No description provided for @noDeliveries.
+  ///
+  /// In en, this message translates to:
+  /// **'No active deliveries.\nAccept a request to see it here.'**
+  String get noDeliveries;
+
+  /// No description provided for @topDonors.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Donors'**
+  String get topDonors;
+
+  /// No description provided for @noTopDonors.
+  ///
+  /// In en, this message translates to:
+  /// **'No top donors found'**
+  String get noTopDonors;
+
+  /// No description provided for @beTheFirstChampion.
+  ///
+  /// In en, this message translates to:
+  /// **'Be the first to become a champion'**
+  String get beTheFirstChampion;
+
+  /// No description provided for @areYouSureYouWantToCancelAcceptance.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to cancel acceptance?'**
+  String get areYouSureYouWantToCancelAcceptance;
+
+  /// No description provided for @donationCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Donation Completed'**
+  String get donationCompleted;
+
+  /// No description provided for @requestDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Request Details'**
+  String get requestDetails;
+
+  /// No description provided for @close.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get close;
+
+  /// No description provided for @donorAccepted.
+  ///
+  /// In en, this message translates to:
+  /// **'Donor Accepted'**
+  String get donorAccepted;
+
+  /// No description provided for @contactDonor.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Donor'**
+  String get contactDonor;
+
+  /// No description provided for @requestCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Request Cancelled'**
+  String get requestCancelled;
+
+  /// No description provided for @viewOnMap.
+  ///
+  /// In en, this message translates to:
+  /// **'View on Map'**
+  String get viewOnMap;
+
+  /// No description provided for @receiverDashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Find donors quickly'**
+  String get receiverDashboard;
+
+  /// No description provided for @emergencyRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency Request'**
+  String get emergencyRequest;
+
+  /// No description provided for @instantDonorNotification.
+  ///
+  /// In en, this message translates to:
+  /// **'Instant Donor Notification'**
+  String get instantDonorNotification;
+
+  /// No description provided for @history.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get history;
+
+  /// No description provided for @noRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'No requests found'**
+  String get noRequests;
+
+  /// No description provided for @highPriority.
+  ///
+  /// In en, this message translates to:
+  /// **'High Priority'**
+  String get highPriority;
+
+  /// No description provided for @quantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity (Units)'**
+  String get quantity;
+
+  /// No description provided for @submitEmergencyRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit Emergency Request'**
+  String get submitEmergencyRequest;
+
+  /// No description provided for @submitRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit Request'**
+  String get submitRequest;
+
+  /// No description provided for @bloodManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Blood Management'**
+  String get bloodManagement;
+
+  /// No description provided for @cityHospital.
+  ///
+  /// In en, this message translates to:
+  /// **'City Hospital'**
+  String get cityHospital;
+
+  /// No description provided for @createRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Request'**
+  String get createRequest;
+
+  /// No description provided for @gettingLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Getting your location...'**
+  String get gettingLocation;
+
+  /// No description provided for @calculatingRoute.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculating route...'**
+  String get calculatingRoute;
+
+  /// No description provided for @tapToSeeRoute.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a marker to see route & ETA'**
+  String get tapToSeeRoute;
+
+  /// No description provided for @arrivedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Arrived Successfully'**
+  String get arrivedSuccessfully;
+
+  /// No description provided for @donorDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Donor Details'**
+  String get donorDetails;
+
+  /// No description provided for @compatibleDonors.
+  ///
+  /// In en, this message translates to:
+  /// **'Compatible Donors'**
+  String get compatibleDonors;
+
+  /// No description provided for @noCompatibleDonors.
+  ///
+  /// In en, this message translates to:
+  /// **'No compatible donors found'**
+  String get noCompatibleDonors;
+
+  /// No description provided for @tryAgainLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again later'**
+  String get tryAgainLater;
+
+  /// No description provided for @saveLives.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Lives'**
+  String get saveLives;
+
+  /// No description provided for @skip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get skip;
+
+  /// No description provided for @permissions.
+  ///
+  /// In en, this message translates to:
+  /// **'Enaple Permissions'**
+  String get permissions;
+
+  /// No description provided for @permissionsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'To ensure the best experience, we need some permissions to be granted. Please allow the permissions to continue.'**
+  String get permissionsDesc;
+
+  /// No description provided for @locationAccessDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'To ensure the best experience, we need location access to be granted. Please allow the location access to continue.'**
+  String get locationAccessDesc;
+
+  /// No description provided for @allow.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow'**
+  String get allow;
+
+  /// No description provided for @myProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'My Profile'**
+  String get myProfile;
+
+  /// No description provided for @aiRecommendation.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Recommendation'**
+  String get aiRecommendation;
+
+  /// No description provided for @completeFirstDonation.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete your first donation to get AI recommendation'**
+  String get completeFirstDonation;
+
+  /// No description provided for @bestDonationTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Best Donation Time is'**
+  String get bestDonationTime;
+
+  /// No description provided for @request.
+  ///
+  /// In en, this message translates to:
+  /// **'Request'**
+  String get request;
+
+  /// No description provided for @timeline.
+  ///
+  /// In en, this message translates to:
+  /// **'Tracking progress'**
+  String get timeline;
+
+  /// No description provided for @requestExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Request Expired'**
+  String get requestExpired;
+
+  /// No description provided for @requestCancelledDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Request has been cancelled'**
+  String get requestCancelledDescription;
 }
 
 class _AppLocalizationsDelegate

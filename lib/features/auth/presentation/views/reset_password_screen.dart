@@ -55,7 +55,10 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           ),
           onPressed: () => Get.back(),
         ),
-        title: Text('Reset Password', style: TextStyleHelper.h1(context)),
+        title: Text(
+          context.l10n.resetPassword,
+          style: TextStyleHelper.h1(context),
+        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -67,7 +70,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               children: [
                 SizedBox(height: height * 0.04),
                 Text(
-                  'Enter the reset token sent to your email along with your new password.',
+                  context.l10n.askForToken,
                   style: TextStyleHelper.bodyMuted(context),
                 ),
                 SizedBox(height: height * 0.04),
@@ -141,7 +144,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                 color: Colors.white,
                               )
                             : Text(
-                                'Reset Password',
+                                context.l10n.resetPassword,
                                 style: TextStyleHelper.h3(
                                   context,
                                 ).copyWith(color: AppColors.primaryForeground),

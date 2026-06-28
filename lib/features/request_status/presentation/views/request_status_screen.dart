@@ -66,7 +66,7 @@ class _RequestStatusBody extends StatelessWidget {
           ),
           onPressed: () => Get.back(),
         ),
-        title: Text('Request Status', style: TextStyleHelper.h1(context)),
+        title: Text(context.l10n.status, style: TextStyleHelper.h1(context)),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -160,14 +160,14 @@ class _RequestStatusBody extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Request #$requestId',
+                            '${context.l10n.request} #$requestId',
                             style: TextStyleHelper.h2(context),
                           ),
                           const SizedBox(height: 12),
                           Row(
                             children: [
                               Text(
-                                'Current Status: ',
+                                '${context.l10n.status}: ',
                                 style: TextStyleHelper.small(
                                   context,
                                 ).copyWith(color: AppColors.textMuted),
@@ -201,7 +201,7 @@ class _RequestStatusBody extends StatelessWidget {
                     ),
                     const SizedBox(height: 28),
                     Text(
-                      'Tracking Progress',
+                      context.l10n.timeline,
                       style: TextStyleHelper.h3(context),
                     ),
                     const SizedBox(height: 20),
@@ -261,7 +261,9 @@ class _RequestStatusBody extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  isCancelled ? 'Request Cancelled' : 'Request Expired',
+                  isCancelled
+                      ? context.l10n.requestCancelled
+                      : context.l10n.requestExpired,
                   style: TextStyleHelper.h3(
                     context,
                   ).copyWith(color: Colors.red),
@@ -269,7 +271,7 @@ class _RequestStatusBody extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   isCancelled
-                      ? 'This blood request has been manually cancelled and is no longer active.'
+                      ? context.l10n.requestCancelledDescription
                       : 'This blood request expired because no compatible donors responded within the required timeframe.',
                   style: TextStyleHelper.small(
                     context,

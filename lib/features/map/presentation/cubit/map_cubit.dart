@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/services/dio_helper.dart';
 import 'package:blood_bridge/core/services/hive_helper.dart';
 import 'package:blood_bridge/features/map/presentation/view/widgets/req_marker.dart';
@@ -348,10 +349,10 @@ class MapCubit extends Cubit<MapState> {
     );
   }
 
-  String routeInfoText() {
-    if (state.myLocation == null) return 'Getting your location...';
-    if (state.isRouting) return 'Calculating route...';
-    if (state.selected == null) return 'Tap a marker to see route & ETA';
+  String routeInfoText(BuildContext context) {
+    if (state.myLocation == null) return context.l10n.gettingLocation;
+    if (state.isRouting) return context.l10n.calculatingRoute;
+    if (state.selected == null) return context.l10n.tapToSeeRoute;
 
     if (state.routeDistanceMeters == null ||
         state.routeDurationSeconds == null) {

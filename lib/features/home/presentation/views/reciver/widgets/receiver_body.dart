@@ -54,7 +54,10 @@ class _ReceiverBodyState extends State<ReceiverBody> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('My Requests', style: TextStyleHelper.h3(context)),
+                      Text(
+                        context.l10n.history,
+                        style: TextStyleHelper.h3(context),
+                      ),
                       IconButton(
                         onPressed: _onRefresh,
                         icon: const Icon(Icons.refresh, color: Colors.white),
@@ -111,7 +114,7 @@ class _ReceiverBodyState extends State<ReceiverBody> {
                             ),
                             const SizedBox(height: 16),
                             Text(
-                              'No requests yet',
+                              context.l10n.noRequests,
                               style: TextStyleHelper.small(context),
                             ),
                           ],

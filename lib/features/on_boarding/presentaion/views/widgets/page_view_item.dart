@@ -1,3 +1,4 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/services/hive_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
@@ -49,7 +50,7 @@ class PageViewItem extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.all(width * 0.06),
                       child: Text(
-                        'skip',
+                        context.l10n.skip,
                         style: TextStyleHelper.small(context),
                       ),
                     ),

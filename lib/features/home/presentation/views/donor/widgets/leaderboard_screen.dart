@@ -35,7 +35,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
           ),
           onPressed: () => Get.back(),
         ),
-        title: Text('Top Donors', style: TextStyleHelper.h1(context)),
+        title: Text(context.l10n.topDonors, style: TextStyleHelper.h1(context)),
       ),
       body: BlocBuilder<DonorCubit, DonorState>(
         builder: (context, state) {
@@ -89,10 +89,13 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                     color: Colors.grey,
                   ),
                   const SizedBox(height: 20),
-                  Text('No top donors yet', style: TextStyleHelper.h2(context)),
+                  Text(
+                    context.l10n.noTopDonors,
+                    style: TextStyleHelper.h2(context),
+                  ),
                   const SizedBox(height: 8),
                   Text(
-                    'Be the first champion!',
+                    context.l10n.beTheFirstChampion,
                     style: TextStyleHelper.bodyMuted(context),
                   ),
                 ],
@@ -217,7 +220,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                             ).copyWith(color: AppColors.primary),
                           ),
                           Text(
-                            'Donations',
+                            context.l10n.donation,
                             style: TextStyleHelper.xs(
                               context,
                             ).copyWith(color: AppColors.textMuted),

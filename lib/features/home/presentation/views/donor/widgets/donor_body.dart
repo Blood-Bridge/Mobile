@@ -150,7 +150,7 @@ class _DonorBodyState extends State<DonorBody> {
                   Row(
                     children: [
                       Text(
-                        'Nearby Requests',
+                        context.l10n.nearbyRequests,
                         style: TextStyleHelper.h3(context),
                       ),
                       const Spacer(),
@@ -158,7 +158,7 @@ class _DonorBodyState extends State<DonorBody> {
                         onPressed: () =>
                             Get.to(() => const LeaderboardScreen()),
                         child: Text(
-                          'Leaderboard',
+                          context.l10n.leaderboard,
                           style: TextStyleHelper.small(
                             context,
                           ).copyWith(color: AppColors.primary),
@@ -168,7 +168,7 @@ class _DonorBodyState extends State<DonorBody> {
                       TextButton(
                         onPressed: () => Get.to(() => const MapScreen()),
                         child: Text(
-                          'Map',
+                          context.l10n.map,
                           style: TextStyleHelper.small(
                             context,
                           ).copyWith(color: AppColors.primary),
@@ -246,8 +246,8 @@ class _DonorBodyState extends State<DonorBody> {
                             padding: const EdgeInsets.all(32),
                             child: Text(
                               _selectedTabIndex == 0
-                                  ? 'No active requests nearby'
-                                  : 'No completed donations yet',
+                                  ? context.l10n.noActiveRequests
+                                  : context.l10n.noCompletedDonations,
                               style: TextStyleHelper.small(context),
                             ),
                           ),
@@ -305,7 +305,7 @@ class _DonorBodyState extends State<DonorBody> {
               ),
               const SizedBox(height: 12),
               Text(
-                'No active deliveries.\nAccept a request to see it here.',
+                context.l10n.noDeliveries,
                 style: TextStyleHelper.small(context),
                 textAlign: TextAlign.center,
               ),

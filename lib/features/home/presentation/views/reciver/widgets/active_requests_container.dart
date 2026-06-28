@@ -1,3 +1,4 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/features/home/presentation/views/reciver/cubit/receiver_cubit.dart';
@@ -206,7 +207,7 @@ class _ActiveRequestsContainerState extends State<ActiveRequestsContainer> {
                           Icon(Icons.check_circle, color: AppColors.success),
                           const SizedBox(width: 8),
                           Text(
-                            'Donor Confirmed',
+                            context.l10n.donorAccepted,
                             style: TextStyleHelper.small(
                               context,
                             ).copyWith(fontWeight: FontWeight.bold),
@@ -221,7 +222,7 @@ class _ActiveRequestsContainerState extends State<ActiveRequestsContainer> {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          'Blood Type: ${donor['bloodType'] ?? 'N/A'}',
+                          '${context.l10n.bloodType}: ${donor['bloodType'] ?? 'N/A'}',
                           style: TextStyleHelper.small(context),
                         ),
                         const SizedBox(height: 4),
@@ -259,13 +260,13 @@ class _ActiveRequestsContainerState extends State<ActiveRequestsContainer> {
                             color: AppColors.primary,
                             borderRadius: BorderRadius.circular(14),
                           ),
-                          child: const Row(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(Icons.phone, color: Colors.white),
                               SizedBox(width: 8),
                               Text(
-                                'Contact Donor',
+                                context.l10n.contactDonor,
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
@@ -320,12 +321,12 @@ class _ActiveRequestsContainerState extends State<ActiveRequestsContainer> {
                     borderRadius: BorderRadius.circular(14),
                     border: Border.all(color: Colors.red),
                   ),
-                  child: const Row(
+                  child: Row(
                     children: [
                       Icon(Icons.cancel, color: Colors.red),
                       SizedBox(width: 10),
                       Text(
-                        'This request was cancelled',
+                        context.l10n.requestCancelled,
                         style: TextStyle(
                           color: Colors.red,
                           fontWeight: FontWeight.bold,
@@ -357,12 +358,12 @@ class _ActiveRequestsContainerState extends State<ActiveRequestsContainer> {
                               width: 2,
                             ),
                           ),
-                          child: const Row(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(Icons.location_on_outlined),
                               SizedBox(width: 8),
-                              Text('View on Map'),
+                              Text(context.l10n.viewOnMap),
                             ],
                           ),
                         ),
@@ -381,9 +382,9 @@ class _ActiveRequestsContainerState extends State<ActiveRequestsContainer> {
                             borderRadius: BorderRadius.circular(14),
                             border: Border.all(color: Colors.red, width: 2),
                           ),
-                          child: const Center(
+                          child: Center(
                             child: Text(
-                              'Cancel Request',
+                              context.l10n.cancelRequest,
                               style: TextStyle(
                                 color: Colors.red,
                                 fontWeight: FontWeight.bold,

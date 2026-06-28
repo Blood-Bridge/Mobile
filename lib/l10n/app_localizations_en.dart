@@ -342,4 +342,291 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get yesCancel => 'Yes, Cancel';
+
+  @override
+  String get continuewithGoogle => 'Continue with Google';
+
+  @override
+  String get filters => 'Filters';
+
+  @override
+  String get status => 'Status';
+
+  @override
+  String get governorate => 'Governorate';
+
+  @override
+  String get clearFilters => 'Clear Filters';
+
+  @override
+  String get search => 'Search';
+
+  @override
+  String get noDonationsFound => 'No donations match the selected filters.';
+
+  @override
+  String get donation => 'Donation';
+
+  @override
+  String get areYouSureYouWantToDelete =>
+      'Are you sure you want to delete this donation?';
+
+  @override
+  String get adminDonors => 'Manage Donors';
+
+  @override
+  String get bloodType => 'Blood Type';
+
+  @override
+  String get noDonorsFound => 'No donors found matching criteria';
+
+  @override
+  String get deleteDonor => 'Delete Donor';
+
+  @override
+  String get deleteDonorConfirmation =>
+      'Are you sure you want to delete this donor?';
+
+  @override
+  String get login => 'Login';
+
+  @override
+  String get joinBloodBridgeToSaveLives => 'Join Blood Bridge to save lives';
+
+  @override
+  String get forgotPassword => 'Forgot password?';
+
+  @override
+  String get orContinueWith => 'Or continue with';
+
+  @override
+  String get dontHaveAnAccount => 'Don\'t have an account?';
+
+  @override
+  String get resetPassword => 'Reset Password';
+
+  @override
+  String get askForToken =>
+      'Enter the reset token sent to your email along with your new password.';
+
+  @override
+  String get alreadyHaveAnAccount => 'Already have an account?';
+
+  @override
+  String get createDonation =>
+      'Provide donation details to initiate verification and confirmation.';
+
+  @override
+  String get hospitalIdRequired => 'Hospital ID is required';
+
+  @override
+  String get logDonation => 'Log Donation';
+
+  @override
+  String get donationConfirmation => 'Donation Confirmation';
+
+  @override
+  String get donationc => 'Confirm Donation details for Process';
+
+  @override
+  String get confirmDonation =>
+      'Tapping the button below indicates verification of successful donor collection and recipient delivery of blood units.';
+
+  @override
+  String get confirm => 'Confirm';
+
+  @override
+  String get donationId => 'Donation ID';
+
+  @override
+  String get noData => 'Loading details...';
+
+  @override
+  String get areYouSureYouWantToDeleteThisDonationLogRecord =>
+      'Are you sure you want to delete this donation log record?';
+
+  @override
+  String get noDonationHistoryFound => 'No donation history found';
+
+  @override
+  String get pullToRefresh => 'Pull to refresh';
+
+  @override
+  String get editDonation => 'Edit Donation';
+
+  @override
+  String get confirmationStatus => 'Confirmation Status';
+
+  @override
+  String get donationDate => 'Donation Date';
+
+  @override
+  String get updateDonation => 'Save changes';
+
+  @override
+  String get donorDashboard => 'Ready to save lives?';
+
+  @override
+  String get available => 'Available to Donate';
+
+  @override
+  String get unavailable => 'Unavailable to Donate';
+
+  @override
+  String get nearbyRequests => 'Nearby Requests';
+
+  @override
+  String get leaderboard => 'Leaderboard';
+
+  @override
+  String get map => 'Map';
+
+  @override
+  String get noActiveRequests => 'No Active Requests';
+
+  @override
+  String get noCompletedDonations => 'No Completed Donations';
+
+  @override
+  String get noDeliveries =>
+      'No active deliveries.\nAccept a request to see it here.';
+
+  @override
+  String get topDonors => 'Top Donors';
+
+  @override
+  String get noTopDonors => 'No top donors found';
+
+  @override
+  String get beTheFirstChampion => 'Be the first to become a champion';
+
+  @override
+  String get areYouSureYouWantToCancelAcceptance =>
+      'Are you sure you want to cancel acceptance?';
+
+  @override
+  String get donationCompleted => 'Donation Completed';
+
+  @override
+  String get requestDetails => 'Request Details';
+
+  @override
+  String get close => 'Close';
+
+  @override
+  String get donorAccepted => 'Donor Accepted';
+
+  @override
+  String get contactDonor => 'Contact Donor';
+
+  @override
+  String get requestCancelled => 'Request Cancelled';
+
+  @override
+  String get viewOnMap => 'View on Map';
+
+  @override
+  String get receiverDashboard => 'Find donors quickly';
+
+  @override
+  String get emergencyRequest => 'Emergency Request';
+
+  @override
+  String get instantDonorNotification => 'Instant Donor Notification';
+
+  @override
+  String get history => 'History';
+
+  @override
+  String get noRequests => 'No requests found';
+
+  @override
+  String get highPriority => 'High Priority';
+
+  @override
+  String get quantity => 'Quantity (Units)';
+
+  @override
+  String get submitEmergencyRequest => 'Submit Emergency Request';
+
+  @override
+  String get submitRequest => 'Submit Request';
+
+  @override
+  String get bloodManagement => 'Blood Management';
+
+  @override
+  String get cityHospital => 'City Hospital';
+
+  @override
+  String get createRequest => 'Create Request';
+
+  @override
+  String get gettingLocation => 'Getting your location...';
+
+  @override
+  String get calculatingRoute => 'Calculating route...';
+
+  @override
+  String get tapToSeeRoute => 'Tap a marker to see route & ETA';
+
+  @override
+  String get arrivedSuccessfully => 'Arrived Successfully';
+
+  @override
+  String get donorDetails => 'Donor Details';
+
+  @override
+  String get compatibleDonors => 'Compatible Donors';
+
+  @override
+  String get noCompatibleDonors => 'No compatible donors found';
+
+  @override
+  String get tryAgainLater => 'Try again later';
+
+  @override
+  String get saveLives => 'Save Lives';
+
+  @override
+  String get skip => 'Skip';
+
+  @override
+  String get permissions => 'Enaple Permissions';
+
+  @override
+  String get permissionsDesc =>
+      'To ensure the best experience, we need some permissions to be granted. Please allow the permissions to continue.';
+
+  @override
+  String get locationAccessDesc =>
+      'To ensure the best experience, we need location access to be granted. Please allow the location access to continue.';
+
+  @override
+  String get allow => 'Allow';
+
+  @override
+  String get myProfile => 'My Profile';
+
+  @override
+  String get aiRecommendation => 'AI Recommendation';
+
+  @override
+  String get completeFirstDonation =>
+      'Complete your first donation to get AI recommendation';
+
+  @override
+  String get bestDonationTime => 'Best Donation Time is';
+
+  @override
+  String get request => 'Request';
+
+  @override
+  String get timeline => 'Tracking progress';
+
+  @override
+  String get requestExpired => 'Request Expired';
+
+  @override
+  String get requestCancelledDescription => 'Request has been cancelled';
 }

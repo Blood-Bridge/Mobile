@@ -41,7 +41,10 @@ class _DonationsListScreenState extends State<DonationsListScreen> {
           ),
           onPressed: () => Get.back(),
         ),
-        title: Text('My Donations', style: TextStyleHelper.h1(context)),
+        title: Text(
+          context.l10n.myDonations,
+          style: TextStyleHelper.h1(context),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Get.to(() => const CreateDonationScreen()),
@@ -86,7 +89,7 @@ class _DonationsListScreenState extends State<DonationsListScreen> {
                     Icon(Icons.history, size: 64, color: AppColors.textMuted),
                     const SizedBox(height: 16),
                     Text(
-                      'No donation history found.',
+                      context.l10n.noDonationHistoryFound,
                       style: TextStyleHelper.bodyMuted(context),
                     ),
                   ],
@@ -138,7 +141,7 @@ class _DonationsListScreenState extends State<DonationsListScreen> {
                         ),
                       ),
                       title: Text(
-                        'Donation #${item.donationProcessId}',
+                        '${context.l10n.donation} #${item.donationProcessId}',
                         style: TextStyleHelper.small(
                           context,
                         ).copyWith(fontWeight: FontWeight.bold),
@@ -188,7 +191,7 @@ class _DonationsListScreenState extends State<DonationsListScreen> {
             );
           }
 
-          return const Center(child: Text('Pull to refresh'));
+          return Center(child: Text(context.l10n.pullToRefresh));
         },
       ),
     );

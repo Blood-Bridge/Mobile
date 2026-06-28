@@ -249,11 +249,11 @@ class RequestsContainer extends StatelessWidget {
                         return AlertDialog(
                           backgroundColor: AppColors.card,
                           title: Text(
-                            'Cancel Acceptance',
+                            context.l10n.cancel,
                             style: TextStyleHelper.h3(context),
                           ),
                           content: Text(
-                            'Are you sure you want to cancel your donation acceptance for this request?',
+                            context.l10n.areYouSureYouWantToCancelAcceptance,
                             style: TextStyleHelper.small(context),
                           ),
                           actions: [
@@ -318,7 +318,7 @@ class RequestsContainer extends StatelessWidget {
             const Icon(Icons.check_circle, color: Colors.green, size: 20),
             const SizedBox(width: 8),
             Text(
-              'Donation Completed',
+              context.l10n.donationCompleted,
               style: TextStyleHelper.small(
                 context,
               ).copyWith(color: Colors.green, fontWeight: FontWeight.bold),
@@ -335,7 +335,10 @@ class RequestsContainer extends StatelessWidget {
       builder: (context) {
         return AlertDialog(
           backgroundColor: AppColors.card,
-          title: Text('Request Details', style: TextStyleHelper.h3(context)),
+          title: Text(
+            context.l10n.requestDetails,
+            style: TextStyleHelper.h3(context),
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -361,7 +364,10 @@ class RequestsContainer extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text('Close', style: TextStyle(color: AppColors.primary)),
+              child: Text(
+                context.l10n.close,
+                style: TextStyle(color: AppColors.primary),
+              ),
             ),
           ],
         );

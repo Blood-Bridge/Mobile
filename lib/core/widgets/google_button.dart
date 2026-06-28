@@ -1,3 +1,4 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,7 @@ class GoogleButton extends StatelessWidget {
                 ),
                 SizedBox(width: width * 0.03),
                 Text(
-                  'Continue with Google',
+                  context.l10n.continueWithGoogle,
                   style: TextStyleHelper.button(context),
                 ),
               ],

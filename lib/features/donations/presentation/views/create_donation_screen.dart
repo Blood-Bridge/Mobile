@@ -110,7 +110,8 @@ class _CreateDonationScreenState extends State<CreateDonationScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Provide donation details to initiate verification and confirmation.',
+                      context.l10n.createDonation,
+
                       style: TextStyleHelper.bodyMuted(context),
                     ),
                     SizedBox(height: height * 0.03),
@@ -133,7 +134,7 @@ class _CreateDonationScreenState extends State<CreateDonationScreen> {
                       keyboardType: TextInputType.number,
                       validator: (v) {
                         if (v == null || v.isEmpty)
-                          return 'Hospital ID is required';
+                          return context.l10n.hospitalIdRequired;
                         if (int.tryParse(v) == null)
                           return 'Must be a valid number';
                         return null;
@@ -210,7 +211,7 @@ class _CreateDonationScreenState extends State<CreateDonationScreen> {
                                 color: Colors.white,
                               )
                             : Text(
-                                'Log Donation',
+                                context.l10n.logDonation,
                                 style: TextStyleHelper.h3(
                                   context,
                                 ).copyWith(color: Colors.white),

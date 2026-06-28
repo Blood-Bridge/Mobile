@@ -164,9 +164,9 @@ class _HospitalAppBar extends StatelessWidget {
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('City Hospital', style: TextStyleHelper.h1(context)),
+          Text(context.l10n.cityHospital, style: TextStyleHelper.h1(context)),
           Text(
-            'Blood Management',
+            context.l10n.bloodManagement,
             style: TextStyleHelper.xs(
               context,
             ).copyWith(color: AppColors.textMuted),
@@ -539,7 +539,7 @@ class _ActiveRequestCard extends StatelessWidget {
                       ).copyWith(fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      'donors',
+                      context.l10n.donors,
                       style: TextStyleHelper.xs(
                         context,
                       ).copyWith(color: AppColors.textMuted),
@@ -561,7 +561,7 @@ class _ActiveRequestCard extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 10),
                 ),
                 child: Text(
-                  'View Details',
+                  context.l10n.viewDetails,
                   style: TextStyleHelper.small(context),
                 ),
               ),
@@ -674,7 +674,7 @@ class _DonorTile extends StatelessWidget {
               elevation: 0,
             ),
             child: Text(
-              'Contact',
+              context.l10n.call,
               style: TextStyleHelper.small(
                 context,
               ).copyWith(fontWeight: FontWeight.bold, color: Colors.white),
@@ -702,7 +702,7 @@ class _CreateRequestButton extends StatelessWidget {
             onPressed: () {},
             icon: const Icon(Icons.add_circle_outline, color: Colors.white),
             label: Text(
-              'Create New Request',
+              context.l10n.createRequest,
               style: TextStyleHelper.small(
                 context,
               ).copyWith(color: Colors.white, fontWeight: FontWeight.bold),

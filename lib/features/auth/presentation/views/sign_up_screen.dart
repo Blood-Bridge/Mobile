@@ -66,12 +66,15 @@ class SignUpScreen extends StatelessWidget {
                   children: [
                     SizedBox(height: height * 0.1),
 
-                    Text('Sign Up', style: TextStyleHelper.h1(context)),
+                    Text(
+                      context.l10n.signUp,
+                      style: TextStyleHelper.h1(context),
+                    ),
 
                     SizedBox(height: height * 0.02),
 
                     Text(
-                      'Join Blood Bridge to save lives',
+                      context.l10n.joinBloodBridgeToSaveLives,
                       textAlign: TextAlign.center,
                       style: TextStyleHelper.bodyMuted(context),
                     ),
@@ -133,7 +136,7 @@ class SignUpScreen extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.all(width * 0.02),
                           child: Text(
-                            'Or continue with',
+                            context.l10n.orContinueWith,
                             style: TextStyleHelper.bodyMuted(context),
                           ),
                         ),
@@ -165,7 +168,7 @@ class SignUpScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Already have an account?',
+                          context.l10n.alreadyHaveAnAccount,
                           style: TextStyleHelper.body(context),
                         ),
                         TextButton(
@@ -173,7 +176,7 @@ class SignUpScreen extends StatelessWidget {
                             Get.back();
                           },
                           child: Text(
-                            'Sign In',
+                            context.l10n.login,
                             style: TextStyleHelper.body(
                               context,
                             ).copyWith(color: AppColors.primary),

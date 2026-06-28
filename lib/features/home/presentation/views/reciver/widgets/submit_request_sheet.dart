@@ -93,8 +93,8 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
                 children: [
                   Text(
                     widget.isEmergency
-                        ? 'Emergency Blood Request'
-                        : 'Request Blood',
+                        ? context.l10n.emergencyRequest
+                        : context.l10n.requestBlood,
                     style: TextStyleHelper.h2(context).copyWith(
                       color: widget.isEmergency
                           ? AppColors.primary
@@ -115,7 +115,7 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
                         ),
                       ),
                       child: Text(
-                        'HIGH PRIORITY',
+                        context.l10n.highPriority,
                         style: TextStyleHelper.xs(context).copyWith(
                           color: AppColors.primary,
                           fontWeight: FontWeight.bold,
@@ -125,7 +125,10 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
                 ],
               ),
               const SizedBox(height: 20),
-              Text('Urgency Level', style: TextStyleHelper.small(context)),
+              Text(
+                context.l10n.urgencyLevel,
+                style: TextStyleHelper.small(context),
+              ),
               const SizedBox(height: 8),
               Row(
                 children: ['Critical', 'Urgent', 'Normal'].map((level) {
@@ -181,7 +184,7 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Blood Type Required',
+                          context.l10n.bloodType,
                           style: TextStyleHelper.small(context),
                         ),
                         const SizedBox(height: 8),
@@ -221,7 +224,7 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Quantity (Units)',
+                        context.l10n.quantity,
                         style: TextStyleHelper.small(context),
                       ),
                       const SizedBox(height: 8),
@@ -270,7 +273,7 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
               ),
               const SizedBox(height: 20),
               Text(
-                'Select Target Hospital',
+                context.l10n.hospital,
                 style: TextStyleHelper.small(context),
               ),
               const SizedBox(height: 8),
@@ -303,7 +306,7 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
               ),
               const SizedBox(height: 20),
               Text(
-                'Medical Case Description',
+                context.l10n.medicalInformation,
                 style: TextStyleHelper.small(context),
               ),
               const SizedBox(height: 8),
@@ -391,8 +394,8 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
                           ? const CircularProgressIndicator(color: Colors.white)
                           : Text(
                               widget.isEmergency
-                                  ? 'Submit Emergency Request'
-                                  : 'Submit Request',
+                                  ? context.l10n.submitEmergencyRequest
+                                  : context.l10n.submitRequest,
                               style: TextStyleHelper.h3(context).copyWith(
                                 color: widget.isEmergency
                                     ? AppColors.primaryForeground

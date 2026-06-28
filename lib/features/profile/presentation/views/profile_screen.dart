@@ -27,7 +27,7 @@ class ProfileScreen extends StatelessWidget {
           ),
           onPressed: () => Get.back(),
         ),
-        title: Text('My Profile', style: TextStyleHelper.h1(context)),
+        title: Text(context.l10n.myProfile, style: TextStyleHelper.h1(context)),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -180,7 +180,7 @@ class ProfileScreen extends StatelessWidget {
             );
           }
 
-          return const Center(child: Text('No profile data loaded.'));
+          return Center(child: Text(context.l10n.noData));
         },
       ),
     );

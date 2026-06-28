@@ -62,7 +62,7 @@ class _DetectionConfirmationScreenState
           ),
           onPressed: () => Get.back(),
         ),
-        title: Text('AI Report Results', style: TextStyleHelper.h1(context)),
+        title: Text(context.l10n.confirm, style: TextStyleHelper.h1(context)),
       ),
       body: BlocConsumer<ReceiverCubit, ReceiverState>(
         listener: (context, state) {

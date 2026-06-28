@@ -42,7 +42,7 @@ class _DonationDetailsScreenState extends State<DonationDetailsScreen> {
           ),
           onPressed: () => Get.back(),
         ),
-        title: Text('Donation Details', style: TextStyleHelper.h1(context)),
+        title: Text(context.l10n.donation, style: TextStyleHelper.h1(context)),
         actions: [
           BlocBuilder<DonationsCubit, DonationsState>(
             builder: (context, state) {
@@ -134,7 +134,7 @@ class _DonationDetailsScreenState extends State<DonationDetailsScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Donation Process ID',
+                              context.l10n.donationId,
                               style: TextStyleHelper.small(
                                 context,
                               ).copyWith(color: AppColors.textMuted),
@@ -177,7 +177,7 @@ class _DonationDetailsScreenState extends State<DonationDetailsScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Status',
+                              context.l10n.status,
                               style: TextStyleHelper.small(
                                 context,
                               ).copyWith(color: AppColors.textMuted),
@@ -222,7 +222,7 @@ class _DonationDetailsScreenState extends State<DonationDetailsScreen> {
                         ),
                       ),
                       child: Text(
-                        'Verify / Confirm Donation',
+                        context.l10n.confirmDonation,
                         style: TextStyleHelper.h3(
                           context,
                         ).copyWith(color: Colors.white),
@@ -242,7 +242,7 @@ class _DonationDetailsScreenState extends State<DonationDetailsScreen> {
                         ),
                       ),
                       child: Text(
-                        'Delete Log Record',
+                        context.l10n.deleteDonationRecord,
                         style: TextStyleHelper.h3(
                           context,
                         ).copyWith(color: AppColors.primary),
@@ -254,7 +254,7 @@ class _DonationDetailsScreenState extends State<DonationDetailsScreen> {
             );
           }
 
-          return const Center(child: Text('Loading details...'));
+          return Center(child: Text(context.l10n.noData));
         },
       ),
     );
@@ -285,15 +285,21 @@ class _DonationDetailsScreenState extends State<DonationDetailsScreen> {
     Get.dialog(
       AlertDialog(
         backgroundColor: AppColors.card,
-        title: Text('Delete Donation Log', style: TextStyleHelper.h3(context)),
+        title: Text(
+          context.l10n.deleteDonationRecord,
+          style: TextStyleHelper.h3(context),
+        ),
         content: Text(
-          'Are you sure you want to delete this donation log record?',
+          context.l10n.areYouSureYouWantToDeleteThisDonationLogRecord,
           style: TextStyleHelper.small(context),
         ),
         actions: [
           TextButton(
             onPressed: () => Get.back(),
-            child: Text('Cancel', style: TextStyle(color: AppColors.textMuted)),
+            child: Text(
+              context.l10n.cancel,
+              style: TextStyle(color: AppColors.textMuted),
+            ),
           ),
           TextButton(
             onPressed: () {
@@ -301,7 +307,7 @@ class _DonationDetailsScreenState extends State<DonationDetailsScreen> {
               context.read<DonationsCubit>().deleteDonation(id);
             },
             child: Text(
-              'Delete',
+              context.l10n.delete,
               style: TextStyle(
                 color: AppColors.primary,
                 fontWeight: FontWeight.bold,

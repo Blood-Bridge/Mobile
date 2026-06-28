@@ -58,12 +58,15 @@ class LoginScreen extends StatelessWidget {
                   children: [
                     SizedBox(height: height * 0.1),
 
-                    Text('Sign In', style: TextStyleHelper.h1(context)),
+                    Text(
+                      context.l10n.login,
+                      style: TextStyleHelper.h1(context),
+                    ),
 
                     SizedBox(height: height * 0.02),
 
                     Text(
-                      'Join Blood Bridge to save lives',
+                      context.l10n.joinBloodBridgeToSaveLives,
                       textAlign: TextAlign.center,
                       style: TextStyleHelper.bodyMuted(context),
                     ),
@@ -96,7 +99,7 @@ class LoginScreen extends StatelessWidget {
                             cubit.forgetPassword(emailController.text);
                           },
                           child: Text(
-                            'Forgot password?',
+                            context.l10n.forgotPassword,
                             style: TextStyleHelper.small(
                               context,
                             ).copyWith(color: AppColors.primary),
@@ -141,7 +144,7 @@ class LoginScreen extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.all(width * 0.02),
                           child: Text(
-                            'Or continue with',
+                            context.l10n.orContinueWith,
                             style: TextStyleHelper.bodyMuted(context),
                           ),
                         ),
@@ -173,7 +176,7 @@ class LoginScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Don\'t have an account?',
+                          context.l10n.dontHaveAnAccount,
                           style: TextStyleHelper.body(context),
                         ),
                         TextButton(
@@ -185,7 +188,7 @@ class LoginScreen extends StatelessWidget {
                             );
                           },
                           child: Text(
-                            'Sign Up',
+                            context.l10n.signUp,
                             style: TextStyleHelper.body(
                               context,
                             ).copyWith(color: AppColors.primary),

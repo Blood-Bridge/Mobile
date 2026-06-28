@@ -1,3 +1,4 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/services/hive_helper.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
@@ -53,7 +54,7 @@ class _DonorAppBarState extends State<DonorAppBar> {
                   children: [
                     Text('Blood Bridge', style: TextStyleHelper.h1(context)),
                     Text(
-                      'Ready to Save Lives',
+                      context.l10n.donorDashboard,
                       style: TextStyleHelper.xs(context),
                     ),
                   ],
@@ -97,11 +98,14 @@ class _DonorAppBarState extends State<DonorAppBar> {
                     children: [
                       Text(
                         isEnabled
-                            ? 'Available to Donate'
-                            : 'Not Available to Donate',
+                            ? context.l10n.available
+                            : context.l10n.notAvailable,
                         style: TextStyleHelper.h4(context),
                       ),
-                      Text('Blood Type:', style: TextStyleHelper.xs(context)),
+                      Text(
+                        context.l10n.bloodType,
+                        style: TextStyleHelper.xs(context),
+                      ),
                       BlocBuilder<ProfileCubit, ProfileState>(
                         builder: (context, state) {
                           if (state is ProfileLoaded) {

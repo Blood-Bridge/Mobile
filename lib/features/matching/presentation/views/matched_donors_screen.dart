@@ -67,7 +67,10 @@ class _MatchedDonorsScreenState extends State<MatchedDonorsScreen> {
           ),
           onPressed: () => Get.back(),
         ),
-        title: Text('Compatible Donors', style: TextStyleHelper.h1(context)),
+        title: Text(
+          context.l10n.compatibleDonors,
+          style: TextStyleHelper.h1(context),
+        ),
       ),
       body: BlocConsumer<MatchCubit, MatchState>(
         listener: (context, state) {
@@ -116,12 +119,12 @@ class _MatchedDonorsScreenState extends State<MatchedDonorsScreen> {
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      'No Compatible Donors Found',
+                      context.l10n.noCompatibleDonors,
                       style: TextStyleHelper.h2(context),
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Try again later',
+                      context.l10n.tryAgainLater,
                       style: TextStyleHelper.small(context),
                     ),
                   ],
@@ -244,7 +247,7 @@ class _MatchedDonorsScreenState extends State<MatchedDonorsScreen> {
             );
           }
 
-          return const Center(child: Text('No data'));
+          return Center(child: Text(context.l10n.noData));
         },
       ),
     );

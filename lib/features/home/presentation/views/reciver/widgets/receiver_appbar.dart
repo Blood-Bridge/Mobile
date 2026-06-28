@@ -1,3 +1,4 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,7 @@ class _ReceiverAppBarState extends State<ReceiverAppBar> {
                   children: [
                     Text('Blood Bridge', style: TextStyleHelper.h1(context)),
                     Text(
-                      'Find donors quickly',
+                      context.l10n.receiverDashboard,
                       style: TextStyleHelper.xs(context),
                     ),
                   ],
@@ -45,7 +46,10 @@ class _ReceiverAppBarState extends State<ReceiverAppBar> {
                 const Spacer(),
                 IconButton(
                   onPressed: () => Get.to(() => const NotificationsScreen()),
-                  icon: Icon(Icons.notifications_outlined, size: widget.width * 0.05),
+                  icon: Icon(
+                    Icons.notifications_outlined,
+                    size: widget.width * 0.05,
+                  ),
                 ),
                 IconButton(
                   onPressed: () => Get.toNamed('/settings'),
@@ -83,11 +87,11 @@ class _ReceiverAppBarState extends State<ReceiverAppBar> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Emergency Request',
+                          context.l10n.emergencyRequest,
                           style: TextStyleHelper.h4(context),
                         ),
                         Text(
-                          'Instant donor notification',
+                          context.l10n.instantDonorNotification,
                           style: TextStyleHelper.xs(
                             context,
                           ).copyWith(color: AppColors.primaryForeground),
@@ -119,7 +123,7 @@ class _ReceiverAppBarState extends State<ReceiverAppBar> {
                   children: [
                     Center(
                       child: Text(
-                        'Request Blood',
+                        context.l10n.requestBlood,
                         style: TextStyleHelper.small(
                           context,
                         ).copyWith(color: AppColors.primaryForeground),

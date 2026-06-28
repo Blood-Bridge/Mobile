@@ -101,7 +101,7 @@ class _AdminDonationsScreenState extends State<AdminDonationsScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Filters',
+                  context.l10n.filters,
                   style: TextStyleHelper.small(
                     context,
                   ).copyWith(fontWeight: FontWeight.bold),
@@ -121,7 +121,7 @@ class _AdminDonationsScreenState extends State<AdminDonationsScreen> {
                           child: DropdownButton<String>(
                             value: _selectedStatus,
                             hint: Text(
-                              'Status',
+                              context.l10n.status,
                               style: TextStyle(
                                 color: AppColors.textMuted,
                                 fontSize: 13,
@@ -162,7 +162,7 @@ class _AdminDonationsScreenState extends State<AdminDonationsScreen> {
                           child: DropdownButton<String>(
                             value: _selectedGovernorate,
                             hint: Text(
-                              'Governorate',
+                              context.l10n.governorate,
                               style: TextStyle(
                                 color: AppColors.textMuted,
                                 fontSize: 13,
@@ -206,7 +206,7 @@ class _AdminDonationsScreenState extends State<AdminDonationsScreen> {
                           _applyFilters();
                         },
                         child: Text(
-                          'Clear Filters',
+                          context.l10n.clearFilters,
                           style: TextStyleHelper.xs(context).copyWith(
                             color: AppColors.primary,
                             fontWeight: FontWeight.bold,
@@ -258,7 +258,7 @@ class _AdminDonationsScreenState extends State<AdminDonationsScreen> {
                   if (list.isEmpty) {
                     return Center(
                       child: Text(
-                        'No donations match the selected filters.',
+                        context.l10n.noDonationsFound,
                         style: TextStyleHelper.bodyMuted(context),
                       ),
                     );
@@ -294,7 +294,7 @@ class _AdminDonationsScreenState extends State<AdminDonationsScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    'Donation #${item.donationProcessId}',
+                                    '${context.l10n.donation} #${item.donationProcessId}',
                                     style: TextStyleHelper.small(
                                       context,
                                     ).copyWith(fontWeight: FontWeight.bold),
@@ -421,7 +421,7 @@ class _AdminDonationsScreenState extends State<AdminDonationsScreen> {
           style: TextStyle(color: Colors.white),
         ),
         content: Text(
-          'Are you sure you want to permanently delete donation record #$donationId?',
+          '${context.l10n.areYouSureYouWantToDelete} #$donationId?',
           style: TextStyle(color: Colors.grey),
         ),
         actions: [

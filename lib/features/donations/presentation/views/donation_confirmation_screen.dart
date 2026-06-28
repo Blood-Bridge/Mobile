@@ -1,3 +1,4 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/features/donations/data/models/donation_model.dart';
@@ -22,10 +23,17 @@ class DonationConfirmationScreen extends StatelessWidget {
         backgroundColor: AppColors.bg,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: AppColors.foreground, size: 18),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: AppColors.foreground,
+            size: 18,
+          ),
           onPressed: () => Get.back(),
         ),
-        title: Text('Verification & Confirmation', style: TextStyleHelper.h2(context)),
+        title: Text(
+          context.l10n.donationConfirmation,
+          style: TextStyleHelper.h2(context),
+        ),
       ),
       body: BlocConsumer<DonationsCubit, DonationsState>(
         listener: (context, state) {
@@ -37,7 +45,9 @@ class DonationConfirmationScreen extends StatelessWidget {
               backgroundColor: Colors.green,
               colorText: Colors.white,
             );
-            context.read<DonationsCubit>().fetchDonationById(donation.donationProcessId);
+            context.read<DonationsCubit>().fetchDonationById(
+              donation.donationProcessId,
+            );
           } else if (state is DonationsError) {
             Get.snackbar(
               'Error',
@@ -50,13 +60,16 @@ class DonationConfirmationScreen extends StatelessWidget {
         builder: (context, state) {
           final isLoading = state is DonationsLoading;
           return Padding(
-            padding: EdgeInsets.symmetric(horizontal: width * 0.05, vertical: 16),
+            padding: EdgeInsets.symmetric(
+              horizontal: width * 0.05,
+              vertical: 16,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: height * 0.02),
                 Text(
-                  'Confirm Donation details for Process #${donation.donationProcessId}.',
+                  '${context.l10n.donationc} #${donation.donationProcessId}.',
                   style: TextStyleHelper.bodyMuted(context),
                 ),
                 SizedBox(height: height * 0.04),
@@ -69,18 +82,34 @@ class DonationConfirmationScreen extends StatelessWidget {
                   ),
                   child: Column(
                     children: [
-                      _buildVerifyRow(context, 'Donor Confirmation Status', donation.confirmationStatus == 'DonorConfirmed' || donation.confirmationStatus == 'Confirmed'),
+                      _buildVerifyRow(
+                        context,
+                        'Donor Confirmation Status',
+                        donation.confirmationStatus == 'DonorConfirmed' ||
+                            donation.confirmationStatus == 'Confirmed',
+                      ),
                       const Divider(color: AppColors.border, height: 24),
-                      _buildVerifyRow(context, 'Patient/Recipient Status', donation.confirmationStatus == 'PatientConfirmed' || donation.confirmationStatus == 'Confirmed'),
+                      _buildVerifyRow(
+                        context,
+                        'Patient/Recipient Status',
+                        donation.confirmationStatus == 'PatientConfirmed' ||
+                            donation.confirmationStatus == 'Confirmed',
+                      ),
                       const Divider(color: AppColors.border, height: 24),
-                      _buildVerifyRow(context, 'Hospital Final Status', donation.confirmationStatus == 'Confirmed'),
+                      _buildVerifyRow(
+                        context,
+                        'Hospital Final Status',
+                        donation.confirmationStatus == 'Confirmed',
+                      ),
                     ],
                   ),
                 ),
                 const Spacer(),
                 Text(
-                  'Tapping the button below indicates verification of successful donor collection and recipient delivery of blood units.',
-                  style: TextStyleHelper.xs(context).copyWith(color: AppColors.textMuted),
+                  context.l10n.confirmDonation,
+                  style: TextStyleHelper.xs(
+                    context,
+                  ).copyWith(color: AppColors.textMuted),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 16),
@@ -91,7 +120,9 @@ class DonationConfirmationScreen extends StatelessWidget {
                     onPressed: isLoading
                         ? null
                         : () {
-                            context.read<DonationsCubit>().confirmDonation(donation.donationProcessId);
+                            context.read<DonationsCubit>().confirmDonation(
+                              donation.donationProcessId,
+                            );
                           },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
@@ -102,8 +133,10 @@ class DonationConfirmationScreen extends StatelessWidget {
                     child: isLoading
                         ? const CircularProgressIndicator(color: Colors.white)
                         : Text(
-                            'Confirm & Finalize',
-                            style: TextStyleHelper.h3(context).copyWith(color: Colors.white),
+                            context.l10n.confirm,
+                            style: TextStyleHelper.h3(
+                              context,
+                            ).copyWith(color: Colors.white),
                           ),
                   ),
                 ),

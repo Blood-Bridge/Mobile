@@ -1,0 +1,132 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/core/services/text_style_helper.dart';
+import 'package:blood_bridge/core/utiles/app_colors.dart';
+import 'package:blood_bridge/core/widgets/custom_textfield.dart';
+import 'package:blood_bridge/features/user_information/presentation/cubit/info_cubit.dart';
+import 'package:blood_bridge/features/user_information/presentation/views/widgets/custom_date_field.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class FirstInfoScreen extends StatelessWidget {
+  FirstInfoScreen({
+    super.key,
+    required this.height,
+    required this.nameController,
+    required this.width,
+    required this.nationalIDController,
+    required this.cubit,
+  });
+
+  final double height;
+  final TextEditingController nameController;
+  final TextEditingController nationalIDController;
+  final double width;
+  final InfoCubit cubit;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("Full Name *", style: TextStyleHelper.small(context)),
+        SizedBox(height: height * 0.01),
+        CustomTextfield(
+          prefixIcon: Icon(Icons.person),
+          text: context.l10n.enterYourFullName,
+          controller: nameController,
+          validator: cubit.nameValidator,
+        ),
+        SizedBox(height: height * 0.04),
+        Text("National ID *", style: TextStyleHelper.small(context)),
+        SizedBox(height: height * 0.01),
+        CustomTextfield(
+          prefixIcon: Icon(Icons.credit_card),
+          text: context.l10n.enterNationalIdNumber,
+          controller: nationalIDController,
+          validator: cubit.nationalIdValidator,
+        ),
+        SizedBox(height: height * 0.04),
+        CustomDateField(
+          label: context.l10n.dateOfBirth,
+          onDateSelected: (date) {
+            cubit.dateOfBirth = date;
+          },
+          date: cubit.dateOfBirth != null
+              ? "${cubit.dateOfBirth?.day}/${cubit.dateOfBirth?.month}/${cubit.dateOfBirth?.year}"
+              : null,
+        ),
+        SizedBox(height: height * 0.04),
+        Text("Gender *", style: TextStyleHelper.small(context)),
+        SizedBox(height: height * 0.01),
+        BlocBuilder<InfoCubit, InfoState>(
+          builder: (context, state) {
+            return Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    if (!cubit.isMale) {
+                      cubit.changeGender();
+                    }
+                  },
+                  child: Container(
+                    width: width * 0.4,
+                    height: height * 0.07,
+
+                    decoration: BoxDecoration(
+                      color: AppColors.card,
+                      border: Border.all(
+                        color: cubit.isMale == true
+                            ? AppColors.primary
+                            : AppColors.border,
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+
+                    child: Center(
+                      child: Text(
+                        "Male",
+                        style: TextStyleHelper.small(context),
+                      ),
+                    ),
+                  ),
+                ),
+
+                SizedBox(width: width * 0.02),
+                GestureDetector(
+                  onTap: () {
+                    if (cubit.isMale) {
+                      cubit.changeGender();
+                    }
+                  },
+                  child: Container(
+                    width: width * 0.4,
+                    height: height * 0.07,
+
+                    decoration: BoxDecoration(
+                      color: AppColors.card,
+                      border: Border.all(
+                        color: cubit.isMale == false
+                            ? AppColors.primary
+                            : AppColors.border,
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+
+                    child: Center(
+                      child: Text(
+                        "Female",
+                        style: TextStyleHelper.small(context),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+      ],
+    );
+  }
+}

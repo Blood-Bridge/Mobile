@@ -83,19 +83,18 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                 children: [
                   SizedBox(height: height * 0.08),
                   Text(
-                    'Enable Permissions',
+                    context.l10n.permissions,
                     style: TextStyleHelper.h1(context),
                   ),
                   Text(
-                    'These help us provide faster emergency responses',
+                    context.l10n.permissionsDesc,
                     style: TextStyleHelper.xs(context),
                   ),
                   PermissionCard(
                     height: height,
                     width: width,
                     title: context.l10n.locationAccess,
-                    description:
-                        'Find nearby donors and requests quickly in emergencies',
+                    description: context.l10n.locationAccessDesc,
                     isAccessed: cubit.isLocationAccessGranted,
                     icon: Icons.location_on_outlined,
                     onTap: () {
