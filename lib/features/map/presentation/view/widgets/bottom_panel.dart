@@ -55,30 +55,33 @@ class BottomPanel extends StatelessWidget {
             children: [
               Row(
                 children: isReceiver
-                    ? const [
+                    ? [
                         LegendDot(color: Colors.blue),
                         SizedBox(width: 8),
                         Text(
-                          "Compatible Donor",
+                          context.l10n.compatibleDonor,
                           style: TextStyle(color: Colors.white70),
                         ),
                       ]
-                    : const [
+                    : [
                         LegendDot(color: Color(0xFFE58B93)),
                         SizedBox(width: 8),
                         Text(
-                          "Critical",
+                          context.l10n.critical,
                           style: TextStyle(color: Colors.white70),
                         ),
                         SizedBox(width: 16),
                         LegendDot(color: Color(0xFFF6B400)),
                         SizedBox(width: 8),
-                        Text("Urgent", style: TextStyle(color: Colors.white70)),
+                        Text(
+                          context.l10n.urgent,
+                          style: TextStyle(color: Colors.white70),
+                        ),
                         SizedBox(width: 16),
                         LegendDot(color: Color(0xFF77B47C)),
                         SizedBox(width: 8),
                         Text(
-                          "Available",
+                          context.l10n.available2,
                           style: TextStyle(color: Colors.white70),
                         ),
                       ],

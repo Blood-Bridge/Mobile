@@ -627,4 +627,172 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get requestCancelledDescription => 'تم إلغاء الطلب';
+
+  @override
+  String get noRequestsMatchTheSelected =>
+      'لا توجد طلبات تطابق الفلاتر المحددة.';
+
+  @override
+  String get logDonationRecord => 'تسجيل عملية تبرع';
+
+  @override
+  String get bloodBridge => 'بلود بريدج';
+
+  @override
+  String get unitsAvailable => 'وحدة متاحة';
+
+  @override
+  String get compatibleDonor => 'متبرع متوافق';
+
+  @override
+  String get critical => 'حرج';
+
+  @override
+  String get urgent => 'عاجل';
+
+  @override
+  String get available2 => 'متاح';
+
+  @override
+  String get markAllRead => 'تحديد الكل كمقروء';
+
+  @override
+  String get noNotificationsYet => 'لا توجد إشعارات حتى الآن';
+
+  @override
+  String get youWillSeeUpdatesHere => 'ستظهر التحديثات هنا';
+
+  @override
+  String get aiReportExtractedInformation =>
+      'المعلومات المستخرجة من تقرير الذكاء الاصطناعي';
+
+  @override
+  String get pleaseReviewTheDetailsExtracted =>
+      'يرجى مراجعة التفاصيل المستخرجة من تقريرك الطبي. يمكنك تعديلها قبل بدء البحث عن متبرعين مطابقين.';
+
+  @override
+  String get verifiedBloodTypeRequired => 'مطلوب التحقق من فصيلة الدم';
+
+  @override
+  String get confirmSearchDonors => 'تأكيد والبحث عن متبرعين';
+
+  @override
+  String get refresh => 'تحديث';
+
+  @override
+  String get language => 'اللغة';
+
+  @override
+  String get aboutBloodBridge => 'عن بلود بريدج';
+
+  @override
+  String get bloodBridgeIsAPlatform =>
+      'بلود بريدج هي منصة مصممة لربط المتبرعين بالدم مباشرة بطلبات المستقبلين وأنظمة مخزون المستشفيات لإنقاذ الأرواح في حالات الطوارئ.';
+
+  @override
+  String get ifYouHaveQuestionsAbout =>
+      'إذا كانت لديك أسئلة حول التبرع بالدم، إدارة الحساب، أو إنشاء الطلبات، يرجى زيارة support.bloodbridge.org أو التواصل مع فريقنا.';
+
+  @override
+  String get emailSupportBloodbridgeOrg =>
+      'البريد الإلكتروني: support@bloodbridge.org';
+
+  @override
+  String get phone20123456789 => 'الهاتف: +20 123 456 789';
+
+  @override
+  String get hours247EmergencySupport =>
+      'ساعات العمل: دعم طوارئ على مدار الساعة';
+
+  @override
+  String get weValueYourPrivacyYour =>
+      'نحن نقدّر خصوصيتك. معلوماتك الشخصية، بيانات الاتصال، والتفاصيل الطبية مخزّنة بشكل آمن. تتم مشاركة الموقع فقط لعرض الطلبات المطابقة النشطة في منطقتك ولا يتم مشاركتها مع أي جهة خارجية.';
+
+  @override
+  String get toRegisterAsADonor =>
+      'للتسجيل كمتبرع، يجب أن تستوفي معايير الأهلية.';
+
+  @override
+  String get switchToRecipient => 'التبديل إلى مستقبل';
+
+  @override
+  String get areYouSureYouWant =>
+      'هل أنت متأكد أنك تريد التبديل إلى وضع المستقبل؟';
+
+  @override
+  String get warningThisWillPermanentlyDelete =>
+      'تحذير: سيؤدي هذا إلى حذف حسابك بشكل نهائي. هذا الإجراء لا يمكن التراجع عنه.';
+
+  @override
+  String get updateBloodInventory => 'تحديث مخزون الدم';
+
+  @override
+  String get enterCurrentUnitsForEach =>
+      'أدخل عدد الوحدات الحالية لكل فصيلة دم';
+
+  @override
+  String get noActiveRequests2 => 'لا توجد طلبات نشطة';
+
+  @override
+  String get settings => 'الإعدادات';
+
+  @override
+  String get bloodBridgeV100 => 'بلود بريدج الإصدار 1.0.0';
+
+  @override
+  String get userType => 'نوع المستخدم';
+
+  @override
+  String get connectingLivesInEmergency => 'نربط الأرواح في حالات الطوارئ';
+
+  @override
+  String get yourInformationIsEncryptedAnd => 'معلوماتك مشفّرة وآمنة';
+
+  @override
+  String get fullName => 'الاسم الكامل *';
+
+  @override
+  String get nationalId2 => 'الرقم القومي *';
+
+  @override
+  String get gender => 'النوع *';
+
+  @override
+  String get male => 'ذكر';
+
+  @override
+  String get female => 'أنثى';
+
+  @override
+  String get phoneNumber => 'رقم الهاتف *';
+
+  @override
+  String get address => 'العنوان *';
+
+  @override
+  String get city => 'المدينة *';
+
+  @override
+  String get bloodType2 => 'فصيلة الدم *';
+
+  @override
+  String get weight => 'الوزن *';
+
+  @override
+  String get medicalConditionsOptional => 'الحالات الطبية (اختياري)';
+
+  @override
+  String get welcome => 'أهلاً بك';
+
+  @override
+  String get howWouldYouLikeTo => 'كيف تريد استخدام بلود بريدج؟';
+
+  @override
+  String get tapAgainToContinue => 'اضغط مرة أخرى للمتابعة';
+
+  @override
+  String get donors => 'المتبرعون';
+
+  @override
+  String get notAvailable => 'غير متاح';
 }

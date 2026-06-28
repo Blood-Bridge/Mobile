@@ -28,7 +28,7 @@ class FirstInfoScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Full Name *", style: TextStyleHelper.small(context)),
+        Text(context.l10n.fullName, style: TextStyleHelper.small(context)),
         SizedBox(height: height * 0.01),
         CustomTextfield(
           prefixIcon: Icon(Icons.person),
@@ -37,7 +37,7 @@ class FirstInfoScreen extends StatelessWidget {
           validator: cubit.nameValidator,
         ),
         SizedBox(height: height * 0.04),
-        Text("National ID *", style: TextStyleHelper.small(context)),
+        Text(context.l10n.nationalId2, style: TextStyleHelper.small(context)),
         SizedBox(height: height * 0.01),
         CustomTextfield(
           prefixIcon: Icon(Icons.credit_card),
@@ -56,7 +56,7 @@ class FirstInfoScreen extends StatelessWidget {
               : null,
         ),
         SizedBox(height: height * 0.04),
-        Text("Gender *", style: TextStyleHelper.small(context)),
+        Text(context.l10n.gender, style: TextStyleHelper.small(context)),
         SizedBox(height: height * 0.01),
         BlocBuilder<InfoCubit, InfoState>(
           builder: (context, state) {
@@ -85,7 +85,7 @@ class FirstInfoScreen extends StatelessWidget {
 
                     child: Center(
                       child: Text(
-                        "Male",
+                        context.l10n.male,
                         style: TextStyleHelper.small(context),
                       ),
                     ),
@@ -116,7 +116,7 @@ class FirstInfoScreen extends StatelessWidget {
 
                     child: Center(
                       child: Text(
-                        "Female",
+                        context.l10n.female,
                         style: TextStyleHelper.small(context),
                       ),
                     ),

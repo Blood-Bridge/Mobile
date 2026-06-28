@@ -72,7 +72,7 @@ class _RequestStatusBody extends StatelessWidget {
             icon: const Icon(Icons.refresh),
             onPressed: () =>
                 context.read<RequestStatusCubit>().getRequestStatus(requestId),
-            tooltip: 'Refresh',
+            tooltip: context.l10n.refresh,
           ),
         ],
       ),

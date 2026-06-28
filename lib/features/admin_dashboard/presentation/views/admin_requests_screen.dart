@@ -86,7 +86,7 @@ class _AdminRequestsScreenState extends State<AdminRequestsScreen> {
           ),
           onPressed: () => Get.back(),
         ),
-        title: Text('Manage Requests', style: TextStyleHelper.h1(context)),
+        title: Text(context.l10n.manageRequests, style: TextStyleHelper.h1(context)),
       ),
       body: Column(
         children: [
@@ -103,7 +103,7 @@ class _AdminRequestsScreenState extends State<AdminRequestsScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Filters',
+                  context.l10n.filters,
                   style: TextStyleHelper.small(
                     context,
                   ).copyWith(fontWeight: FontWeight.bold),
@@ -123,7 +123,7 @@ class _AdminRequestsScreenState extends State<AdminRequestsScreen> {
                           child: DropdownButton<String>(
                             value: _selectedStatus,
                             hint: Text(
-                              'Status',
+                              context.l10n.status,
                               style: TextStyle(
                                 color: AppColors.textMuted,
                                 fontSize: 13,
@@ -164,7 +164,7 @@ class _AdminRequestsScreenState extends State<AdminRequestsScreen> {
                           child: DropdownButton<String>(
                             value: _selectedGovernorate,
                             hint: Text(
-                              'Governorate',
+                              context.l10n.governorate,
                               style: TextStyle(
                                 color: AppColors.textMuted,
                                 fontSize: 13,
@@ -208,7 +208,7 @@ class _AdminRequestsScreenState extends State<AdminRequestsScreen> {
                           _applyFilters();
                         },
                         child: Text(
-                          'Clear Filters',
+                          context.l10n.clearFilters,
                           style: TextStyleHelper.xs(context).copyWith(
                             color: AppColors.primary,
                             fontWeight: FontWeight.bold,
@@ -260,7 +260,7 @@ class _AdminRequestsScreenState extends State<AdminRequestsScreen> {
                   if (list.isEmpty) {
                     return Center(
                       child: Text(
-                        'No requests match the selected filters.',
+                        context.l10n.noRequestsMatchTheSelected,
                         style: TextStyleHelper.bodyMuted(context),
                       ),
                     );

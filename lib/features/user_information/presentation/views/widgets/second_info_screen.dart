@@ -25,7 +25,7 @@ class SecondInfoScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Phone Number *", style: TextStyleHelper.small(context)),
+        Text(context.l10n.phoneNumber, style: TextStyleHelper.small(context)),
         SizedBox(height: height * 0.01),
         CustomTextfield(
           prefixIcon: Icon(Icons.phone),
@@ -34,7 +34,7 @@ class SecondInfoScreen extends StatelessWidget {
           validator: cubit.phoneValidator,
         ),
         SizedBox(height: height * 0.04),
-        Text("Address *", style: TextStyleHelper.small(context)),
+        Text(context.l10n.address, style: TextStyleHelper.small(context)),
         SizedBox(height: height * 0.01),
         CustomTextfield(
           prefixIcon: Icon(Icons.location_on),
@@ -43,7 +43,7 @@ class SecondInfoScreen extends StatelessWidget {
           validator: cubit.addressValidator,
         ),
         SizedBox(height: height * 0.04),
-        Text("City *", style: TextStyleHelper.small(context)),
+        Text(context.l10n.city, style: TextStyleHelper.small(context)),
         SizedBox(height: height * 0.01),
         DropdownButtonFormField<String>(
           dropdownColor: Colors.black,

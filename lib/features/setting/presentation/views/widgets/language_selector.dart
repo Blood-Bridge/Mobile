@@ -30,7 +30,7 @@ class LanguageSelector extends StatelessWidget {
                 children: [
                   Icon(Icons.language, color: AppColors.textMuted, size: 18),
                   const SizedBox(width: 8),
-                  Text('Language', style: TextStyleHelper.h4(context)),
+                  Text(context.l10n.language, style: TextStyleHelper.h4(context)),
                 ],
               ),
               const SizedBox(height: 12),

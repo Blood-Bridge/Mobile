@@ -398,7 +398,7 @@ class _BloodStockCard extends StatelessWidget {
             ).copyWith(fontWeight: FontWeight.bold),
           ),
           Text(
-            'units available',
+            context.l10n.unitsAvailable,
             style: TextStyleHelper.xs(
               context,
             ).copyWith(color: AppColors.textMuted),

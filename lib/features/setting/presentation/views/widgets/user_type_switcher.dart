@@ -42,7 +42,7 @@ class UserTypeSelector extends StatelessWidget {
                 children: [
                   Icon(Icons.swap_horiz, color: AppColors.textMuted, size: 22),
                   const SizedBox(width: 10),
-                  Text('User Type', style: TextStyleHelper.h4(context)),
+                  Text(context.l10n.userType, style: TextStyleHelper.h4(context)),
                 ],
               ),
               const SizedBox(height: 16),

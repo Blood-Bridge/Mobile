@@ -31,7 +31,7 @@ class ThirdInfoScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("blood type *", style: TextStyleHelper.small(context)),
+        Text(context.l10n.bloodType2, style: TextStyleHelper.small(context)),
         SizedBox(height: height * 0.01),
         Wrap(
           spacing: 10,
@@ -58,7 +58,7 @@ class ThirdInfoScreen extends StatelessWidget {
               .toList(),
         ),
         SizedBox(height: height * 0.04),
-        Text("weight *", style: TextStyleHelper.small(context)),
+        Text(context.l10n.weight, style: TextStyleHelper.small(context)),
         SizedBox(height: height * 0.01),
         CustomTextfield(
           prefixIcon: Icon(CupertinoIcons.bag),
@@ -68,7 +68,7 @@ class ThirdInfoScreen extends StatelessWidget {
         ),
         SizedBox(height: height * 0.04),
         Text(
-          "Medical Conditions (Optional)",
+          context.l10n.medicalConditionsOptional,
           style: TextStyleHelper.small(context),
         ),
         SizedBox(height: height * 0.01),

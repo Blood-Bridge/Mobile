@@ -148,7 +148,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: AppColors.card,
-        title: Text('Search Radius', style: TextStyleHelper.h3(context)),
+        title: Text(context.l10n.searchRadius, style: TextStyleHelper.h3(context)),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [5, 10, 20, 50].map((radius) {
@@ -173,15 +173,15 @@ class _SettingViewBodyState extends State<SettingViewBody> {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: AppColors.card,
-        title: Text('About Blood Bridge', style: TextStyleHelper.h3(context)),
+        title: Text(context.l10n.aboutBloodBridge, style: TextStyleHelper.h3(context)),
         content: Text(
-          'Blood Bridge is a platform designed to connect blood donors directly with recipient requests and hospital inventory systems to save lives in emergency situations.',
+          context.l10n.bloodBridgeIsAPlatform,
           style: TextStyleHelper.small(context),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Close', style: TextStyle(color: AppColors.primary)),
+            child: Text(context.l10n.close, style: TextStyle(color: AppColors.primary)),
           ),
         ],
       ),
@@ -193,15 +193,15 @@ class _SettingViewBodyState extends State<SettingViewBody> {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: AppColors.card,
-        title: Text('Help Center', style: TextStyleHelper.h3(context)),
+        title: Text(context.l10n.helpCenter, style: TextStyleHelper.h3(context)),
         content: Text(
-          'If you have questions about donating blood, account management, or request creation, please visit support.bloodbridge.org or contact our team.',
+          context.l10n.ifYouHaveQuestionsAbout,
           style: TextStyleHelper.small(context),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Close', style: TextStyle(color: AppColors.primary)),
+            child: Text(context.l10n.close, style: TextStyle(color: AppColors.primary)),
           ),
         ],
       ),
@@ -213,23 +213,23 @@ class _SettingViewBodyState extends State<SettingViewBody> {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: AppColors.card,
-        title: Text('Contact Support', style: TextStyleHelper.h3(context)),
+        title: Text(context.l10n.contactSupport, style: TextStyleHelper.h3(context)),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Email: support@bloodbridge.org',
+              context.l10n.emailSupportBloodbridgeOrg,
               style: TextStyleHelper.small(context),
             ),
             const SizedBox(height: 8),
             Text(
-              'Phone: +20 123 456 789',
+              context.l10n.phone20123456789,
               style: TextStyleHelper.small(context),
             ),
             const SizedBox(height: 8),
             Text(
-              'Hours: 24/7 emergency support',
+              context.l10n.hours247EmergencySupport,
               style: TextStyleHelper.small(context),
             ),
           ],
@@ -237,7 +237,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Close', style: TextStyle(color: AppColors.primary)),
+            child: Text(context.l10n.close, style: TextStyle(color: AppColors.primary)),
           ),
         ],
       ),
@@ -249,17 +249,17 @@ class _SettingViewBodyState extends State<SettingViewBody> {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: AppColors.card,
-        title: Text('Privacy Policy', style: TextStyleHelper.h3(context)),
+        title: Text(context.l10n.privacyPolicy, style: TextStyleHelper.h3(context)),
         content: SingleChildScrollView(
           child: Text(
-            'We value your privacy. Your personal information, contact info, and medical details are securely stored. Location sharing is exclusively used to display active matching requests in your area and is not shared with third parties.',
+            context.l10n.weValueYourPrivacyYour,
             style: TextStyleHelper.small(context),
           ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Close', style: TextStyle(color: AppColors.primary)),
+            child: Text(context.l10n.close, style: TextStyle(color: AppColors.primary)),
           ),
         ],
       ),
@@ -278,7 +278,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
       builder: (dlgContext) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
           backgroundColor: AppColors.card,
-          title: Text('Switch to Donor', style: TextStyleHelper.h3(context)),
+          title: Text(context.l10n.switchToDonor, style: TextStyleHelper.h3(context)),
           content: Form(
             key: formKey,
             child: SingleChildScrollView(
@@ -286,7 +286,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'To register as a donor, you must meet eligibility criteria.',
+                    context.l10n.toRegisterAsADonor,
                     style: TextStyleHelper.xs(
                       context,
                     ).copyWith(color: AppColors.textMuted),
@@ -413,9 +413,9 @@ class _SettingViewBodyState extends State<SettingViewBody> {
       context: context,
       builder: (dlgContext) => AlertDialog(
         backgroundColor: AppColors.card,
-        title: Text('Switch to Recipient', style: TextStyleHelper.h3(context)),
+        title: Text(context.l10n.switchToRecipient, style: TextStyleHelper.h3(context)),
         content: Text(
-          'Are you sure you want to switch your role back to Recipient?',
+          context.l10n.areYouSureYouWant,
           style: TextStyleHelper.small(
             context,
           ).copyWith(color: AppColors.textMuted),
@@ -450,11 +450,11 @@ class _SettingViewBodyState extends State<SettingViewBody> {
       builder: (dlgContext) => AlertDialog(
         backgroundColor: AppColors.card,
         title: Text(
-          'Delete Account',
+          context.l10n.deleteAccount,
           style: TextStyleHelper.h3(context).copyWith(color: Colors.red),
         ),
         content: Text(
-          'WARNING: This will permanently delete your account. This action is irreversible.',
+          context.l10n.warningThisWillPermanentlyDelete,
           style: TextStyleHelper.small(
             context,
           ).copyWith(color: AppColors.textMuted),
@@ -519,10 +519,10 @@ class _SettingViewBodyState extends State<SettingViewBody> {
                     ),
                   ),
                 ),
-                Text('Update Blood Inventory', style: TextStyleHelper.h3(ctx)),
+                Text(context.l10n.updateBloodInventory, style: TextStyleHelper.h3(ctx)),
                 const SizedBox(height: 4),
                 Text(
-                  'Enter current units for each blood type',
+                  context.l10n.enterCurrentUnitsForEach,
                   style: TextStyleHelper.xs(
                     ctx,
                   ).copyWith(color: AppColors.textMuted),
@@ -664,7 +664,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Active Requests', style: TextStyleHelper.h3(ctx)),
+                      Text(context.l10n.activeRequests, style: TextStyleHelper.h3(ctx)),
                       TextButton.icon(
                         onPressed: () async {
                           await _fetchActiveRequests();
@@ -677,7 +677,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
                           color: AppColors.primary,
                         ),
                         label: Text(
-                          'Refresh',
+                          context.l10n.refresh,
                           style: TextStyle(color: AppColors.primary),
                         ),
                       ),
@@ -693,7 +693,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
                   : _activeRequests.isEmpty
                   ? Center(
                       child: Text(
-                        'No active requests',
+                        context.l10n.noActiveRequests2,
                         style: TextStyleHelper.small(
                           ctx,
                         ).copyWith(color: AppColors.textMuted),
@@ -760,7 +760,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
             ),
             onPressed: () => Navigator.pop(context),
           ),
-          title: Text('Settings', style: TextStyleHelper.h1(context)),
+          title: Text(context.l10n.settings, style: TextStyleHelper.h1(context)),
         ),
         body: ListView(
           padding: const EdgeInsets.only(top: 8, bottom: 32),
@@ -927,7 +927,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
             const SizedBox(height: 16),
             Center(
               child: Text(
-                'Blood Bridge v1.0.0',
+                context.l10n.bloodBridgeV100,
                 style: TextStyleHelper.xs(context),
               ),
             ),

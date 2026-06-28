@@ -36,7 +36,7 @@ class _ReceiverAppBarState extends State<ReceiverAppBar> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Blood Bridge', style: TextStyleHelper.h1(context)),
+                    Text(context.l10n.bloodBridge, style: TextStyleHelper.h1(context)),
                     Text(
                       context.l10n.receiverDashboard,
                       style: TextStyleHelper.xs(context),

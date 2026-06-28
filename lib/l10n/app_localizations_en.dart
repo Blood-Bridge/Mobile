@@ -629,4 +629,170 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get requestCancelledDescription => 'Request has been cancelled';
+
+  @override
+  String get noRequestsMatchTheSelected =>
+      'No requests match the selected filters.';
+
+  @override
+  String get logDonationRecord => 'Log Donation Record';
+
+  @override
+  String get bloodBridge => 'Blood Bridge';
+
+  @override
+  String get unitsAvailable => 'units available';
+
+  @override
+  String get compatibleDonor => 'Compatible Donor';
+
+  @override
+  String get critical => 'Critical';
+
+  @override
+  String get urgent => 'Urgent';
+
+  @override
+  String get available2 => 'Available';
+
+  @override
+  String get markAllRead => 'Mark all read';
+
+  @override
+  String get noNotificationsYet => 'No notifications yet';
+
+  @override
+  String get youWillSeeUpdatesHere => 'You will see updates here';
+
+  @override
+  String get aiReportExtractedInformation => 'AI Report Extracted Information';
+
+  @override
+  String get pleaseReviewTheDetailsExtracted =>
+      'Please review the details extracted from your medical report. You can modify them before starting the donor matching search.';
+
+  @override
+  String get verifiedBloodTypeRequired => 'Verified Blood Type Required';
+
+  @override
+  String get confirmSearchDonors => 'Confirm & Search Donors';
+
+  @override
+  String get refresh => 'Refresh';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get aboutBloodBridge => 'About Blood Bridge';
+
+  @override
+  String get bloodBridgeIsAPlatform =>
+      'Blood Bridge is a platform designed to connect blood donors directly with recipient requests and hospital inventory systems to save lives in emergency situations.';
+
+  @override
+  String get ifYouHaveQuestionsAbout =>
+      'If you have questions about donating blood, account management, or request creation, please visit support.bloodbridge.org or contact our team.';
+
+  @override
+  String get emailSupportBloodbridgeOrg => 'Email: support@bloodbridge.org';
+
+  @override
+  String get phone20123456789 => 'Phone: +20 123 456 789';
+
+  @override
+  String get hours247EmergencySupport => 'Hours: 24/7 emergency support';
+
+  @override
+  String get weValueYourPrivacyYour =>
+      'We value your privacy. Your personal information, contact info, and medical details are securely stored. Location sharing is exclusively used to display active matching requests in your area and is not shared with third parties.';
+
+  @override
+  String get toRegisterAsADonor =>
+      'To register as a donor, you must meet eligibility criteria.';
+
+  @override
+  String get switchToRecipient => 'Switch to Recipient';
+
+  @override
+  String get areYouSureYouWant =>
+      'Are you sure you want to switch your role back to Recipient?';
+
+  @override
+  String get warningThisWillPermanentlyDelete =>
+      'WARNING: This will permanently delete your account. This action is irreversible.';
+
+  @override
+  String get updateBloodInventory => 'Update Blood Inventory';
+
+  @override
+  String get enterCurrentUnitsForEach =>
+      'Enter current units for each blood type';
+
+  @override
+  String get noActiveRequests2 => 'No active requests';
+
+  @override
+  String get settings => 'Settings';
+
+  @override
+  String get bloodBridgeV100 => 'Blood Bridge v1.0.0';
+
+  @override
+  String get userType => 'User Type';
+
+  @override
+  String get connectingLivesInEmergency => 'Connecting lives in emergency';
+
+  @override
+  String get yourInformationIsEncryptedAnd =>
+      'Your information is encrypted and secure';
+
+  @override
+  String get fullName => 'Full Name *';
+
+  @override
+  String get nationalId2 => 'National ID *';
+
+  @override
+  String get gender => 'Gender *';
+
+  @override
+  String get male => 'Male';
+
+  @override
+  String get female => 'Female';
+
+  @override
+  String get phoneNumber => 'Phone Number *';
+
+  @override
+  String get address => 'Address *';
+
+  @override
+  String get city => 'City *';
+
+  @override
+  String get bloodType2 => 'blood type *';
+
+  @override
+  String get weight => 'weight *';
+
+  @override
+  String get medicalConditionsOptional => 'Medical Conditions (Optional)';
+
+  @override
+  String get welcome => 'Welcome';
+
+  @override
+  String get howWouldYouLikeTo => 'How would you like to use Blood Bridge?';
+
+  @override
+  String get tapAgainToContinue => 'Tap again to continue';
+
+  @override
+  String get donors => 'Donors';
+
+  @override
+  String get notAvailable => 'Not Available';
 }

@@ -1315,6 +1315,318 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Request has been cancelled'**
   String get requestCancelledDescription;
+
+  /// No description provided for @noRequestsMatchTheSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'No requests match the selected filters.'**
+  String get noRequestsMatchTheSelected;
+
+  /// No description provided for @logDonationRecord.
+  ///
+  /// In en, this message translates to:
+  /// **'Log Donation Record'**
+  String get logDonationRecord;
+
+  /// No description provided for @bloodBridge.
+  ///
+  /// In en, this message translates to:
+  /// **'Blood Bridge'**
+  String get bloodBridge;
+
+  /// No description provided for @unitsAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'units available'**
+  String get unitsAvailable;
+
+  /// No description provided for @compatibleDonor.
+  ///
+  /// In en, this message translates to:
+  /// **'Compatible Donor'**
+  String get compatibleDonor;
+
+  /// No description provided for @critical.
+  ///
+  /// In en, this message translates to:
+  /// **'Critical'**
+  String get critical;
+
+  /// No description provided for @urgent.
+  ///
+  /// In en, this message translates to:
+  /// **'Urgent'**
+  String get urgent;
+
+  /// No description provided for @available2.
+  ///
+  /// In en, this message translates to:
+  /// **'Available'**
+  String get available2;
+
+  /// No description provided for @markAllRead.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark all read'**
+  String get markAllRead;
+
+  /// No description provided for @noNotificationsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No notifications yet'**
+  String get noNotificationsYet;
+
+  /// No description provided for @youWillSeeUpdatesHere.
+  ///
+  /// In en, this message translates to:
+  /// **'You will see updates here'**
+  String get youWillSeeUpdatesHere;
+
+  /// No description provided for @aiReportExtractedInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Report Extracted Information'**
+  String get aiReportExtractedInformation;
+
+  /// No description provided for @pleaseReviewTheDetailsExtracted.
+  ///
+  /// In en, this message translates to:
+  /// **'Please review the details extracted from your medical report. You can modify them before starting the donor matching search.'**
+  String get pleaseReviewTheDetailsExtracted;
+
+  /// No description provided for @verifiedBloodTypeRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified Blood Type Required'**
+  String get verifiedBloodTypeRequired;
+
+  /// No description provided for @confirmSearchDonors.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm & Search Donors'**
+  String get confirmSearchDonors;
+
+  /// No description provided for @refresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get refresh;
+
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// No description provided for @aboutBloodBridge.
+  ///
+  /// In en, this message translates to:
+  /// **'About Blood Bridge'**
+  String get aboutBloodBridge;
+
+  /// No description provided for @bloodBridgeIsAPlatform.
+  ///
+  /// In en, this message translates to:
+  /// **'Blood Bridge is a platform designed to connect blood donors directly with recipient requests and hospital inventory systems to save lives in emergency situations.'**
+  String get bloodBridgeIsAPlatform;
+
+  /// No description provided for @ifYouHaveQuestionsAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'If you have questions about donating blood, account management, or request creation, please visit support.bloodbridge.org or contact our team.'**
+  String get ifYouHaveQuestionsAbout;
+
+  /// No description provided for @emailSupportBloodbridgeOrg.
+  ///
+  /// In en, this message translates to:
+  /// **'Email: support@bloodbridge.org'**
+  String get emailSupportBloodbridgeOrg;
+
+  /// No description provided for @phone20123456789.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone: +20 123 456 789'**
+  String get phone20123456789;
+
+  /// No description provided for @hours247EmergencySupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Hours: 24/7 emergency support'**
+  String get hours247EmergencySupport;
+
+  /// No description provided for @weValueYourPrivacyYour.
+  ///
+  /// In en, this message translates to:
+  /// **'We value your privacy. Your personal information, contact info, and medical details are securely stored. Location sharing is exclusively used to display active matching requests in your area and is not shared with third parties.'**
+  String get weValueYourPrivacyYour;
+
+  /// No description provided for @toRegisterAsADonor.
+  ///
+  /// In en, this message translates to:
+  /// **'To register as a donor, you must meet eligibility criteria.'**
+  String get toRegisterAsADonor;
+
+  /// No description provided for @switchToRecipient.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to Recipient'**
+  String get switchToRecipient;
+
+  /// No description provided for @areYouSureYouWant.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to switch your role back to Recipient?'**
+  String get areYouSureYouWant;
+
+  /// No description provided for @warningThisWillPermanentlyDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'WARNING: This will permanently delete your account. This action is irreversible.'**
+  String get warningThisWillPermanentlyDelete;
+
+  /// No description provided for @updateBloodInventory.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Blood Inventory'**
+  String get updateBloodInventory;
+
+  /// No description provided for @enterCurrentUnitsForEach.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter current units for each blood type'**
+  String get enterCurrentUnitsForEach;
+
+  /// No description provided for @noActiveRequests2.
+  ///
+  /// In en, this message translates to:
+  /// **'No active requests'**
+  String get noActiveRequests2;
+
+  /// No description provided for @settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
+
+  /// No description provided for @bloodBridgeV100.
+  ///
+  /// In en, this message translates to:
+  /// **'Blood Bridge v1.0.0'**
+  String get bloodBridgeV100;
+
+  /// No description provided for @userType.
+  ///
+  /// In en, this message translates to:
+  /// **'User Type'**
+  String get userType;
+
+  /// No description provided for @connectingLivesInEmergency.
+  ///
+  /// In en, this message translates to:
+  /// **'Connecting lives in emergency'**
+  String get connectingLivesInEmergency;
+
+  /// No description provided for @yourInformationIsEncryptedAnd.
+  ///
+  /// In en, this message translates to:
+  /// **'Your information is encrypted and secure'**
+  String get yourInformationIsEncryptedAnd;
+
+  /// No description provided for @fullName.
+  ///
+  /// In en, this message translates to:
+  /// **'Full Name *'**
+  String get fullName;
+
+  /// No description provided for @nationalId2.
+  ///
+  /// In en, this message translates to:
+  /// **'National ID *'**
+  String get nationalId2;
+
+  /// No description provided for @gender.
+  ///
+  /// In en, this message translates to:
+  /// **'Gender *'**
+  String get gender;
+
+  /// No description provided for @male.
+  ///
+  /// In en, this message translates to:
+  /// **'Male'**
+  String get male;
+
+  /// No description provided for @female.
+  ///
+  /// In en, this message translates to:
+  /// **'Female'**
+  String get female;
+
+  /// No description provided for @phoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number *'**
+  String get phoneNumber;
+
+  /// No description provided for @address.
+  ///
+  /// In en, this message translates to:
+  /// **'Address *'**
+  String get address;
+
+  /// No description provided for @city.
+  ///
+  /// In en, this message translates to:
+  /// **'City *'**
+  String get city;
+
+  /// No description provided for @bloodType2.
+  ///
+  /// In en, this message translates to:
+  /// **'blood type *'**
+  String get bloodType2;
+
+  /// No description provided for @weight.
+  ///
+  /// In en, this message translates to:
+  /// **'weight *'**
+  String get weight;
+
+  /// No description provided for @medicalConditionsOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Medical Conditions (Optional)'**
+  String get medicalConditionsOptional;
+
+  /// No description provided for @welcome.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome'**
+  String get welcome;
+
+  /// No description provided for @howWouldYouLikeTo.
+  ///
+  /// In en, this message translates to:
+  /// **'How would you like to use Blood Bridge?'**
+  String get howWouldYouLikeTo;
+
+  /// No description provided for @tapAgainToContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap again to continue'**
+  String get tapAgainToContinue;
+
+  /// No description provided for @donors.
+  ///
+  /// In en, this message translates to:
+  /// **'Donors'**
+  String get donors;
+
+  /// No description provided for @notAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Not Available'**
+  String get notAvailable;
 }
 
 class _AppLocalizationsDelegate

@@ -96,12 +96,12 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody> {
               children: [
                 SizedBox(height: height * 0.08),
 
-                Text('Welcome', style: TextStyleHelper.h1(context)),
+                Text(context.l10n.welcome, style: TextStyleHelper.h1(context)),
 
                 const SizedBox(height: 8),
 
                 Text(
-                  'How would you like to use Blood Bridge?',
+                  context.l10n.howWouldYouLikeTo,
                   textAlign: TextAlign.center,
                   style: TextStyleHelper.small(context),
                 ),
@@ -142,7 +142,7 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody> {
                   duration: const Duration(milliseconds: 300),
                   opacity: selectedRole != null ? 1 : 0,
                   child: Text(
-                    'Tap again to continue',
+                    context.l10n.tapAgainToContinue,
                     style: TextStyleHelper.small(context),
                   ),
                 ),

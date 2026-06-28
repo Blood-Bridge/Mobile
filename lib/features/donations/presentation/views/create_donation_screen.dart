@@ -74,7 +74,7 @@ class _CreateDonationScreenState extends State<CreateDonationScreen> {
           ),
           onPressed: () => Get.back(),
         ),
-        title: Text('Log Donation Record', style: TextStyleHelper.h1(context)),
+        title: Text(context.l10n.logDonationRecord, style: TextStyleHelper.h1(context)),
       ),
       body: BlocConsumer<DonationsCubit, DonationsState>(
         listener: (context, state) {
@@ -142,7 +142,7 @@ class _CreateDonationScreenState extends State<CreateDonationScreen> {
                     ),
                     SizedBox(height: height * 0.03),
                     Text(
-                      'Donation Date',
+                      context.l10n.donationDate,
                       style: TextStyleHelper.small(context),
                     ),
                     const SizedBox(height: 8),

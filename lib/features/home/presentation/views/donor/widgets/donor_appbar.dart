@@ -52,7 +52,7 @@ class _DonorAppBarState extends State<DonorAppBar> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Blood Bridge', style: TextStyleHelper.h1(context)),
+                    Text(context.l10n.bloodBridge, style: TextStyleHelper.h1(context)),
                     Text(
                       context.l10n.donorDashboard,
                       style: TextStyleHelper.xs(context),

@@ -114,7 +114,7 @@ class _DetectionConfirmationScreenState
                 const SizedBox(height: 24),
                 Center(
                   child: Text(
-                    'AI Report Extracted Information',
+                    context.l10n.aiReportExtractedInformation,
                     style: TextStyleHelper.h2(context),
                     textAlign: TextAlign.center,
                   ),
@@ -122,7 +122,7 @@ class _DetectionConfirmationScreenState
                 const SizedBox(height: 8),
                 Center(
                   child: Text(
-                    'Please review the details extracted from your medical report. You can modify them before starting the donor matching search.',
+                    context.l10n.pleaseReviewTheDetailsExtracted,
                     style: TextStyleHelper.small(
                       context,
                     ).copyWith(color: AppColors.textMuted),
@@ -151,7 +151,7 @@ class _DetectionConfirmationScreenState
                       ),
                       const Divider(height: 32, color: Colors.grey),
                       Text(
-                        'Verified Blood Type Required',
+                        context.l10n.verifiedBloodTypeRequired,
                         style: TextStyleHelper.small(
                           context,
                         ).copyWith(color: AppColors.textMuted),
@@ -216,7 +216,7 @@ class _DetectionConfirmationScreenState
                     child: isLoading
                         ? const CircularProgressIndicator(color: Colors.white)
                         : Text(
-                            'Confirm & Search Donors',
+                            context.l10n.confirmSearchDonors,
                             style: TextStyleHelper.h3(
                               context,
                             ).copyWith(color: AppColors.primaryForeground),

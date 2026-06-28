@@ -1,3 +1,4 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/models/snackbar_type.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
@@ -146,7 +147,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                       ),
                       SizedBox(height: height * 0.01),
                       Text(
-                        "Your information is encrypted and secure",
+                        context.l10n.yourInformationIsEncryptedAnd,
                         style: TextStyleHelper.small(context),
                       ),
                     ],

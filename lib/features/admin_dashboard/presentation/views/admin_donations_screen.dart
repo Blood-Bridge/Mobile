@@ -84,7 +84,7 @@ class _AdminDonationsScreenState extends State<AdminDonationsScreen> {
           ),
           onPressed: () => Get.back(),
         ),
-        title: Text('Manage Donations', style: TextStyleHelper.h1(context)),
+        title: Text(context.l10n.manageDonations, style: TextStyleHelper.h1(context)),
       ),
       body: Column(
         children: [

@@ -24,7 +24,10 @@ class NotificationsScreen extends StatelessWidget {
           ),
           onPressed: () => Get.back(),
         ),
-        title: Text('Notifications', style: TextStyleHelper.h1(context)),
+        title: Text(
+          context.l10n.notifications,
+          style: TextStyleHelper.h1(context),
+        ),
         actions: [
           TextButton(
             onPressed: () {
@@ -37,7 +40,7 @@ class NotificationsScreen extends StatelessWidget {
               );
             },
             child: Text(
-              'Mark all read',
+              context.l10n.markAllRead,
               style: TextStyleHelper.small(
                 context,
               ).copyWith(color: AppColors.primary, fontWeight: FontWeight.bold),
@@ -89,12 +92,12 @@ class NotificationsScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      'No notifications yet',
+                      context.l10n.noNotificationsYet,
                       style: TextStyleHelper.h2(context),
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'You will see updates here',
+                      context.l10n.youWillSeeUpdatesHere,
                       style: TextStyleHelper.bodyMuted(context),
                     ),
                   ],
@@ -197,7 +200,7 @@ class NotificationsScreen extends StatelessWidget {
             );
           }
 
-          return const Center(child: Text('Pull to refresh'));
+          return Center(child: Text(context.l10n.pullToRefresh));
         },
       ),
     );

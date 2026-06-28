@@ -34,7 +34,7 @@ class GoogleButton extends StatelessWidget {
                 ),
                 SizedBox(width: width * 0.03),
                 Text(
-                  context.l10n.continueWithGoogle,
+                  context.l10n.continuewithGoogle,
                   style: TextStyleHelper.button(context),
                 ),
               ],
