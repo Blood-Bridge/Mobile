@@ -190,10 +190,7 @@ class DonorCubit extends Cubit<DonorState> {
     emit(DonorsLoading());
     isLoading = true;
     try {
-      await DioHelper.postData(
-        path: "Donors/on-the-way",
-        body: {"requestId": requestId},
-      );
+      await DioHelper.postData(path: "Donors/on-the-way/$requestId", body: {});
       _updateLocalStatus(requestId, 'OnTheWay');
       emit(DonorsSuccess({"onTheWayRequestId": requestId}));
     } catch (e) {
@@ -210,20 +207,24 @@ class DonorCubit extends Cubit<DonorState> {
     _lastRequestId = requestId;
     emit(DonorsLoading());
     isLoading = true;
+
     try {
-      await DioHelper.postData(
-        path: "Donors/arrived",
-        body: {"requestId": requestId},
-      );
+      await DioHelper.postData(path: "Donors/arrived/$requestId");
+
       _updateLocalStatus(requestId, 'Arrived');
+
       emit(DonorsSuccess({"arrivedRequestId": requestId}));
     } catch (e) {
       if (e is DioException) {
+        print("STATUS: ${e.response?.statusCode}");
+        print("BODY: ${e.response?.data}");
+
         emit(DonorsError(_extractError(e, "Error marking arrival")));
       } else {
         emit(DonorsError("Unexpected error"));
       }
     }
+
     isLoading = false;
   }
 

@@ -13,6 +13,7 @@ import 'package:blood_bridge/features/admin_dashboard/presentation/views/system_
 import 'package:blood_bridge/features/admin_dashboard/presentation/views/admin_donors_screen.dart';
 import 'package:blood_bridge/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:blood_bridge/features/home/presentation/views/donor/cubit/cubit/donor_cubit.dart';
+import 'package:blood_bridge/features/hospital_profile/presentation/cubit/hospital_profile_cubit.dart';
 import 'package:blood_bridge/features/permissions/presntation/cubit/permissions_cubit.dart';
 import 'package:blood_bridge/features/splash/presentaion/views/splash_screen.dart';
 import 'package:blood_bridge/features/hospital_dashboard/presentation/views/hospital_dashboard_screen.dart';
@@ -100,6 +101,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => RecommendationCubit()),
         BlocProvider(create: (_) => SwitchRoleCubit()),
         BlocProvider(create: (_) => DeleteAccountCubit()),
+        BlocProvider(create: (_) => HospitalProfileCubit()),
       ],
       child: BlocBuilder<LanguageCubit, LanguageState>(
         builder: (context, state) {

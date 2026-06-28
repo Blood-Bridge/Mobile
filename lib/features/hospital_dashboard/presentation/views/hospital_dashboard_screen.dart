@@ -2,6 +2,8 @@ import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/features/hospital_dashboard/presentation/cubit/hospital_dashboard_cubit.dart';
+import 'package:blood_bridge/features/hospital_profile/presentation/cubit/hospital_profile_cubit.dart';
+import 'package:blood_bridge/features/hospital_profile/presentation/views/hospital_profile_screen.dart';
 import 'package:blood_bridge/features/map/presentation/view/map_screen.dart';
 import 'package:blood_bridge/features/setting/presentation/views/setting_view.dart';
 import 'package:flutter/material.dart';
@@ -174,6 +176,13 @@ class _HospitalAppBar extends StatelessWidget {
         ],
       ),
       actions: [
+        IconButton(
+          icon: Icon(Icons.person_outline, color: AppColors.textMuted),
+          onPressed: () {
+            context.read<HospitalProfileCubit>().fetchProfile();
+            Get.to(() => const HospitalProfileScreen());
+          },
+        ),
         IconButton(
           icon: Icon(Icons.settings_outlined, color: AppColors.textMuted),
           onPressed: () {
