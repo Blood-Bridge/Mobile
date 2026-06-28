@@ -193,8 +193,7 @@ class ReceiverCubit extends Cubit<ReceiverState> {
         safeEmit(ReceiverLoaded(List.from(_requests)));
       }
     } on DioException catch (e) {
-<<<<<<< HEAD
-      emit(ReceiverError(_extractError(e, 'Cancel failed')));
+      safeEmit(ReceiverError(_extractError(e, 'Cancel failed')));
     }
   }
 
@@ -230,9 +229,6 @@ class ReceiverCubit extends Cubit<ReceiverState> {
       emit(ReceiverLoaded(List.from(_requests)));
     } catch (_) {
       acceptedDonors[requestId] = null;
-=======
-      safeEmit(ReceiverError(_extractError(e, 'Cancel failed')));
->>>>>>> af8f4df78a9888ef9c50bafab98289044af4a7c6
     }
   }
 
@@ -247,25 +243,17 @@ class ReceiverCubit extends Cubit<ReceiverState> {
         path: 'Requests/confirm-detection',
         body: {'requestId': requestId, 'bloodType': bloodType},
       );
-<<<<<<< HEAD
 
-      if (response.statusCode == 200) {
-        emit(ReceiverConfirmDetectionSuccess());
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        safeEmit(ReceiverConfirmDetectionSuccess());
 
-        // Refresh requests after confirmation
         await loadActiveRequests();
       } else {
         final msg = response.data is Map
             ? response.data['message']?.toString() ?? 'Confirmation failed'
             : 'Confirmation failed';
 
-        emit(ReceiverError(msg));
-=======
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        safeEmit(ReceiverConfirmDetectionSuccess());
-      } else {
-        safeEmit(ReceiverError('Confirmation failed'));
->>>>>>> af8f4df78a9888ef9c50bafab98289044af4a7c6
+        safeEmit(ReceiverError(msg));
       }
     } on DioException catch (e) {
       safeEmit(ReceiverError(_extractError(e, 'Confirmation failed')));
@@ -274,27 +262,6 @@ class ReceiverCubit extends Cubit<ReceiverState> {
     }
   }
 
-<<<<<<< HEAD
-=======
-  Future<void> fetchAcceptedDonor(int requestId) async {
-    try {
-      final resp = await DioHelper.getData(path: 'Requests/$requestId/donors');
-      final dynamic data = resp.data?['data'];
-
-      if (data is List && data.isNotEmpty) {
-        acceptedDonors[requestId] = data.first;
-      } else if (data is Map) {
-        acceptedDonors[requestId] = data;
-      } else {
-        acceptedDonors[requestId] = null;
-      }
-      safeEmit(ReceiverLoaded(List.from(_requests)));
-    } catch (_) {
-      acceptedDonors[requestId] = null;
-    }
-  }
-
->>>>>>> af8f4df78a9888ef9c50bafab98289044af4a7c6
   Future<void> loadAcceptedRequests() async {
     emit(ReceiverLoading());
 
@@ -340,10 +307,7 @@ class ReceiverCubit extends Cubit<ReceiverState> {
 
         _requests = items.where((req) {
           final s = req.status.toLowerCase();
-<<<<<<< HEAD
 
-=======
->>>>>>> af8f4df78a9888ef9c50bafab98289044af4a7c6
           return s == 'accepted' ||
               s == 'ontheway' ||
               s == 'on_the_way' ||
