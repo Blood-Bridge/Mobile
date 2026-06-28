@@ -1,3 +1,5 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/models/snackbar_type.dart';
 import 'package:blood_bridge/core/widgets/custom_snackbar.dart';
 import 'package:blood_bridge/features/home/presentation/views/donor/donor_screen.dart';
@@ -151,7 +153,7 @@ class _MapScreenBodyState extends State<MapScreenBody>
                           _cubit.buildRouteTo(marker);
                         },
                         icon: const Icon(Icons.directions),
-                        label: const Text("Show Route"),
+                        label: Text(context.l10n.showRoute),
                         style: OutlinedButton.styleFrom(
                           foregroundColor: Colors.white,
                           side: const BorderSide(color: Colors.white54),
@@ -168,7 +170,7 @@ class _MapScreenBodyState extends State<MapScreenBody>
                             _contactDonorWithNumber(marker.phone!);
                           },
                           icon: const Icon(Icons.phone),
-                          label: const Text("Call"),
+                          label: Text(context.l10n.call),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.green,
                             foregroundColor: Colors.white,

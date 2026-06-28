@@ -1,10 +1,11 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'widgets/admin_section.dart';
 import 'widgets/admin_setting_item.dart';
 
 class BackupScreen extends StatefulWidget {
-  const BackupScreen({super.key});
+  BackupScreen({super.key});
 
   @override
   State<BackupScreen> createState() => _BackupScreenState();
@@ -18,13 +19,11 @@ class _BackupScreenState extends State<BackupScreen> {
 
   void _triggerBackup(bool isCloud) async {
     Get.dialog(
-      const Center(
-        child: CircularProgressIndicator(color: Color(0xFFC97777)),
-      ),
+      Center(child: CircularProgressIndicator(color: Color(0xFFC97777))),
       barrierDismissible: false,
     );
 
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 2));
     Get.back(); // Dismiss progress dialog
 
     setState(() {
@@ -41,15 +40,18 @@ class _BackupScreenState extends State<BackupScreen> {
       backgroundColor: Colors.green[800],
       colorText: Colors.white,
       snackPosition: SnackPosition.BOTTOM,
-      margin: const EdgeInsets.all(16),
+      margin: EdgeInsets.all(16),
     );
   }
 
   void _showRetentionDialog() {
     Get.dialog(
       SimpleDialog(
-        backgroundColor: const Color(0xFF121212),
-        title: const Text('Retention Period', style: TextStyle(color: Colors.white)),
+        backgroundColor: Color(0xFF121212),
+        title: Text(
+          context.l10n.retentionPeriod,
+          style: TextStyle(color: Colors.white),
+        ),
         children: [7, 15, 30, 90].map((days) {
           return SimpleDialogOption(
             onPressed: () {
@@ -63,14 +65,14 @@ class _BackupScreenState extends State<BackupScreen> {
                 backgroundColor: Colors.green[800],
                 colorText: Colors.white,
                 snackPosition: SnackPosition.BOTTOM,
-                margin: const EdgeInsets.all(16),
+                margin: EdgeInsets.all(16),
               );
             },
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
+              padding: EdgeInsets.symmetric(vertical: 8),
               child: Text(
                 '$days days',
-                style: const TextStyle(color: Colors.white, fontSize: 16),
+                style: TextStyle(color: Colors.white, fontSize: 16),
               ),
             ),
           );
@@ -82,16 +84,16 @@ class _BackupScreenState extends State<BackupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0A0A0A),
+      backgroundColor: Color(0xFF0A0A0A),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0A0A0A),
+        backgroundColor: Color(0xFF0A0A0A),
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.white, size: 18),
+          icon: Icon(Icons.arrow_back_ios, color: Colors.white, size: 18),
           onPressed: () => Get.back(),
         ),
-        title: const Text(
-          'Backup Database',
+        title: Text(
+          context.l10n.backupDatabase,
           style: TextStyle(
             color: Colors.white,
             fontSize: 24,
@@ -101,47 +103,44 @@ class _BackupScreenState extends State<BackupScreen> {
         ),
         centerTitle: false,
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1.5),
-          child: Container(
-            color: const Color(0xFF262626),
-            height: 1.5,
-          ),
+          preferredSize: Size.fromHeight(1.5),
+          child: Container(color: Color(0xFF262626), height: 1.5),
         ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AdminSection(
-              title: 'BACKUP OPTIONS',
+              title: context.l10n.backupOptions,
               children: [
                 AdminSettingItem(
                   icon: Icons.cloud_upload_outlined,
-                  iconBgColor: const Color(0xFF2B7FFF).withOpacity(0.2),
-                  title: 'Backup to Cloud',
+                  iconBgColor: Color(0xFF2B7FFF).withOpacity(0.2),
+                  title: context.l10n.backupToCloud,
                   subtitle: 'Last backup: $_lastCloudBackup',
                   hasArrow: true,
                   onTap: () => _triggerBackup(true),
                 ),
                 AdminSettingItem(
                   icon: Icons.sd_storage_outlined,
-                  iconBgColor: const Color(0xFFAD46FF).withOpacity(0.2),
-                  title: 'Local Backup',
+                  iconBgColor: Color(0xFFAD46FF).withOpacity(0.2),
+                  title: context.l10n.localBackup,
                   subtitle: 'Last backup: $_lastLocalBackup',
                   hasArrow: true,
                   onTap: () => _triggerBackup(false),
                 ),
               ],
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
             AdminSection(
-              title: 'AUTOMATIC BACKUP',
+              title: context.l10n.automaticBackup,
               children: [
                 AdminSettingItem(
                   icon: Icons.auto_mode_outlined,
-                  iconBgColor: const Color(0xFF00C950).withOpacity(0.2),
-                  title: 'Daily Backup',
+                  iconBgColor: Color(0xFF00C950).withOpacity(0.2),
+                  title: context.l10n.dailyBackup,
                   subtitle: _dailyBackup ? 'Enabled' : 'Disabled',
                   trailing: _buildSwitch(
                     _dailyBackup,
@@ -153,22 +152,22 @@ class _BackupScreenState extends State<BackupScreen> {
                         backgroundColor: Colors.green[800],
                         colorText: Colors.white,
                         snackPosition: SnackPosition.BOTTOM,
-                        margin: const EdgeInsets.all(16),
+                        margin: EdgeInsets.all(16),
                       );
                     }),
                   ),
                 ),
                 AdminSettingItem(
                   icon: Icons.history_outlined,
-                  iconBgColor: const Color(0xFFF0B100).withOpacity(0.2),
-                  title: 'Retention Period',
+                  iconBgColor: Color(0xFFF0B100).withOpacity(0.2),
+                  title: context.l10n.retentionPeriod,
                   subtitle: '$_retentionDays days',
                   hasArrow: true,
                   onTap: () => _showRetentionDialog(),
                 ),
               ],
             ),
-            const SizedBox(height: 32),
+            SizedBox(height: 32),
             SizedBox(
               width: double.infinity,
               height: 56,
@@ -176,30 +175,48 @@ class _BackupScreenState extends State<BackupScreen> {
                 onPressed: () {
                   Get.bottomSheet(
                     Container(
-                      padding: const EdgeInsets.all(20),
-                      decoration: const BoxDecoration(
+                      padding: EdgeInsets.all(20),
+                      decoration: BoxDecoration(
                         color: Color(0xFF121212),
-                        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(20),
+                        ),
                       ),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Text(
-                            'Select Backup Type',
-                            style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                          Text(
+                            context.l10n.selectBackupType,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                          const SizedBox(height: 16),
+                          SizedBox(height: 16),
                           ListTile(
-                            leading: const Icon(Icons.cloud_upload_outlined, color: Color(0xFF2B7FFF)),
-                            title: const Text('Cloud Backup', style: TextStyle(color: Colors.white)),
+                            leading: Icon(
+                              Icons.cloud_upload_outlined,
+                              color: Color(0xFF2B7FFF),
+                            ),
+                            title: Text(
+                              context.l10n.cloudBackup,
+                              style: TextStyle(color: Colors.white),
+                            ),
                             onTap: () {
                               Get.back();
                               _triggerBackup(true);
                             },
                           ),
                           ListTile(
-                            leading: const Icon(Icons.sd_storage_outlined, color: Color(0xFFAD46FF)),
-                            title: const Text('Local Backup', style: TextStyle(color: Colors.white)),
+                            leading: Icon(
+                              Icons.sd_storage_outlined,
+                              color: Color(0xFFAD46FF),
+                            ),
+                            title: Text(
+                              context.l10n.localBackup,
+                              style: TextStyle(color: Colors.white),
+                            ),
                             onTap: () {
                               Get.back();
                               _triggerBackup(false);
@@ -211,13 +228,13 @@ class _BackupScreenState extends State<BackupScreen> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFC97777),
+                  backgroundColor: Color(0xFFC97777),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
                 ),
-                child: const Text(
-                  'Create New Backup',
+                child: Text(
+                  context.l10n.createNewBackup,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
@@ -238,7 +255,7 @@ class _BackupScreenState extends State<BackupScreen> {
       child: Switch(
         value: value,
         onChanged: onChanged,
-        activeColor: const Color(0xFFC97777),
+        activeColor: Color(0xFFC97777),
       ),
     );
   }

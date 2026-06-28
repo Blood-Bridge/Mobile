@@ -1,1 +1,559 @@
-{}
+{
+  "@@locale": "en",
+  "@@last_modified": "2026-06-28T15:32:44.831799",
+  "about": "About",
+  "@about": {
+    "description": "Used in lib\\features\\setting\\presentation\\views\\widgets\\setting_view_body.dart line 881",
+    "type": "text"
+  },
+  "accept": "Accept",
+  "@accept": {
+    "description": "Used in lib\\features\\home\\presentation\\views\\donor\\widgets\\requests_container.dart line 147",
+    "type": "text"
+  },
+  "activeRequests": "Active Requests",
+  "@activeRequests": {
+    "description": "Used in lib\\features\\hospital_dashboard\\presentation\\views\\hospital_dashboard_screen.dart line 119 (+2 more)",
+    "type": "text"
+  },
+  "adminDashboard": "Admin Dashboard",
+  "@adminDashboard": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\admin_dashboard_screen.dart line 22",
+    "type": "text"
+  },
+  "arrived": "Arrived",
+  "@arrived": {
+    "description": "Used in lib\\features\\map\\presentation\\view\\widgets\\bottom_panel.dart line 204",
+    "type": "text"
+  },
+  "automaticBackup": "AUTOMATIC BACKUP",
+  "@automaticBackup": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\backup_screen.dart line 139",
+    "type": "text"
+  },
+  "availableDonors": "Available Donors",
+  "@availableDonors": {
+    "description": "Used in lib\\features\\hospital_dashboard\\presentation\\views\\hospital_dashboard_screen.dart line 218",
+    "type": "text"
+  },
+  "backupDatabase": "Backup Database",
+  "@backupDatabase": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\admin_dashboard_screen.dart line 173 (+1 more)",
+    "type": "text"
+  },
+  "backupOptions": "BACKUP OPTIONS",
+  "@backupOptions": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\backup_screen.dart line 117",
+    "type": "text"
+  },
+  "backupToCloud": "Backup to Cloud",
+  "@backupToCloud": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\backup_screen.dart line 122",
+    "type": "text"
+  },
+  "bloodInventory": "Blood Inventory",
+  "@bloodInventory": {
+    "description": "Used in lib\\features\\setting\\presentation\\views\\widgets\\setting_view_body.dart line 856",
+    "type": "text"
+  },
+  "bloodRequestId": "Blood Request ID",
+  "@bloodRequestId": {
+    "description": "Used in lib\\features\\donations\\presentation\\views\\create_donation_screen.dart line 102",
+    "type": "text"
+  },
+  "bloodStockOverview": "Blood Stock Overview",
+  "@bloodStockOverview": {
+    "description": "Used in lib\\features\\hospital_dashboard\\presentation\\views\\hospital_dashboard_screen.dart line 114",
+    "type": "text"
+  },
+  "call": "Call",
+  "@call": {
+    "description": "Used in lib\\features\\map\\presentation\\view\\widgets\\map_screen_body.dart line 171",
+    "type": "text"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\admin_dashboard_screen.dart line 378 (+4 more)",
+    "type": "text"
+  },
+  "cancelAcceptance": "Cancel Acceptance",
+  "@cancelAcceptance": {
+    "description": "Used in lib\\features\\home\\presentation\\views\\donor\\widgets\\requests_container.dart line 230",
+    "type": "text"
+  },
+  "cancelRequest": "Cancel Request",
+  "@cancelRequest": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\admin_requests_screen.dart line 288 (+1 more)",
+    "type": "text"
+  },
+  "cloudBackup": "Cloud Backup",
+  "@cloudBackup": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\backup_screen.dart line 194",
+    "type": "text"
+  },
+  "confirmNewPassword": "Confirm New Password",
+  "@confirmNewPassword": {
+    "description": "Used in lib\\features\\auth\\presentation\\views\\reset_password_screen.dart line 93",
+    "type": "text"
+  },
+  "contact": "Contact",
+  "@contact": {
+    "description": "Used in lib\\features\\map\\presentation\\view\\widgets\\bottom_panel.dart line 134",
+    "type": "text"
+  },
+  "contactSupport": "Contact Support",
+  "@contactSupport": {
+    "description": "Used in lib\\features\\setting\\presentation\\views\\widgets\\setting_view_body.dart line 878",
+    "type": "text"
+  },
+  "createNewBackup": "Create New Backup",
+  "@createNewBackup": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\backup_screen.dart line 220",
+    "type": "text"
+  },
+  "currentRole": "Current Role",
+  "@currentRole": {
+    "description": "Used in lib\\features\\setting\\presentation\\views\\widgets\\setting_view_body.dart line 830",
+    "type": "text"
+  },
+  "dailyBackup": "Daily Backup",
+  "@dailyBackup": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\backup_screen.dart line 144",
+    "type": "text"
+  },
+  "dangerZone": "DANGER ZONE",
+  "@dangerZone": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\admin_dashboard_screen.dart line 191",
+    "type": "text"
+  },
+  "darkMode": "Dark Mode",
+  "@darkMode": {
+    "description": "Used in lib\\features\\setting\\presentation\\views\\widgets\\setting_view_body.dart line 817",
+    "type": "text"
+  },
+  "dateFormat": "Date Format",
+  "@dateFormat": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\language_settings_screen.dart line 54",
+    "type": "text"
+  },
+  "dateOfBirth": "Date of Birth *",
+  "@dateOfBirth": {
+    "description": "Used in lib\\features\\user_information\\presentation\\views\\widgets\\first_info_screen.dart line 49",
+    "type": "text"
+  },
+  "decline": "Decline",
+  "@decline": {
+    "description": "Used in lib\\features\\home\\presentation\\views\\donor\\widgets\\requests_container.dart line 159",
+    "type": "text"
+  },
+  "delete": "Delete",
+  "@delete": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\admin_donations_screen.dart line 335",
+    "type": "text"
+  },
+  "deleteAccount": "Delete Account",
+  "@deleteAccount": {
+    "description": "Used in lib\\features\\setting\\presentation\\views\\widgets\\setting_view_body.dart line 906",
+    "type": "text"
+  },
+  "deleteDonationRecord": "Delete Donation Record",
+  "@deleteDonationRecord": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\admin_donations_screen.dart line 323",
+    "type": "text"
+  },
+  "deletePermanently": "Delete Permanently",
+  "@deletePermanently": {
+    "description": "Used in lib\\features\\setting\\presentation\\views\\widgets\\setting_view_body.dart line 464",
+    "type": "text"
+  },
+  "deleteRecord": "Delete Record",
+  "@deleteRecord": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\admin_donations_screen.dart line 287",
+    "type": "text"
+  },
+  "donateBlood": "Donate Blood",
+  "@donateBlood": {
+    "description": "Used in lib\\features\\welcome\\presentation\\views\\widgets\\welcome_view_body.dart line 115",
+    "type": "text"
+  },
+  "donationReminders": "Donation Reminders",
+  "@donationReminders": {
+    "description": "Used in lib\\features\\setting\\presentation\\views\\widgets\\notification_section.dart line 34 (+1 more)",
+    "type": "text"
+  },
+  "donor": "Donor",
+  "@donor": {
+    "description": "Used in lib\\features\\setting\\presentation\\views\\widgets\\user_type_switcher.dart line 52",
+    "type": "text"
+  },
+  "email": "Email",
+  "@email": {
+    "description": "Used in lib\\features\\auth\\presentation\\views\\login_screen.dart line 73 (+1 more)",
+    "type": "text"
+  },
+  "emailAddress": "Email Address",
+  "@emailAddress": {
+    "description": "Used in lib\\features\\auth\\presentation\\views\\reset_password_screen.dart line 70",
+    "type": "text"
+  },
+  "emailNotifications": "Email Notifications",
+  "@emailNotifications": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\admin_dashboard_screen.dart line 140",
+    "type": "text"
+  },
+  "emergencyAlerts": "Emergency Alerts",
+  "@emergencyAlerts": {
+    "description": "Used in lib\\features\\setting\\presentation\\views\\widgets\\notification_section.dart line 19 (+1 more)",
+    "type": "text"
+  },
+  "english": "English",
+  "@english": {
+    "description": "Used in lib\\features\\setting\\presentation\\views\\widgets\\language_selector.dart line 39",
+    "type": "text"
+  },
+  "enterCaseDetailsEGPostOperativeCareAccidentLeukemiaTreatment": "Enter case details (e.g. post-operative care, accident, leukemia treatment...)",
+  "@enterCaseDetailsEGPostOperativeCareAccidentLeukemiaTreatment": {
+    "description": "Used in lib\\features\\home\\presentation\\views\\reciver\\widgets\\submit_request_sheet.dart line 284",
+    "type": "text"
+  },
+  "enterNationalIdNumber": "Enter national ID number",
+  "@enterNationalIdNumber": {
+    "description": "Used in lib\\features\\user_information\\presentation\\views\\widgets\\first_info_screen.dart line 43",
+    "type": "text"
+  },
+  "enterWeight": "Enter weight",
+  "@enterWeight": {
+    "description": "Used in lib\\features\\user_information\\presentation\\views\\widgets\\third_info_screen.dart line 64",
+    "type": "text"
+  },
+  "enterYourAddress": "Enter your address",
+  "@enterYourAddress": {
+    "description": "Used in lib\\features\\user_information\\presentation\\views\\widgets\\second_info_screen.dart line 40",
+    "type": "text"
+  },
+  "enterYourFullName": "Enter your full name",
+  "@enterYourFullName": {
+    "description": "Used in lib\\features\\user_information\\presentation\\views\\widgets\\first_info_screen.dart line 34",
+    "type": "text"
+  },
+  "enterYourMedicalConditions": "Enter your medical conditions",
+  "@enterYourMedicalConditions": {
+    "description": "Used in lib\\features\\user_information\\presentation\\views\\widgets\\third_info_screen.dart line 79",
+    "type": "text"
+  },
+  "getStarted": "Get Started",
+  "@getStarted": {
+    "description": "Used in lib\\features\\on_boarding\\presentaion\\views\\widgets\\on_boarder_view_body.dart line 85",
+    "type": "text"
+  },
+  "helpCenter": "Help Center",
+  "@helpCenter": {
+    "description": "Used in lib\\features\\setting\\presentation\\views\\widgets\\setting_view_body.dart line 876",
+    "type": "text"
+  },
+  "hospital": "Hospital",
+  "@hospital": {
+    "description": "Used in lib\\features\\welcome\\presentation\\views\\widgets\\welcome_view_body.dart line 132",
+    "type": "text"
+  },
+  "hospitalId": "Hospital ID",
+  "@hospitalId": {
+    "description": "Used in lib\\features\\donations\\presentation\\views\\create_donation_screen.dart line 113",
+    "type": "text"
+  },
+  "localBackup": "Local Backup",
+  "@localBackup": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\backup_screen.dart line 130 (+1 more)",
+    "type": "text"
+  },
+  "locationAccess": "Location Access",
+  "@locationAccess": {
+    "description": "Used in lib\\features\\permissions\\presntation\\views\\permissions_screen.dart line 95",
+    "type": "text"
+  },
+  "locationSharing": "Location Sharing",
+  "@locationSharing": {
+    "description": "Used in lib\\features\\setting\\presentation\\views\\widgets\\privacy_section.dart line 19 (+1 more)",
+    "type": "text"
+  },
+  "maintenanceMode": "Maintenance Mode",
+  "@maintenanceMode": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\admin_dashboard_screen.dart line 197",
+    "type": "text"
+  },
+  "manageDonations": "Manage Donations",
+  "@manageDonations": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\admin_dashboard_screen.dart line 102",
+    "type": "text"
+  },
+  "manageDonors": "Manage Donors",
+  "@manageDonors": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\admin_dashboard_screen.dart line 86",
+    "type": "text"
+  },
+  "manageRequests": "Manage Requests",
+  "@manageRequests": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\admin_dashboard_screen.dart line 94",
+    "type": "text"
+  },
+  "medicalHistory": "Medical History",
+  "@medicalHistory": {
+    "description": "Used in lib\\features\\setting\\presentation\\views\\widgets\\setting_view_body.dart line 325",
+    "type": "text"
+  },
+  "medicalInformation": "Medical Information",
+  "@medicalInformation": {
+    "description": "Used in lib\\features\\profile\\presentation\\views\\profile_screen.dart line 106",
+    "type": "text"
+  },
+  "myDonations": "My Donations",
+  "@myDonations": {
+    "description": "Used in lib\\features\\setting\\presentation\\views\\widgets\\setting_view_body.dart line 843",
+    "type": "text"
+  },
+  "nationalId": "National ID",
+  "@nationalId": {
+    "description": "Used in lib\\features\\setting\\presentation\\views\\widgets\\setting_view_body.dart line 298",
+    "type": "text"
+  },
+  "navigate": "Navigate",
+  "@navigate": {
+    "description": "Used in lib\\features\\map\\presentation\\view\\widgets\\bottom_panel.dart line 152",
+    "type": "text"
+  },
+  "nearbyAvailableDonors": "Nearby Available Donors",
+  "@nearbyAvailableDonors": {
+    "description": "Used in lib\\features\\hospital_dashboard\\presentation\\views\\hospital_dashboard_screen.dart line 127",
+    "type": "text"
+  },
+  "newPassword": "New Password",
+  "@newPassword": {
+    "description": "Used in lib\\features\\auth\\presentation\\views\\reset_password_screen.dart line 82",
+    "type": "text"
+  },
+  "no": "No",
+  "@no": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\admin_requests_screen.dart line 329 (+1 more)",
+    "type": "text"
+  },
+  "noneDiabetesEtc": "None, diabetes, etc.",
+  "@noneDiabetesEtc": {
+    "description": "Used in lib\\features\\setting\\presentation\\views\\widgets\\setting_view_body.dart line 327",
+    "type": "text"
+  },
+  "notifications": "Notifications",
+  "@notifications": {
+    "description": "Used in lib\\features\\permissions\\presntation\\views\\permissions_screen.dart line 107",
+    "type": "text"
+  },
+  "password": "Password",
+  "@password": {
+    "description": "Used in lib\\features\\auth\\presentation\\views\\login_screen.dart line 84 (+1 more)",
+    "type": "text"
+  },
+  "personalDetails": "Personal Details",
+  "@personalDetails": {
+    "description": "Used in lib\\features\\profile\\presentation\\views\\profile_screen.dart line 123",
+    "type": "text"
+  },
+  "privacyPolicy": "Privacy Policy",
+  "@privacyPolicy": {
+    "description": "Used in lib\\features\\setting\\presentation\\views\\widgets\\setting_view_body.dart line 890",
+    "type": "text"
+  },
+  "profile": "Profile",
+  "@profile": {
+    "description": "Used in lib\\features\\home\\presentation\\views\\donor\\donor_screen.dart line 33 (+1 more)",
+    "type": "text"
+  },
+  "profileVisibility": "Profile Visibility",
+  "@profileVisibility": {
+    "description": "Used in lib\\features\\setting\\presentation\\views\\widgets\\privacy_section.dart line 26 (+1 more)",
+    "type": "text"
+  },
+  "recipient": "Recipient",
+  "@recipient": {
+    "description": "Used in lib\\features\\setting\\presentation\\views\\widgets\\user_type_switcher.dart line 62",
+    "type": "text"
+  },
+  "refreshData": "Refresh Data",
+  "@refreshData": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\admin_dashboard_screen.dart line 239",
+    "type": "text"
+  },
+  "requestBlood": "Request Blood",
+  "@requestBlood": {
+    "description": "Used in lib\\features\\welcome\\presentation\\views\\widgets\\welcome_view_body.dart line 124",
+    "type": "text"
+  },
+  "requestNotifications": "Request Notifications",
+  "@requestNotifications": {
+    "description": "Used in lib\\features\\setting\\presentation\\views\\widgets\\notification_section.dart line 26 (+1 more)",
+    "type": "text"
+  },
+  "resetEverything": "Reset Everything",
+  "@resetEverything": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\admin_dashboard_screen.dart line 393",
+    "type": "text"
+  },
+  "resetSystem": "Reset System",
+  "@resetSystem": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\admin_dashboard_screen.dart line 215 (+1 more)",
+    "type": "text"
+  },
+  "resetToken": "Reset Token",
+  "@resetToken": {
+    "description": "Used in lib\\features\\auth\\presentation\\views\\reset_password_screen.dart line 76",
+    "type": "text"
+  },
+  "retentionPeriod": "Retention Period",
+  "@retentionPeriod": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\backup_screen.dart line 52 (+1 more)",
+    "type": "text"
+  },
+  "retry": "Retry",
+  "@retry": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\admin_donations_screen.dart line 207 (+12 more)",
+    "type": "text"
+  },
+  "saveInventory": "Save Inventory",
+  "@saveInventory": {
+    "description": "Used in lib\\features\\setting\\presentation\\views\\widgets\\setting_view_body.dart line 601",
+    "type": "text"
+  },
+  "searchRadius": "Search Radius",
+  "@searchRadius": {
+    "description": "Used in lib\\features\\setting\\presentation\\views\\widgets\\setting_view_body.dart line 823",
+    "type": "text"
+  },
+  "selectBackupType": "Select Backup Type",
+  "@selectBackupType": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\backup_screen.dart line 188",
+    "type": "text"
+  },
+  "selectLanguage": "SELECT LANGUAGE",
+  "@selectLanguage": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\language_settings_screen.dart line 39",
+    "type": "text"
+  },
+  "sessionTimeout": "Session Timeout",
+  "@sessionTimeout": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\admin_dashboard_screen.dart line 125 (+1 more)",
+    "type": "text"
+  },
+  "showRoute": "Show Route",
+  "@showRoute": {
+    "description": "Used in lib\\features\\map\\presentation\\view\\widgets\\map_screen_body.dart line 154",
+    "type": "text"
+  },
+  "signIn": "Sign In",
+  "@signIn": {
+    "description": "Used in lib\\features\\auth\\presentation\\views\\login_screen.dart line 111",
+    "type": "text"
+  },
+  "signOut": "Sign Out",
+  "@signOut": {
+    "description": "Used in lib\\features\\setting\\presentation\\views\\widgets\\setting_view_body.dart line 898",
+    "type": "text"
+  },
+  "signUp": "Sign Up",
+  "@signUp": {
+    "description": "Used in lib\\features\\auth\\presentation\\views\\sign_up_screen.dart line 103",
+    "type": "text"
+  },
+  "smsNotifications": "SMS Notifications",
+  "@smsNotifications": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\admin_dashboard_screen.dart line 153",
+    "type": "text"
+  },
+  "switchh": "Switch",
+  "@switchh": {
+    "description": "Used in lib\\features\\setting\\presentation\\views\\widgets\\setting_view_body.dart line 397 (+1 more)",
+    "type": "text"
+  },
+  "switchToDonor": "Switch to Donor",
+  "@switchToDonor": {
+    "description": "Used in lib\\features\\setting\\presentation\\views\\widgets\\user_type_switcher.dart line 82",
+    "type": "text"
+  },
+  "systemLanguage": "System Language",
+  "@systemLanguage": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\admin_dashboard_screen.dart line 117 (+1 more)",
+    "type": "text"
+  },
+  "systemLogs": "System Logs",
+  "@systemLogs": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\system_logs_screen.dart line 15",
+    "type": "text"
+  },
+  "text072": "العربية",
+  "@text072": {
+    "description": "Used in lib\\features\\setting\\presentation\\views\\widgets\\language_selector.dart line 45",
+    "type": "text"
+  },
+  "text100": "Cancel",
+  "@text100": {
+    "description": "Used in lib\\features\\setting\\presentation\\views\\widgets\\user_type_switcher.dart line 89",
+    "type": "text"
+  },
+  "text101": "Confirm",
+  "@text101": {
+    "description": "Used in lib\\features\\setting\\presentation\\views\\widgets\\user_type_switcher.dart line 104",
+    "type": "text"
+  },
+  "text20123456789": "+20 123456789",
+  "@text20123456789": {
+    "description": "Used in lib\\features\\user_information\\presentation\\views\\widgets\\second_info_screen.dart line 31",
+    "type": "text"
+  },
+  "thisWillCompletelyClearTheSystemDatabaseAndLogFilesThisActio": "This will completely clear the system database and log files. This action CANNOT be undone.",
+  "@thisWillCompletelyClearTheSystemDatabaseAndLogFilesThisActio": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\admin_dashboard_screen.dart line 372",
+    "type": "text"
+  },
+  "timeFormat": "Time Format",
+  "@timeFormat": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\language_settings_screen.dart line 61",
+    "type": "text"
+  },
+  "totalStock": "Total Stock",
+  "@totalStock": {
+    "description": "Used in lib\\features\\hospital_dashboard\\presentation\\views\\hospital_dashboard_screen.dart line 204",
+    "type": "text"
+  },
+  "urgencyLevel": "Urgency Level",
+  "@urgencyLevel": {
+    "description": "Used in lib\\features\\requests\\presentation\\views\\detection_confirmation_screen.dart line 134",
+    "type": "text"
+  },
+  "viewDetails": "View Details",
+  "@viewDetails": {
+    "description": "Used in lib\\features\\home\\presentation\\views\\donor\\widgets\\requests_container.dart line 172",
+    "type": "text"
+  },
+  "viewStatus": "View Status",
+  "@viewStatus": {
+    "description": "Used in lib\\features\\home\\presentation\\views\\donor\\widgets\\requests_container.dart line 264",
+    "type": "text"
+  },
+  "viewSystemLogs": "View System Logs",
+  "@viewSystemLogs": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\admin_dashboard_screen.dart line 181",
+    "type": "text"
+  },
+  "weightDobEtc": "(Weight, DOB, etc.)",
+  "@weightDobEtc": {
+    "description": "Used in lib\\features\\setting\\presentation\\views\\widgets\\user_type_switcher.dart line 84",
+    "type": "text"
+  },
+  "weightKg": "Weight (kg)",
+  "@weightKg": {
+    "description": "Used in lib\\features\\setting\\presentation\\views\\widgets\\setting_view_body.dart line 310",
+    "type": "text"
+  },
+  "yesCancel": "Yes, Cancel",
+  "@yesCancel": {
+    "description": "Used in lib\\features\\admin_dashboard\\presentation\\views\\admin_requests_screen.dart line 336 (+1 more)",
+    "type": "text"
+  }
+}

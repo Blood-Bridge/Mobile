@@ -1,3 +1,4 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/models/snackbar_type.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
@@ -49,7 +50,7 @@ class UserTypeSelector extends StatelessWidget {
               Row(
                 children: [
                   _TypeOption(
-                    label: 'Donor',
+                    label: context.l10n.donor,
                     isSelected: isDonor,
                     isLoading: isLoading,
                     onTap: () {
@@ -59,7 +60,7 @@ class UserTypeSelector extends StatelessWidget {
                   ),
                   const SizedBox(width: 12),
                   _TypeOption(
-                    label: 'Recipient',
+                    label: context.l10n.recipient,
                     isSelected: !isDonor,
                     isLoading: isLoading,
                     onTap: () =>
@@ -79,14 +80,12 @@ class UserTypeSelector extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Switch to Donor'),
-        content: const Text(
-          'سيتم تنفيذ نموذج إدخال البيانات هنا (Weight, DOB, etc.)',
-        ),
+        title: Text(context.l10n.switchToDonor),
+        content: Text(context.l10n.weightDobEtc),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('إلغاء'),
+            child: Text(context.l10n.text100),
           ),
           ElevatedButton(
             onPressed: () {
@@ -101,7 +100,7 @@ class UserTypeSelector extends StatelessWidget {
               );
               Navigator.pop(context);
             },
-            child: const Text('تأكيد'),
+            child: Text(context.l10n.text101),
           ),
         ],
       ),

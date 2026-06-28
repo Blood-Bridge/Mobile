@@ -1,3 +1,4 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/features/donations/presentation/cubit/donations_cubit.dart';
@@ -33,7 +34,11 @@ class _DonationsListScreenState extends State<DonationsListScreen> {
         backgroundColor: AppColors.bg,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: AppColors.foreground, size: 18),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: AppColors.foreground,
+            size: 18,
+          ),
           onPressed: () => Get.back(),
         ),
         title: Text('My Donations', style: TextStyleHelper.h1(context)),
@@ -59,9 +64,12 @@ class _DonationsListScreenState extends State<DonationsListScreen> {
                   Text(state.message, style: TextStyleHelper.body(context)),
                   const SizedBox(height: 16),
                   ElevatedButton(
-                    onPressed: () => context.read<DonationsCubit>().fetchAllDonations(),
-                    style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
-                    child: const Text('Retry'),
+                    onPressed: () =>
+                        context.read<DonationsCubit>().fetchAllDonations(),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                    ),
+                    child: Text(context.l10n.retry),
                   ),
                 ],
               ),
@@ -77,14 +85,18 @@ class _DonationsListScreenState extends State<DonationsListScreen> {
                   children: [
                     Icon(Icons.history, size: 64, color: AppColors.textMuted),
                     const SizedBox(height: 16),
-                    Text('No donation history found.', style: TextStyleHelper.bodyMuted(context)),
+                    Text(
+                      'No donation history found.',
+                      style: TextStyleHelper.bodyMuted(context),
+                    ),
                   ],
                 ),
               );
             }
 
             return RefreshIndicator(
-              onRefresh: () => context.read<DonationsCubit>().fetchAllDonations(),
+              onRefresh: () =>
+                  context.read<DonationsCubit>().fetchAllDonations(),
               color: AppColors.primary,
               child: ListView.builder(
                 padding: const EdgeInsets.all(16),
@@ -96,7 +108,8 @@ class _DonationsListScreenState extends State<DonationsListScreen> {
 
                   Color statusColor = Colors.orange;
                   if (isConfirmed) statusColor = Colors.green;
-                  if (item.confirmationStatus == 'Cancelled') statusColor = Colors.red;
+                  if (item.confirmationStatus == 'Cancelled')
+                    statusColor = Colors.red;
 
                   return Container(
                     margin: const EdgeInsets.only(bottom: 12),
@@ -106,16 +119,29 @@ class _DonationsListScreenState extends State<DonationsListScreen> {
                       border: Border.all(color: AppColors.border),
                     ),
                     child: ListTile(
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                      onTap: () => Get.to(() => DonationDetailsScreen(donationId: item.donationProcessId)),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
+                      onTap: () => Get.to(
+                        () => DonationDetailsScreen(
+                          donationId: item.donationProcessId,
+                        ),
+                      ),
                       leading: CircleAvatar(
                         radius: 20,
                         backgroundColor: AppColors.primary.withOpacity(0.15),
-                        child: Icon(Icons.favorite, color: AppColors.primary, size: 20),
+                        child: Icon(
+                          Icons.favorite,
+                          color: AppColors.primary,
+                          size: 20,
+                        ),
                       ),
                       title: Text(
                         'Donation #${item.donationProcessId}',
-                        style: TextStyleHelper.small(context).copyWith(fontWeight: FontWeight.bold),
+                        style: TextStyleHelper.small(
+                          context,
+                        ).copyWith(fontWeight: FontWeight.bold),
                       ),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,15 +149,22 @@ class _DonationsListScreenState extends State<DonationsListScreen> {
                           const SizedBox(height: 4),
                           Text(
                             'Date: ${item.donationDate.toLocal().toString().split(' ').first}',
-                            style: TextStyleHelper.xs(context).copyWith(color: AppColors.textMuted),
+                            style: TextStyleHelper.xs(
+                              context,
+                            ).copyWith(color: AppColors.textMuted),
                           ),
                           const SizedBox(height: 4),
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 2,
+                            ),
                             decoration: BoxDecoration(
                               color: statusColor.withOpacity(0.15),
                               borderRadius: BorderRadius.circular(12),
-                              border: Border.all(color: statusColor.withOpacity(0.3)),
+                              border: Border.all(
+                                color: statusColor.withOpacity(0.3),
+                              ),
                             ),
                             child: Text(
                               item.confirmationStatus,
@@ -144,7 +177,10 @@ class _DonationsListScreenState extends State<DonationsListScreen> {
                           ),
                         ],
                       ),
-                      trailing: Icon(Icons.chevron_right, color: AppColors.textMuted),
+                      trailing: Icon(
+                        Icons.chevron_right,
+                        color: AppColors.textMuted,
+                      ),
                     ),
                   );
                 },

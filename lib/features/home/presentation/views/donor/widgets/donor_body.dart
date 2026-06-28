@@ -13,6 +13,7 @@ import 'package:blood_bridge/features/recommendations/presentation/widgets/donat
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:blood_bridge/core/l10n_ext.dart';
 
 class DonorBody extends StatefulWidget {
   const DonorBody({
@@ -122,6 +123,12 @@ class _DonorBodyState extends State<DonorBody> {
           }
 
           showSnackBar(title, message, SnackbarType.success);
+
+          // Refresh requests
+          _loadTabRequests();
+
+          // Refresh map markers
+          showSnackBar(title, message, SnackbarType.success);
           setState(() {}); // rebuild to reflect local cache changes
           try {
             context.read<MapCubit>().refreshMarkers();
@@ -211,7 +218,7 @@ class _DonorBodyState extends State<DonorBody> {
                           ),
                           const SizedBox(height: 16),
                           CustomButton(
-                            text: 'Retry',
+                            text: context.l10n.retry,
                             height: 44,
                             backgroundColor: AppColors.primary,
                             isEnabled: true,

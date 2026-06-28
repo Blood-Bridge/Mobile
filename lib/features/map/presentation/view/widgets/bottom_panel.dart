@@ -1,4 +1,6 @@
 import 'dart:ui';
+import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/features/map/presentation/view/widgets/legend_dot.dart';
 import 'package:blood_bridge/core/services/hive_helper.dart';
 import 'package:flutter/material.dart';
@@ -131,7 +133,7 @@ class BottomPanel extends StatelessWidget {
                             child: ElevatedButton.icon(
                               onPressed: onContact,
                               icon: const Icon(Icons.phone),
-                              label: const Text("Contact"),
+                              label: Text(context.l10n.contact),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.green,
                                 foregroundColor: Colors.white,
@@ -149,7 +151,7 @@ class BottomPanel extends StatelessWidget {
                             child: ElevatedButton.icon(
                               onPressed: onNavigate,
                               icon: const Icon(Icons.directions),
-                              label: const Text("Navigate"),
+                              label: Text(context.l10n.navigate),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFF2F80ED),
                                 foregroundColor: Colors.white,
@@ -201,7 +203,7 @@ class BottomPanel extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(14),
                                       ),
                                     ),
-                                    child: const Text("Arrived"),
+                                    child: Text(context.l10n.arrived),
                                   ),
                                 ),
                             ],

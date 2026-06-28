@@ -1,3 +1,4 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/models/snackbar_type.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/widgets/custom_button.dart';
@@ -92,7 +93,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                   PermissionCard(
                     height: height,
                     width: width,
-                    title: 'Location Access',
+                    title: context.l10n.locationAccess,
                     description:
                         'Find nearby donors and requests quickly in emergencies',
                     isAccessed: cubit.isLocationAccessGranted,
@@ -104,7 +105,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                   PermissionCard(
                     height: height,
                     width: width,
-                    title: 'Notifications',
+                    title: context.l10n.notifications,
                     description:
                         'Receive urgent blood requests and emergency alerts',
                     isAccessed: cubit.isNotificationAccessGranted,

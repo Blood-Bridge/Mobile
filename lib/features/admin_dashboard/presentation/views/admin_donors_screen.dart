@@ -1,3 +1,4 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/features/home/presentation/views/donor/cubit/cubit/donor_cubit.dart';
@@ -6,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
 class AdminDonorsScreen extends StatefulWidget {
-  const AdminDonorsScreen({super.key});
+  AdminDonorsScreen({super.key});
 
   @override
   State<AdminDonorsScreen> createState() => _AdminDonorsScreenState();
@@ -49,9 +50,9 @@ class _AdminDonorsScreenState extends State<AdminDonorsScreen> {
 
   void _fetchFilteredDonors() {
     context.read<DonorCubit>().getAllDonors(
-          bloodType: _selectedBloodType,
-          governorate: _selectedGovernorate,
-        );
+      bloodType: _selectedBloodType,
+      governorate: _selectedGovernorate,
+    );
   }
 
   @override
@@ -65,7 +66,11 @@ class _AdminDonorsScreenState extends State<AdminDonorsScreen> {
         backgroundColor: AppColors.bg,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: AppColors.foreground, size: 18),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: AppColors.foreground,
+            size: 18,
+          ),
           onPressed: () => Get.back(),
         ),
         title: Text('Manage Donors', style: TextStyleHelper.h1(context)),
@@ -74,21 +79,28 @@ class _AdminDonorsScreenState extends State<AdminDonorsScreen> {
         children: [
           // Filter section
           Container(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: AppColors.card,
-              border: Border(bottom: BorderSide(color: AppColors.border, width: 1)),
+              border: Border(
+                bottom: BorderSide(color: AppColors.border, width: 1),
+              ),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Filters', style: TextStyleHelper.small(context).copyWith(fontWeight: FontWeight.bold)),
-                const SizedBox(height: 12),
+                Text(
+                  'Filters',
+                  style: TextStyleHelper.small(
+                    context,
+                  ).copyWith(fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 12),
                 Row(
                   children: [
                     Expanded(
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        padding: EdgeInsets.symmetric(horizontal: 12),
                         decoration: BoxDecoration(
                           color: AppColors.muted,
                           borderRadius: BorderRadius.circular(10),
@@ -97,13 +109,25 @@ class _AdminDonorsScreenState extends State<AdminDonorsScreen> {
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton<String>(
                             value: _selectedBloodType,
-                            hint: Text('Blood Type', style: TextStyle(color: AppColors.textMuted, fontSize: 13)),
+                            hint: Text(
+                              'Blood Type',
+                              style: TextStyle(
+                                color: AppColors.textMuted,
+                                fontSize: 13,
+                              ),
+                            ),
                             dropdownColor: AppColors.card,
                             isExpanded: true,
                             items: _bloodTypes.map((type) {
                               return DropdownMenuItem(
                                 value: type,
-                                child: Text(type, style: const TextStyle(color: Colors.white, fontSize: 13)),
+                                child: Text(
+                                  type,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 13,
+                                  ),
+                                ),
                               );
                             }).toList(),
                             onChanged: (val) {
@@ -116,10 +140,10 @@ class _AdminDonorsScreenState extends State<AdminDonorsScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    SizedBox(width: 12),
                     Expanded(
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        padding: EdgeInsets.symmetric(horizontal: 12),
                         decoration: BoxDecoration(
                           color: AppColors.muted,
                           borderRadius: BorderRadius.circular(10),
@@ -128,13 +152,25 @@ class _AdminDonorsScreenState extends State<AdminDonorsScreen> {
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton<String>(
                             value: _selectedGovernorate,
-                            hint: Text('Governorate', style: TextStyle(color: AppColors.textMuted, fontSize: 13)),
+                            hint: Text(
+                              'Governorate',
+                              style: TextStyle(
+                                color: AppColors.textMuted,
+                                fontSize: 13,
+                              ),
+                            ),
                             dropdownColor: AppColors.card,
                             isExpanded: true,
                             items: _governorates.map((gov) {
                               return DropdownMenuItem(
                                 value: gov,
-                                child: Text(gov, style: const TextStyle(color: Colors.white, fontSize: 13)),
+                                child: Text(
+                                  gov,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 13,
+                                  ),
+                                ),
                               );
                             }).toList(),
                             onChanged: (val) {
@@ -151,7 +187,7 @@ class _AdminDonorsScreenState extends State<AdminDonorsScreen> {
                 ),
                 if (_selectedBloodType != null || _selectedGovernorate != null)
                   Padding(
-                    padding: const EdgeInsets.only(top: 12),
+                    padding: EdgeInsets.only(top: 12),
                     child: TextButton(
                       onPressed: () {
                         setState(() {
@@ -162,7 +198,10 @@ class _AdminDonorsScreenState extends State<AdminDonorsScreen> {
                       },
                       child: Text(
                         'Clear Filters',
-                        style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
@@ -193,22 +232,33 @@ class _AdminDonorsScreenState extends State<AdminDonorsScreen> {
               },
               builder: (context, state) {
                 if (state is DonorsLoading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return Center(child: CircularProgressIndicator());
                 }
 
-                if (state is DonorsError && _selectedBloodType == null && _selectedGovernorate == null) {
+                if (state is DonorsError &&
+                    _selectedBloodType == null &&
+                    _selectedGovernorate == null) {
                   return Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.error_outline, size: 48, color: AppColors.primary),
-                        const SizedBox(height: 16),
-                        Text(state.message, style: TextStyleHelper.body(context)),
-                        const SizedBox(height: 16),
+                        Icon(
+                          Icons.error_outline,
+                          size: 48,
+                          color: AppColors.primary,
+                        ),
+                        SizedBox(height: 16),
+                        Text(
+                          state.message,
+                          style: TextStyleHelper.body(context),
+                        ),
+                        SizedBox(height: 16),
                         ElevatedButton(
                           onPressed: () => _fetchFilteredDonors(),
-                          style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
-                          child: const Text('Retry'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.primary,
+                          ),
+                          child: Text(context.l10n.retry),
                         ),
                       ],
                     ),
@@ -232,28 +282,36 @@ class _AdminDonorsScreenState extends State<AdminDonorsScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.people_outline, size: 64, color: AppColors.textMuted),
-                        const SizedBox(height: 16),
-                        Text('No donors found matching criteria', style: TextStyleHelper.bodyMuted(context)),
+                        Icon(
+                          Icons.people_outline,
+                          size: 64,
+                          color: AppColors.textMuted,
+                        ),
+                        SizedBox(height: 16),
+                        Text(
+                          'No donors found matching criteria',
+                          style: TextStyleHelper.bodyMuted(context),
+                        ),
                       ],
                     ),
                   );
                 }
 
                 return ListView.builder(
-                  padding: const EdgeInsets.all(16),
+                  padding: EdgeInsets.all(16),
                   itemCount: donors.length,
                   itemBuilder: (context, index) {
                     final d = donors[index] as Map<String, dynamic>;
                     final donorId = d['id'] as int? ?? d['userId'] as int? ?? 0;
-                    final donorName = '${d['firstName'] ?? ''} ${d['lastName'] ?? ''}'.trim();
+                    final donorName =
+                        '${d['firstName'] ?? ''} ${d['lastName'] ?? ''}'.trim();
                     final bloodType = d['bloodType'] as String? ?? 'OPositive';
                     final city = d['governorate'] as String? ?? 'N/A';
                     final phone = d['phone'] as String? ?? 'N/A';
 
                     return Container(
-                      margin: const EdgeInsets.only(bottom: 12),
-                      padding: const EdgeInsets.all(16),
+                      margin: EdgeInsets.only(bottom: 12),
+                      padding: EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         color: AppColors.card,
                         borderRadius: BorderRadius.circular(16),
@@ -263,48 +321,82 @@ class _AdminDonorsScreenState extends State<AdminDonorsScreen> {
                         children: [
                           CircleAvatar(
                             radius: 24,
-                            backgroundColor: AppColors.primary.withOpacity(0.15),
+                            backgroundColor: AppColors.primary.withOpacity(
+                              0.15,
+                            ),
                             child: Text(
-                              bloodType.replaceAll('Positive', '+').replaceAll('Negative', '−'),
-                              style: TextStyleHelper.h3(context).copyWith(color: AppColors.primary),
+                              bloodType
+                                  .replaceAll('Positive', '+')
+                                  .replaceAll('Negative', '−'),
+                              style: TextStyleHelper.h3(
+                                context,
+                              ).copyWith(color: AppColors.primary),
                             ),
                           ),
-                          const SizedBox(width: 16),
+                          SizedBox(width: 16),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  donorName.isEmpty ? 'Donor #$donorId' : donorName,
-                                  style: TextStyleHelper.small(context).copyWith(fontWeight: FontWeight.bold),
+                                  donorName.isEmpty
+                                      ? 'Donor #$donorId'
+                                      : donorName,
+                                  style: TextStyleHelper.small(
+                                    context,
+                                  ).copyWith(fontWeight: FontWeight.bold),
                                 ),
-                                const SizedBox(height: 4),
+                                SizedBox(height: 4),
                                 Text(
                                   'Loc: $city  |  Tel: $phone',
-                                  style: TextStyleHelper.xs(context).copyWith(color: AppColors.textMuted),
+                                  style: TextStyleHelper.xs(
+                                    context,
+                                  ).copyWith(color: AppColors.textMuted),
                                 ),
                               ],
                             ),
                           ),
                           IconButton(
-                            icon: Icon(Icons.delete_outline, color: AppColors.primary),
+                            icon: Icon(
+                              Icons.delete_outline,
+                              color: AppColors.primary,
+                            ),
                             onPressed: () {
                               Get.dialog(
                                 AlertDialog(
                                   backgroundColor: AppColors.card,
-                                  title: Text('Delete Donor', style: TextStyleHelper.h3(context)),
-                                  content: Text('Are you sure you want to delete this donor from the system?', style: TextStyleHelper.small(context)),
+                                  title: Text(
+                                    'Delete Donor',
+                                    style: TextStyleHelper.h3(context),
+                                  ),
+                                  content: Text(
+                                    'Are you sure you want to delete this donor from the system?',
+                                    style: TextStyleHelper.small(context),
+                                  ),
                                   actions: [
                                     TextButton(
                                       onPressed: () => Get.back(),
-                                      child: Text('Cancel', style: TextStyle(color: AppColors.textMuted)),
+                                      child: Text(
+                                        'Cancel',
+                                        style: TextStyle(
+                                          color: AppColors.textMuted,
+                                        ),
+                                      ),
                                     ),
                                     TextButton(
                                       onPressed: () {
                                         Get.back();
-                                        context.read<DonorCubit>().deleteDonor(donorId);
+                                        context.read<DonorCubit>().deleteDonor(
+                                          donorId,
+                                        );
                                       },
-                                      child: Text('Delete', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold)),
+                                      child: Text(
+                                        'Delete',
+                                        style: TextStyle(
+                                          color: AppColors.primary,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 ),

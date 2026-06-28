@@ -1,3 +1,4 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/models/snackbar_type.dart';
 import 'package:blood_bridge/core/models/user_role.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
@@ -70,7 +71,7 @@ class LoginScreen extends StatelessWidget {
                     Container(
                       height: height * 0.076,
                       child: CustomTextfield(
-                        text: 'Email',
+                        text: context.l10n.email,
                         controller: emailController,
                         validator: cubit.emailValidator,
                       ),
@@ -81,7 +82,7 @@ class LoginScreen extends StatelessWidget {
                     Container(
                       height: height * 0.076,
                       child: CustomTextfield(
-                        text: 'Password',
+                        text: context.l10n.password,
                         isPassword: true,
                         controller: passwordController,
                         validator: cubit.passwordValidator,
@@ -108,7 +109,7 @@ class LoginScreen extends StatelessWidget {
                       builder: (context, state) {
                         return CustomLoadingButton(
                           isEnabled: cubit.isEnabled,
-                          text: 'Sign In',
+                          text: context.l10n.signIn,
                           formKey: _formKey,
 
                           emailController: emailController,

@@ -119,27 +119,21 @@ class MyApp extends StatelessWidget {
             home: const SplashScreen(),
 
             getPages: [
-              GetPage(name: '/admin', page: () => const AdminDashboardScreen()),
-              GetPage(
-                name: '/admin/logs',
-                page: () => const SystemLogsScreen(),
-              ),
-              GetPage(
-                name: '/admin/donors',
-                page: () => const AdminDonorsScreen(),
-              ),
+              GetPage(name: '/admin', page: () => AdminDashboardScreen()),
+              GetPage(name: '/admin/logs', page: () => SystemLogsScreen()),
+              GetPage(name: '/admin/donors', page: () => AdminDonorsScreen()),
               GetPage(
                 name: '/admin/requests',
-                page: () => const AdminRequestsScreen(),
+                page: () => AdminRequestsScreen(),
               ),
               GetPage(
                 name: '/admin/donations',
-                page: () => const AdminDonationsScreen(),
+                page: () => AdminDonationsScreen(),
               ),
-              GetPage(name: '/admin/backup', page: () => const BackupScreen()),
+              GetPage(name: '/admin/backup', page: () => BackupScreen()),
               GetPage(
                 name: '/admin/language',
-                page: () => const LanguageSettingsScreen(),
+                page: () => LanguageSettingsScreen(),
               ),
               GetPage(
                 name: '/hospital',

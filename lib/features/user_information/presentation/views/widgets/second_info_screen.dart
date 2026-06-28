@@ -1,4 +1,5 @@
 import 'package:blood_bridge/constants.dart';
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/widgets/custom_textfield.dart';
 import 'package:blood_bridge/features/user_information/presentation/cubit/info_cubit.dart';
@@ -28,7 +29,7 @@ class SecondInfoScreen extends StatelessWidget {
         SizedBox(height: height * 0.01),
         CustomTextfield(
           prefixIcon: Icon(Icons.phone),
-          text: "+20 123456789",
+          text: context.l10n.text20123456789,
           controller: phoneController,
           validator: cubit.phoneValidator,
         ),
@@ -37,7 +38,7 @@ class SecondInfoScreen extends StatelessWidget {
         SizedBox(height: height * 0.01),
         CustomTextfield(
           prefixIcon: Icon(Icons.location_on),
-          text: "Enter your address",
+          text: context.l10n.enterYourAddress,
           controller: addressController,
           validator: cubit.addressValidator,
         ),

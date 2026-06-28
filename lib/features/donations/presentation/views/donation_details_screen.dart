@@ -1,3 +1,5 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/features/donations/presentation/cubit/donations_cubit.dart';
@@ -33,7 +35,11 @@ class _DonationDetailsScreenState extends State<DonationDetailsScreen> {
         backgroundColor: AppColors.bg,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: AppColors.foreground, size: 18),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: AppColors.foreground,
+            size: 18,
+          ),
           onPressed: () => Get.back(),
         ),
         title: Text('Donation Details', style: TextStyleHelper.h1(context)),
@@ -43,7 +49,9 @@ class _DonationDetailsScreenState extends State<DonationDetailsScreen> {
               if (state is DonationDetailsLoaded) {
                 return IconButton(
                   icon: const Icon(Icons.edit_outlined),
-                  onPressed: () => Get.to(() => EditDonationScreen(donation: state.donation)),
+                  onPressed: () => Get.to(
+                    () => EditDonationScreen(donation: state.donation),
+                  ),
                 );
               }
               return const SizedBox();
@@ -55,12 +63,20 @@ class _DonationDetailsScreenState extends State<DonationDetailsScreen> {
         listener: (context, state) {
           if (state is DonationDeleteSuccess) {
             Get.back();
-            Get.snackbar('Success', 'Donation deleted successfully',
-                backgroundColor: Colors.green, colorText: Colors.white);
+            Get.snackbar(
+              'Success',
+              'Donation deleted successfully',
+              backgroundColor: Colors.green,
+              colorText: Colors.white,
+            );
             context.read<DonationsCubit>().fetchAllDonations();
           } else if (state is DonationsError) {
-            Get.snackbar('Error', state.message,
-                backgroundColor: Colors.red, colorText: Colors.white);
+            Get.snackbar(
+              'Error',
+              state.message,
+              backgroundColor: Colors.red,
+              colorText: Colors.white,
+            );
           }
         },
         builder: (context, state) {
@@ -78,9 +94,13 @@ class _DonationDetailsScreenState extends State<DonationDetailsScreen> {
                   Text(state.message, style: TextStyleHelper.body(context)),
                   const SizedBox(height: 16),
                   ElevatedButton(
-                    onPressed: () => context.read<DonationsCubit>().fetchDonationById(widget.donationId),
-                    style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
-                    child: const Text('Retry'),
+                    onPressed: () => context
+                        .read<DonationsCubit>()
+                        .fetchDonationById(widget.donationId),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                    ),
+                    child: Text(context.l10n.retry),
                   ),
                 ],
               ),
@@ -90,8 +110,10 @@ class _DonationDetailsScreenState extends State<DonationDetailsScreen> {
           if (state is DonationDetailsLoaded) {
             final item = state.donation;
             Color statusColor = Colors.orange;
-            if (item.confirmationStatus == 'Confirmed') statusColor = Colors.green;
-            if (item.confirmationStatus == 'Cancelled') statusColor = Colors.red;
+            if (item.confirmationStatus == 'Confirmed')
+              statusColor = Colors.green;
+            if (item.confirmationStatus == 'Cancelled')
+              statusColor = Colors.red;
 
             return SingleChildScrollView(
               padding: const EdgeInsets.all(16),
@@ -113,33 +135,64 @@ class _DonationDetailsScreenState extends State<DonationDetailsScreen> {
                           children: [
                             Text(
                               'Donation Process ID',
-                              style: TextStyleHelper.small(context).copyWith(color: AppColors.textMuted),
+                              style: TextStyleHelper.small(
+                                context,
+                              ).copyWith(color: AppColors.textMuted),
                             ),
                             Text(
                               '#${item.donationProcessId}',
-                              style: TextStyleHelper.small(context).copyWith(fontWeight: FontWeight.bold),
+                              style: TextStyleHelper.small(
+                                context,
+                              ).copyWith(fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
                         const Divider(color: AppColors.border, height: 24),
-                        _buildDetailRow(context, 'Donor ID', '#${item.donorId}'),
-                        _buildDetailRow(context, 'Request ID', '#${item.bloodRequestId}'),
-                        _buildDetailRow(context, 'Hospital ID', '#${item.hospitalId}'),
-                        _buildDetailRow(context, 'Donation Date', item.donationDate.toLocal().toString().split(' ').first),
+                        _buildDetailRow(
+                          context,
+                          'Donor ID',
+                          '#${item.donorId}',
+                        ),
+                        _buildDetailRow(
+                          context,
+                          'Request ID',
+                          '#${item.bloodRequestId}',
+                        ),
+                        _buildDetailRow(
+                          context,
+                          'Hospital ID',
+                          '#${item.hospitalId}',
+                        ),
+                        _buildDetailRow(
+                          context,
+                          'Donation Date',
+                          item.donationDate
+                              .toLocal()
+                              .toString()
+                              .split(' ')
+                              .first,
+                        ),
                         const Divider(color: AppColors.border, height: 24),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               'Status',
-                              style: TextStyleHelper.small(context).copyWith(color: AppColors.textMuted),
+                              style: TextStyleHelper.small(
+                                context,
+                              ).copyWith(color: AppColors.textMuted),
                             ),
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 4,
+                              ),
                               decoration: BoxDecoration(
                                 color: statusColor.withOpacity(0.15),
                                 borderRadius: BorderRadius.circular(12),
-                                border: Border.all(color: statusColor.withOpacity(0.3)),
+                                border: Border.all(
+                                  color: statusColor.withOpacity(0.3),
+                                ),
                               ),
                               child: Text(
                                 item.confirmationStatus,
@@ -159,7 +212,9 @@ class _DonationDetailsScreenState extends State<DonationDetailsScreen> {
                     width: double.infinity,
                     height: 55,
                     child: ElevatedButton(
-                      onPressed: () => Get.to(() => DonationConfirmationScreen(donation: item)),
+                      onPressed: () => Get.to(
+                        () => DonationConfirmationScreen(donation: item),
+                      ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,
                         shape: RoundedRectangleBorder(
@@ -168,7 +223,9 @@ class _DonationDetailsScreenState extends State<DonationDetailsScreen> {
                       ),
                       child: Text(
                         'Verify / Confirm Donation',
-                        style: TextStyleHelper.h3(context).copyWith(color: Colors.white),
+                        style: TextStyleHelper.h3(
+                          context,
+                        ).copyWith(color: Colors.white),
                       ),
                     ),
                   ),
@@ -186,7 +243,9 @@ class _DonationDetailsScreenState extends State<DonationDetailsScreen> {
                       ),
                       child: Text(
                         'Delete Log Record',
-                        style: TextStyleHelper.h3(context).copyWith(color: AppColors.primary),
+                        style: TextStyleHelper.h3(
+                          context,
+                        ).copyWith(color: AppColors.primary),
                       ),
                     ),
                   ),
@@ -207,8 +266,16 @@ class _DonationDetailsScreenState extends State<DonationDetailsScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: TextStyleHelper.small(context).copyWith(color: AppColors.textMuted)),
-          Text(value, style: TextStyleHelper.small(context).copyWith(color: Colors.white)),
+          Text(
+            label,
+            style: TextStyleHelper.small(
+              context,
+            ).copyWith(color: AppColors.textMuted),
+          ),
+          Text(
+            value,
+            style: TextStyleHelper.small(context).copyWith(color: Colors.white),
+          ),
         ],
       ),
     );
@@ -219,7 +286,10 @@ class _DonationDetailsScreenState extends State<DonationDetailsScreen> {
       AlertDialog(
         backgroundColor: AppColors.card,
         title: Text('Delete Donation Log', style: TextStyleHelper.h3(context)),
-        content: Text('Are you sure you want to delete this donation log record?', style: TextStyleHelper.small(context)),
+        content: Text(
+          'Are you sure you want to delete this donation log record?',
+          style: TextStyleHelper.small(context),
+        ),
         actions: [
           TextButton(
             onPressed: () => Get.back(),
@@ -230,7 +300,13 @@ class _DonationDetailsScreenState extends State<DonationDetailsScreen> {
               Get.back();
               context.read<DonationsCubit>().deleteDonation(id);
             },
-            child: Text('Delete', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold)),
+            child: Text(
+              'Delete',
+              style: TextStyle(
+                color: AppColors.primary,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ],
       ),

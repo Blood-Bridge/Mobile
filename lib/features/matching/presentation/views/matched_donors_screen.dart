@@ -1,3 +1,4 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/models/snackbar_type.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
@@ -92,7 +93,7 @@ class _MatchedDonorsScreenState extends State<MatchedDonorsScreen> {
                     const SizedBox(height: 24),
                     ElevatedButton(
                       onPressed: _loadData,
-                      child: const Text('Retry'),
+                      child: Text(context.l10n.retry),
                     ),
                   ],
                 ),

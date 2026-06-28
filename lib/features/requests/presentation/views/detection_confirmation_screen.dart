@@ -1,3 +1,4 @@
+import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/features/home/presentation/views/reciver/cubit/receiver_cubit.dart';
@@ -18,10 +19,12 @@ class DetectionConfirmationScreen extends StatefulWidget {
   });
 
   @override
-  State<DetectionConfirmationScreen> createState() => _DetectionConfirmationScreenState();
+  State<DetectionConfirmationScreen> createState() =>
+      _DetectionConfirmationScreenState();
 }
 
-class _DetectionConfirmationScreenState extends State<DetectionConfirmationScreen> {
+class _DetectionConfirmationScreenState
+    extends State<DetectionConfirmationScreen> {
   late String _selectedBloodType;
   final List<String> _bloodTypes = [
     'OPositive',
@@ -52,7 +55,11 @@ class _DetectionConfirmationScreenState extends State<DetectionConfirmationScree
         backgroundColor: AppColors.bg,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: AppColors.foreground, size: 18),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: AppColors.foreground,
+            size: 18,
+          ),
           onPressed: () => Get.back(),
         ),
         title: Text('AI Report Results', style: TextStyleHelper.h1(context)),
@@ -92,7 +99,10 @@ class _DetectionConfirmationScreenState extends State<DetectionConfirmationScree
                     decoration: BoxDecoration(
                       color: AppColors.primary.withOpacity(0.1),
                       shape: BoxShape.circle,
-                      border: Border.all(color: AppColors.primary.withOpacity(0.3), width: 2),
+                      border: Border.all(
+                        color: AppColors.primary.withOpacity(0.3),
+                        width: 2,
+                      ),
                     ),
                     child: Icon(
                       Icons.online_prediction,
@@ -113,7 +123,9 @@ class _DetectionConfirmationScreenState extends State<DetectionConfirmationScree
                 Center(
                   child: Text(
                     'Please review the details extracted from your medical report. You can modify them before starting the donor matching search.',
-                    style: TextStyleHelper.small(context).copyWith(color: AppColors.textMuted),
+                    style: TextStyleHelper.small(
+                      context,
+                    ).copyWith(color: AppColors.textMuted),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -131,7 +143,7 @@ class _DetectionConfirmationScreenState extends State<DetectionConfirmationScree
                     children: [
                       _buildInfoRow(
                         context,
-                        label: 'Urgency Level',
+                        label: context.l10n.urgencyLevel,
                         value: widget.urgencyLevel,
                         valueColor: widget.urgencyLevel == 'Critical'
                             ? AppColors.primary
@@ -140,11 +152,16 @@ class _DetectionConfirmationScreenState extends State<DetectionConfirmationScree
                       const Divider(height: 32, color: Colors.grey),
                       Text(
                         'Verified Blood Type Required',
-                        style: TextStyleHelper.small(context).copyWith(color: AppColors.textMuted),
+                        style: TextStyleHelper.small(
+                          context,
+                        ).copyWith(color: AppColors.textMuted),
                       ),
                       const SizedBox(height: 12),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 4,
+                        ),
                         decoration: BoxDecoration(
                           color: AppColors.muted,
                           borderRadius: BorderRadius.circular(12),
@@ -186,9 +203,9 @@ class _DetectionConfirmationScreenState extends State<DetectionConfirmationScree
                         ? null
                         : () {
                             context.read<ReceiverCubit>().confirmDetection(
-                                  requestId: widget.requestId,
-                                  bloodType: _selectedBloodType,
-                                );
+                              requestId: widget.requestId,
+                              bloodType: _selectedBloodType,
+                            );
                           },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
@@ -200,9 +217,9 @@ class _DetectionConfirmationScreenState extends State<DetectionConfirmationScree
                         ? const CircularProgressIndicator(color: Colors.white)
                         : Text(
                             'Confirm & Search Donors',
-                            style: TextStyleHelper.h3(context).copyWith(
-                              color: AppColors.primaryForeground,
-                            ),
+                            style: TextStyleHelper.h3(
+                              context,
+                            ).copyWith(color: AppColors.primaryForeground),
                           ),
                   ),
                 ),
@@ -225,7 +242,9 @@ class _DetectionConfirmationScreenState extends State<DetectionConfirmationScree
       children: [
         Text(
           label,
-          style: TextStyleHelper.small(context).copyWith(color: AppColors.textMuted),
+          style: TextStyleHelper.small(
+            context,
+          ).copyWith(color: AppColors.textMuted),
         ),
         Text(
           value,
