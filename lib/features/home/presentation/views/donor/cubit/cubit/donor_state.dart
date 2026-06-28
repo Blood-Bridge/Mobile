@@ -8,7 +8,7 @@ class DonorInitial extends DonorState {}
 class DonorsLoading extends DonorState {}
 
 class DonorsSuccess extends DonorState {
-  final dynamic donors; // يفضل يكون dynamic
+  final dynamic donors;
   DonorsSuccess(this.donors);
 }
 

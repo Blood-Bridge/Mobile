@@ -1,3 +1,4 @@
+import 'package:blood_bridge/core/models/blood_request_model.dart';
 import 'package:blood_bridge/core/l10n_ext.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
@@ -7,6 +8,7 @@ import 'package:blood_bridge/features/home/presentation/views/reciver/cubit/rece
 import 'package:blood_bridge/features/map/presentation/cubit/map_cubit.dart';
 import 'package:blood_bridge/features/map/presentation/view/map_screen.dart';
 import 'package:blood_bridge/features/request_status/presentation/views/request_status_screen.dart';
+import 'package:blood_bridge/features/request_status/presentation/cubit/request_status_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -26,6 +28,7 @@ class RequestsContainer extends StatelessWidget {
     required this.requestId,
     required this.donorCubit,
     this.tabIndex = 0,
+    this.requestModel, // ← new optional param for local caching
   });
 
   final double height;
@@ -39,6 +42,7 @@ class RequestsContainer extends StatelessWidget {
   final int requestId;
   final DonorCubit donorCubit;
   final int tabIndex;
+  final BloodRequestModel? requestModel;
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +142,6 @@ class RequestsContainer extends StatelessWidget {
 
   Widget _buildActionButtons(BuildContext context) {
     if (tabIndex == 0) {
-      // Available Requests tab: Show Accept & Decline buttons, plus View Details
       return Column(
         children: [
           Row(
@@ -150,7 +153,11 @@ class RequestsContainer extends StatelessWidget {
                   backgroundColor: AppColors.primary,
                   isEnabled: true,
                   onPressed: () {
-                    donorCubit.acceptRequest(requestId);
+                    // Pass requestModel so DonorCubit can cache it locally
+                    donorCubit.acceptRequest(
+                      requestId,
+                      requestModel: requestModel,
+                    );
                   },
                 ),
               ),
@@ -249,6 +256,14 @@ class RequestsContainer extends StatelessWidget {
                             'Are you sure you want to cancel your donation acceptance for this request?',
                             style: TextStyleHelper.small(context),
                           ),
+                          title: Text(
+                            'Cancel Acceptance',
+                            style: TextStyleHelper.h3(context),
+                          ),
+                          content: Text(
+                            'Are you sure you want to cancel your donation acceptance for this request?',
+                            style: TextStyleHelper.small(context),
+                          ),
                           actions: [
                             TextButton(
                               onPressed: () => Navigator.pop(context),
@@ -281,8 +296,16 @@ class RequestsContainer extends StatelessWidget {
                   height: height * 0.06,
                   backgroundColor: AppColors.popover.withOpacity(0.5),
                   isEnabled: true,
-                  onPressed: () =>
-                      Get.to(() => RequestStatusScreen(requestId: requestId)),
+                  onPressed: () {
+                    final statusCubit = RequestStatusCubit()
+                      ..getRequestStatus(requestId);
+                    Get.to(
+                      () => BlocProvider.value(
+                        value: statusCubit,
+                        child: RequestStatusScreen(requestId: requestId),
+                      ),
+                    );
+                  },
                 ),
               ),
             ],
@@ -290,7 +313,6 @@ class RequestsContainer extends StatelessWidget {
         ],
       );
     } else {
-      // Completed tab: Read-only badge/status
       return Container(
         padding: const EdgeInsets.symmetric(vertical: 8),
         width: double.infinity,

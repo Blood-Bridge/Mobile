@@ -197,32 +197,26 @@ class ReceiverCubit extends Cubit<ReceiverState> {
     }
   }
 
-  Future<void> confirmDetection({
+  Future<void> acceptDonor({
     required int requestId,
-    required String bloodType,
+    required int donorId,
   }) async {
-    emit(ReceiverLoading());
     try {
-      final response = await DioHelper.postData(
-        path: 'Requests/confirm-detection',
-        body: {'requestId': requestId, 'bloodType': bloodType},
+      await DioHelper.postData(
+        path: 'Requests/$requestId/accept-donor',
+        body: {'donorId': donorId},
       );
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        safeEmit(ReceiverConfirmDetectionSuccess());
-      } else {
-        safeEmit(ReceiverError('Confirmation failed'));
-      }
-    } on DioException catch (e) {
-      safeEmit(ReceiverError(_extractError(e, 'Confirmation failed')));
-    } catch (_) {
-      safeEmit(const ReceiverError('Unexpected error'));
+      fetchAcceptedDonor(requestId);
+    } catch (e) {
+      emit(ReceiverError('Failed to accept donor'));
     }
   }
 
   Future<void> fetchAcceptedDonor(int requestId) async {
     try {
       final resp = await DioHelper.getData(path: 'Requests/$requestId/donors');
-      final dynamic data = resp.data?['data'];
+
+      final dynamic data = resp.data['data'];
 
       if (data is List && data.isNotEmpty) {
         acceptedDonors[requestId] = data.first;
@@ -231,21 +225,55 @@ class ReceiverCubit extends Cubit<ReceiverState> {
       } else {
         acceptedDonors[requestId] = null;
       }
-      safeEmit(ReceiverLoaded(List.from(_requests)));
+
+      emit(ReceiverLoaded(List.from(_requests)));
     } catch (_) {
       acceptedDonors[requestId] = null;
     }
   }
 
+  Future<void> confirmDetection({
+    required int requestId,
+    required String bloodType,
+  }) async {
+    emit(ReceiverLoading());
+
+    try {
+      final response = await DioHelper.postData(
+        path: 'Requests/confirm-detection',
+        body: {'requestId': requestId, 'bloodType': bloodType},
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        safeEmit(ReceiverConfirmDetectionSuccess());
+
+        await loadActiveRequests();
+      } else {
+        final msg = response.data is Map
+            ? response.data['message']?.toString() ?? 'Confirmation failed'
+            : 'Confirmation failed';
+
+        safeEmit(ReceiverError(msg));
+      }
+    } on DioException catch (e) {
+      safeEmit(ReceiverError(_extractError(e, 'Confirmation failed')));
+    } catch (_) {
+      safeEmit(const ReceiverError('Unexpected error'));
+    }
+  }
+
   Future<void> loadAcceptedRequests() async {
     emit(ReceiverLoading());
+
     try {
       final response = await DioHelper.getData(
         path: 'Donors/accepted-requests',
       );
 
       final dynamic dataField = response.data?['data'];
+
       List<dynamic> rawItems = [];
+
       if (dataField is List) {
         rawItems = dataField;
       } else if (dataField is Map) {
@@ -257,26 +285,29 @@ class ReceiverCubit extends Cubit<ReceiverState> {
           .toList();
 
       _requests = items;
+
       emit(ReceiverLoaded(items));
     } on DioException catch (e) {
-      // Fallback if the endpoint does not exist on this backend version yet.
-      // We will try fetching active requests and history, filtering by status.
       try {
         final response = await DioHelper.getData(path: 'Requests/history');
+
         final dynamic dataField = response.data?['data'];
+
         List<dynamic> rawItems = [];
+
         if (dataField is List) {
           rawItems = dataField;
         } else if (dataField is Map) {
           rawItems = dataField['items'] as List<dynamic>? ?? [];
         }
+
         final items = rawItems
             .map((e) => BloodRequestModel.fromJson(e as Map<String, dynamic>))
             .toList();
 
-        // Include accepted, ontheway, arrived
         _requests = items.where((req) {
           final s = req.status.toLowerCase();
+
           return s == 'accepted' ||
               s == 'ontheway' ||
               s == 'on_the_way' ||
