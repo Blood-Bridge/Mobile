@@ -256,14 +256,6 @@ class RequestsContainer extends StatelessWidget {
                             'Are you sure you want to cancel your donation acceptance for this request?',
                             style: TextStyleHelper.small(context),
                           ),
-                          title: Text(
-                            'Cancel Acceptance',
-                            style: TextStyleHelper.h3(context),
-                          ),
-                          content: Text(
-                            'Are you sure you want to cancel your donation acceptance for this request?',
-                            style: TextStyleHelper.small(context),
-                          ),
                           actions: [
                             TextButton(
                               onPressed: () => Navigator.pop(context),
