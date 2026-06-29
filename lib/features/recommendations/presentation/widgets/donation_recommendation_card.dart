@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/features/recommendations/presentation/cubit/recommendation_cubit.dart';
@@ -66,7 +66,7 @@ class _DonationRecommendationCardState
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        context.l10n.aiRecommendation,
+                        AppLocalizations.of(context)!.aiRecommendation,
                         style: TextStyleHelper.body(
                           context,
                         ).copyWith(fontWeight: FontWeight.bold),
@@ -74,7 +74,9 @@ class _DonationRecommendationCardState
                       const SizedBox(height: 4),
                       Text(
                         isNoHistory
-                            ? context.l10n.completeFirstDonation
+                            ? AppLocalizations.of(
+                                context,
+                              )!.completeFirstDonation
                             : state.message,
                         style: TextStyleHelper.xs(
                           context,
@@ -126,7 +128,7 @@ class _DonationRecommendationCardState
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        context.l10n.aiRecommendation,
+                        AppLocalizations.of(context)!.aiRecommendation,
                         style: TextStyleHelper.body(context).copyWith(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
@@ -134,7 +136,7 @@ class _DonationRecommendationCardState
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        context.l10n.bestDonationTime,
+                        AppLocalizations.of(context)!.bestDonationTime,
                         style: TextStyleHelper.xs(
                           context,
                         ).copyWith(color: AppColors.textMuted),

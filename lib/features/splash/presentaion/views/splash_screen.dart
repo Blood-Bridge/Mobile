@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/models/user_role.dart';
 import 'package:blood_bridge/core/services/hive_helper.dart';
 import 'package:blood_bridge/core/services/secure_storage_service.dart';
@@ -156,12 +156,12 @@ class _SplashScreenState extends State<SplashScreen>
                 ),
                 const SizedBox(height: 24),
                 Text(
-                  context.l10n.bloodBridge,
+                  AppLocalizations.of(context)!.bloodBridge,
                   style: TextStyleHelper.h1(context),
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  context.l10n.connectingLivesInEmergency,
+                  AppLocalizations.of(context)!.connectingLivesInEmergency,
                   textAlign: TextAlign.center,
                   style: TextStyleHelper.bodyMuted(
                     context,

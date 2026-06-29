@@ -1,6 +1,6 @@
 import 'dart:ui';
-import 'package:blood_bridge/core/l10n_ext.dart';
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/features/map/presentation/view/widgets/legend_dot.dart';
 import 'package:blood_bridge/core/services/hive_helper.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +59,7 @@ class BottomPanel extends StatelessWidget {
                         LegendDot(color: Colors.blue),
                         SizedBox(width: 8),
                         Text(
-                          context.l10n.compatibleDonor,
+                          AppLocalizations.of(context)!.compatibleDonor,
                           style: TextStyle(color: Colors.white70),
                         ),
                       ]
@@ -67,21 +67,21 @@ class BottomPanel extends StatelessWidget {
                         LegendDot(color: Color(0xFFE58B93)),
                         SizedBox(width: 8),
                         Text(
-                          context.l10n.critical,
+                          AppLocalizations.of(context)!.critical,
                           style: TextStyle(color: Colors.white70),
                         ),
                         SizedBox(width: 16),
                         LegendDot(color: Color(0xFFF6B400)),
                         SizedBox(width: 8),
                         Text(
-                          context.l10n.urgent,
+                          AppLocalizations.of(context)!.urgent,
                           style: TextStyle(color: Colors.white70),
                         ),
                         SizedBox(width: 16),
                         LegendDot(color: Color(0xFF77B47C)),
                         SizedBox(width: 8),
                         Text(
-                          context.l10n.available2,
+                          AppLocalizations.of(context)!.available2,
                           style: TextStyle(color: Colors.white70),
                         ),
                       ],
@@ -136,7 +136,9 @@ class BottomPanel extends StatelessWidget {
                             child: ElevatedButton.icon(
                               onPressed: onContact,
                               icon: const Icon(Icons.phone),
-                              label: Text(context.l10n.contact),
+                              label: Text(
+                                AppLocalizations.of(context)!.contact,
+                              ),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.green,
                                 foregroundColor: Colors.white,
@@ -154,7 +156,9 @@ class BottomPanel extends StatelessWidget {
                             child: ElevatedButton.icon(
                               onPressed: onNavigate,
                               icon: const Icon(Icons.directions),
-                              label: Text(context.l10n.navigate),
+                              label: Text(
+                                AppLocalizations.of(context)!.navigate,
+                              ),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFF2F80ED),
                                 foregroundColor: Colors.white,
@@ -206,7 +210,9 @@ class BottomPanel extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(14),
                                       ),
                                     ),
-                                    child: Text(context.l10n.arrived),
+                                    child: Text(
+                                      AppLocalizations.of(context)!.arrived,
+                                    ),
                                   ),
                                 ),
                             ],

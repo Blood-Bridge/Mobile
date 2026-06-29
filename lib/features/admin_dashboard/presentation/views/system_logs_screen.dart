@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'widgets/admin_section.dart';
 
@@ -13,7 +13,7 @@ class SystemLogsScreen extends StatelessWidget {
         backgroundColor: Color(0xFF0A0A0A),
         elevation: 0,
         title: Text(
-          context.l10n.systemLogs,
+          AppLocalizations.of(context)!.systemLogs,
           style: TextStyle(
             color: Colors.white,
             fontSize: 24,

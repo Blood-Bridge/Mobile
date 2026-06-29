@@ -1,5 +1,5 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/models/snackbar_type.dart';
 import 'package:blood_bridge/core/widgets/custom_snackbar.dart';
 import 'package:blood_bridge/features/home/presentation/views/donor/donor_screen.dart';
@@ -124,8 +124,8 @@ class _MapScreenBodyState extends State<MapScreenBody>
                 const SizedBox(height: 20),
                 Text(
                   isReceiver
-                      ? context.l10n.donorDetails
-                      : context.l10n.requestDetails,
+                      ? AppLocalizations.of(context)!.donorDetails
+                      : AppLocalizations.of(context)!.requestDetails,
                   style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -155,7 +155,7 @@ class _MapScreenBodyState extends State<MapScreenBody>
                           _cubit.buildRouteTo(marker);
                         },
                         icon: const Icon(Icons.directions),
-                        label: Text(context.l10n.showRoute),
+                        label: Text(AppLocalizations.of(context)!.showRoute),
                         style: OutlinedButton.styleFrom(
                           foregroundColor: Colors.white,
                           side: const BorderSide(color: Colors.white54),
@@ -172,7 +172,7 @@ class _MapScreenBodyState extends State<MapScreenBody>
                             _contactDonorWithNumber(marker.phone!);
                           },
                           icon: const Icon(Icons.phone),
-                          label: Text(context.l10n.call),
+                          label: Text(AppLocalizations.of(context)!.call),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.green,
                             foregroundColor: Colors.white,

@@ -1,5 +1,5 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/features/donations/presentation/cubit/donations_cubit.dart';
@@ -42,7 +42,10 @@ class _DonationDetailsScreenState extends State<DonationDetailsScreen> {
           ),
           onPressed: () => Get.back(),
         ),
-        title: Text(context.l10n.donation, style: TextStyleHelper.h1(context)),
+        title: Text(
+          AppLocalizations.of(context)!.donation,
+          style: TextStyleHelper.h1(context),
+        ),
         actions: [
           BlocBuilder<DonationsCubit, DonationsState>(
             builder: (context, state) {
@@ -100,7 +103,7 @@ class _DonationDetailsScreenState extends State<DonationDetailsScreen> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                     ),
-                    child: Text(context.l10n.retry),
+                    child: Text(AppLocalizations.of(context)!.retry),
                   ),
                 ],
               ),
@@ -134,7 +137,7 @@ class _DonationDetailsScreenState extends State<DonationDetailsScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              context.l10n.donationId,
+                              AppLocalizations.of(context)!.donationId,
                               style: TextStyleHelper.small(
                                 context,
                               ).copyWith(color: AppColors.textMuted),
@@ -177,7 +180,7 @@ class _DonationDetailsScreenState extends State<DonationDetailsScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              context.l10n.status,
+                              AppLocalizations.of(context)!.status,
                               style: TextStyleHelper.small(
                                 context,
                               ).copyWith(color: AppColors.textMuted),
@@ -222,7 +225,7 @@ class _DonationDetailsScreenState extends State<DonationDetailsScreen> {
                         ),
                       ),
                       child: Text(
-                        context.l10n.confirmDonation,
+                        AppLocalizations.of(context)!.confirmDonation,
                         style: TextStyleHelper.h3(
                           context,
                         ).copyWith(color: Colors.white),
@@ -242,7 +245,7 @@ class _DonationDetailsScreenState extends State<DonationDetailsScreen> {
                         ),
                       ),
                       child: Text(
-                        context.l10n.deleteDonationRecord,
+                        AppLocalizations.of(context)!.deleteDonationRecord,
                         style: TextStyleHelper.h3(
                           context,
                         ).copyWith(color: AppColors.primary),
@@ -254,7 +257,7 @@ class _DonationDetailsScreenState extends State<DonationDetailsScreen> {
             );
           }
 
-          return Center(child: Text(context.l10n.noData));
+          return Center(child: Text(AppLocalizations.of(context)!.noData));
         },
       ),
     );
@@ -286,18 +289,20 @@ class _DonationDetailsScreenState extends State<DonationDetailsScreen> {
       AlertDialog(
         backgroundColor: AppColors.card,
         title: Text(
-          context.l10n.deleteDonationRecord,
+          AppLocalizations.of(context)!.deleteDonationRecord,
           style: TextStyleHelper.h3(context),
         ),
         content: Text(
-          context.l10n.areYouSureYouWantToDeleteThisDonationLogRecord,
+          AppLocalizations.of(
+            context,
+          )!.areYouSureYouWantToDeleteThisDonationLogRecord,
           style: TextStyleHelper.small(context),
         ),
         actions: [
           TextButton(
             onPressed: () => Get.back(),
             child: Text(
-              context.l10n.cancel,
+              AppLocalizations.of(context)!.cancel,
               style: TextStyle(color: AppColors.textMuted),
             ),
           ),
@@ -307,7 +312,7 @@ class _DonationDetailsScreenState extends State<DonationDetailsScreen> {
               context.read<DonationsCubit>().deleteDonation(id);
             },
             child: Text(
-              context.l10n.delete,
+              AppLocalizations.of(context)!.delete,
               style: TextStyle(
                 color: AppColors.primary,
                 fontWeight: FontWeight.bold,

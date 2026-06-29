@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/features/donations/data/models/donation_model.dart';
@@ -83,7 +83,7 @@ class _EditDonationScreenState extends State<EditDonationScreen> {
           onPressed: () => Get.back(),
         ),
         title: Text(
-          context.l10n.editDonation,
+          AppLocalizations.of(context)!.editDonation,
           style: TextStyleHelper.h1(context),
         ),
       ),
@@ -123,12 +123,12 @@ class _EditDonationScreenState extends State<EditDonationScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${context.l10n.donation} #${widget.donation.donationProcessId}',
+                      '${AppLocalizations.of(context)!.donation} #${widget.donation.donationProcessId}',
                       style: TextStyleHelper.h3(context),
                     ),
                     SizedBox(height: height * 0.03),
                     Text(
-                      context.l10n.confirmationStatus,
+                      AppLocalizations.of(context)!.confirmationStatus,
                       style: TextStyleHelper.small(context),
                     ),
                     const SizedBox(height: 8),
@@ -162,7 +162,7 @@ class _EditDonationScreenState extends State<EditDonationScreen> {
                     ),
                     SizedBox(height: height * 0.03),
                     Text(
-                      context.l10n.donationDate,
+                      AppLocalizations.of(context)!.donationDate,
                       style: TextStyleHelper.small(context),
                     ),
                     const SizedBox(height: 8),
@@ -225,7 +225,7 @@ class _EditDonationScreenState extends State<EditDonationScreen> {
                                 color: Colors.white,
                               )
                             : Text(
-                                context.l10n.updateDonation,
+                                AppLocalizations.of(context)!.updateDonation,
                                 style: TextStyleHelper.h3(
                                   context,
                                 ).copyWith(color: Colors.white),

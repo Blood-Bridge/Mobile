@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/features/setting/presentation/cubits/privacy_cubit/cubit/privacy_cubit.dart';
 import 'package:blood_bridge/features/setting/presentation/cubits/privacy_cubit/cubit/privacy_state.dart';
 import 'package:blood_bridge/features/setting/presentation/views/widgets/setting_group.dart';
@@ -17,14 +17,14 @@ class PrivacySection extends StatelessWidget {
           sectionTitle: 'Privacy',
           children: [
             ToggleItem(
-              title: context.l10n.locationSharing,
+              title: AppLocalizations.of(context)!.locationSharing,
               subtitle: 'For nearby matching',
               value: state.locationSharing,
               onChanged: (val) =>
                   context.read<PrivacyCubit>().toggleLocationSharing(val),
             ),
             ToggleItem(
-              title: context.l10n.profileVisibility,
+              title: AppLocalizations.of(context)!.profileVisibility,
               subtitle: 'Show to other users',
               value: state.profileVisibility,
               onChanged: (val) =>

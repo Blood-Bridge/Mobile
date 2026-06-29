@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/models/snackbar_type.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/services/hive_helper.dart';
@@ -148,7 +148,10 @@ class _SettingViewBodyState extends State<SettingViewBody> {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: AppColors.card,
-        title: Text(context.l10n.searchRadius, style: TextStyleHelper.h3(context)),
+        title: Text(
+          AppLocalizations.of(context)!.searchRadius,
+          style: TextStyleHelper.h3(context),
+        ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [5, 10, 20, 50].map((radius) {
@@ -173,15 +176,21 @@ class _SettingViewBodyState extends State<SettingViewBody> {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: AppColors.card,
-        title: Text(context.l10n.aboutBloodBridge, style: TextStyleHelper.h3(context)),
+        title: Text(
+          AppLocalizations.of(context)!.aboutBloodBridge,
+          style: TextStyleHelper.h3(context),
+        ),
         content: Text(
-          context.l10n.bloodBridgeIsAPlatform,
+          AppLocalizations.of(context)!.bloodBridgeIsAPlatform,
           style: TextStyleHelper.small(context),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(context.l10n.close, style: TextStyle(color: AppColors.primary)),
+            child: Text(
+              AppLocalizations.of(context)!.close,
+              style: TextStyle(color: AppColors.primary),
+            ),
           ),
         ],
       ),
@@ -193,15 +202,21 @@ class _SettingViewBodyState extends State<SettingViewBody> {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: AppColors.card,
-        title: Text(context.l10n.helpCenter, style: TextStyleHelper.h3(context)),
+        title: Text(
+          AppLocalizations.of(context)!.helpCenter,
+          style: TextStyleHelper.h3(context),
+        ),
         content: Text(
-          context.l10n.ifYouHaveQuestionsAbout,
+          AppLocalizations.of(context)!.ifYouHaveQuestionsAbout,
           style: TextStyleHelper.small(context),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(context.l10n.close, style: TextStyle(color: AppColors.primary)),
+            child: Text(
+              AppLocalizations.of(context)!.close,
+              style: TextStyle(color: AppColors.primary),
+            ),
           ),
         ],
       ),
@@ -213,23 +228,26 @@ class _SettingViewBodyState extends State<SettingViewBody> {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: AppColors.card,
-        title: Text(context.l10n.contactSupport, style: TextStyleHelper.h3(context)),
+        title: Text(
+          AppLocalizations.of(context)!.contactSupport,
+          style: TextStyleHelper.h3(context),
+        ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              context.l10n.emailSupportBloodbridgeOrg,
+              AppLocalizations.of(context)!.emailSupportBloodbridgeOrg,
               style: TextStyleHelper.small(context),
             ),
             const SizedBox(height: 8),
             Text(
-              context.l10n.phone20123456789,
+              AppLocalizations.of(context)!.phone20123456789,
               style: TextStyleHelper.small(context),
             ),
             const SizedBox(height: 8),
             Text(
-              context.l10n.hours247EmergencySupport,
+              AppLocalizations.of(context)!.hours247EmergencySupport,
               style: TextStyleHelper.small(context),
             ),
           ],
@@ -237,7 +255,10 @@ class _SettingViewBodyState extends State<SettingViewBody> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(context.l10n.close, style: TextStyle(color: AppColors.primary)),
+            child: Text(
+              AppLocalizations.of(context)!.close,
+              style: TextStyle(color: AppColors.primary),
+            ),
           ),
         ],
       ),
@@ -249,17 +270,23 @@ class _SettingViewBodyState extends State<SettingViewBody> {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: AppColors.card,
-        title: Text(context.l10n.privacyPolicy, style: TextStyleHelper.h3(context)),
+        title: Text(
+          AppLocalizations.of(context)!.privacyPolicy,
+          style: TextStyleHelper.h3(context),
+        ),
         content: SingleChildScrollView(
           child: Text(
-            context.l10n.weValueYourPrivacyYour,
+            AppLocalizations.of(context)!.weValueYourPrivacyYour,
             style: TextStyleHelper.small(context),
           ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(context.l10n.close, style: TextStyle(color: AppColors.primary)),
+            child: Text(
+              AppLocalizations.of(context)!.close,
+              style: TextStyle(color: AppColors.primary),
+            ),
           ),
         ],
       ),
@@ -278,7 +305,10 @@ class _SettingViewBodyState extends State<SettingViewBody> {
       builder: (dlgContext) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
           backgroundColor: AppColors.card,
-          title: Text(context.l10n.switchToDonor, style: TextStyleHelper.h3(context)),
+          title: Text(
+            AppLocalizations.of(context)!.switchToDonor,
+            style: TextStyleHelper.h3(context),
+          ),
           content: Form(
             key: formKey,
             child: SingleChildScrollView(
@@ -286,7 +316,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    context.l10n.toRegisterAsADonor,
+                    AppLocalizations.of(context)!.toRegisterAsADonor,
                     style: TextStyleHelper.xs(
                       context,
                     ).copyWith(color: AppColors.textMuted),
@@ -296,7 +326,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
                     controller: nationalIdController,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
-                      labelText: context.l10n.nationalId,
+                      labelText: AppLocalizations.of(context)!.nationalId,
                       labelStyle: TextStyle(color: Colors.grey, fontSize: 13),
                     ),
                     validator: (v) =>
@@ -308,7 +338,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
                     keyboardType: TextInputType.number,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
-                      labelText: context.l10n.weightKg,
+                      labelText: AppLocalizations.of(context)!.weightKg,
                       labelStyle: TextStyle(color: Colors.grey, fontSize: 13),
                     ),
                     validator: (v) {
@@ -323,9 +353,9 @@ class _SettingViewBodyState extends State<SettingViewBody> {
                     controller: medicalHistoryController,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
-                      labelText: context.l10n.medicalHistory,
+                      labelText: AppLocalizations.of(context)!.medicalHistory,
                       labelStyle: TextStyle(color: Colors.grey, fontSize: 13),
-                      hintText: context.l10n.noneDiabetesEtc,
+                      hintText: AppLocalizations.of(context)!.noneDiabetesEtc,
                       hintStyle: TextStyle(color: Colors.grey, fontSize: 11),
                     ),
                   ),
@@ -368,7 +398,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
             TextButton(
               onPressed: () => Navigator.pop(dlgContext),
               child: Text(
-                context.l10n.cancel,
+                AppLocalizations.of(context)!.cancel,
                 style: TextStyle(color: Colors.grey),
               ),
             ),
@@ -398,7 +428,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
                 backgroundColor: AppColors.primary,
               ),
               child: Text(
-                context.l10n.switchh,
+                AppLocalizations.of(context)!.switchh,
                 style: TextStyle(color: Colors.white),
               ),
             ),
@@ -413,9 +443,12 @@ class _SettingViewBodyState extends State<SettingViewBody> {
       context: context,
       builder: (dlgContext) => AlertDialog(
         backgroundColor: AppColors.card,
-        title: Text(context.l10n.switchToRecipient, style: TextStyleHelper.h3(context)),
+        title: Text(
+          AppLocalizations.of(context)!.switchToRecipient,
+          style: TextStyleHelper.h3(context),
+        ),
         content: Text(
-          context.l10n.areYouSureYouWant,
+          AppLocalizations.of(context)!.areYouSureYouWant,
           style: TextStyleHelper.small(
             context,
           ).copyWith(color: AppColors.textMuted),
@@ -424,7 +457,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
           TextButton(
             onPressed: () => Navigator.pop(dlgContext),
             child: Text(
-              context.l10n.cancel,
+              AppLocalizations.of(context)!.cancel,
               style: TextStyle(color: Colors.grey),
             ),
           ),
@@ -435,7 +468,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
             },
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
             child: Text(
-              context.l10n.switchh,
+              AppLocalizations.of(context)!.switchh,
               style: TextStyle(color: Colors.white),
             ),
           ),
@@ -450,11 +483,11 @@ class _SettingViewBodyState extends State<SettingViewBody> {
       builder: (dlgContext) => AlertDialog(
         backgroundColor: AppColors.card,
         title: Text(
-          context.l10n.deleteAccount,
+          AppLocalizations.of(context)!.deleteAccount,
           style: TextStyleHelper.h3(context).copyWith(color: Colors.red),
         ),
         content: Text(
-          context.l10n.warningThisWillPermanentlyDelete,
+          AppLocalizations.of(context)!.warningThisWillPermanentlyDelete,
           style: TextStyleHelper.small(
             context,
           ).copyWith(color: AppColors.textMuted),
@@ -463,7 +496,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
           TextButton(
             onPressed: () => Navigator.pop(dlgContext),
             child: Text(
-              context.l10n.cancel,
+              AppLocalizations.of(context)!.cancel,
               style: TextStyle(color: Colors.grey),
             ),
           ),
@@ -474,7 +507,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
             },
             style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
             child: Text(
-              context.l10n.deletePermanently,
+              AppLocalizations.of(context)!.deletePermanently,
               style: TextStyle(color: Colors.white),
             ),
           ),
@@ -519,10 +552,13 @@ class _SettingViewBodyState extends State<SettingViewBody> {
                     ),
                   ),
                 ),
-                Text(context.l10n.updateBloodInventory, style: TextStyleHelper.h3(ctx)),
+                Text(
+                  AppLocalizations.of(context)!.updateBloodInventory,
+                  style: TextStyleHelper.h3(ctx),
+                ),
                 const SizedBox(height: 4),
                 Text(
-                  context.l10n.enterCurrentUnitsForEach,
+                  AppLocalizations.of(context)!.enterCurrentUnitsForEach,
                   style: TextStyleHelper.xs(
                     ctx,
                   ).copyWith(color: AppColors.textMuted),
@@ -611,7 +647,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
                             ),
                           )
                         : Text(
-                            context.l10n.saveInventory,
+                            AppLocalizations.of(context)!.saveInventory,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
@@ -664,7 +700,10 @@ class _SettingViewBodyState extends State<SettingViewBody> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(context.l10n.activeRequests, style: TextStyleHelper.h3(ctx)),
+                      Text(
+                        AppLocalizations.of(context)!.activeRequests,
+                        style: TextStyleHelper.h3(ctx),
+                      ),
                       TextButton.icon(
                         onPressed: () async {
                           await _fetchActiveRequests();
@@ -677,7 +716,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
                           color: AppColors.primary,
                         ),
                         label: Text(
-                          context.l10n.refresh,
+                          AppLocalizations.of(context)!.refresh,
                           style: TextStyle(color: AppColors.primary),
                         ),
                       ),
@@ -693,7 +732,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
                   : _activeRequests.isEmpty
                   ? Center(
                       child: Text(
-                        context.l10n.noActiveRequests2,
+                        AppLocalizations.of(context)!.noActiveRequests2,
                         style: TextStyleHelper.small(
                           ctx,
                         ).copyWith(color: AppColors.textMuted),
@@ -760,7 +799,10 @@ class _SettingViewBodyState extends State<SettingViewBody> {
             ),
             onPressed: () => Navigator.pop(context),
           ),
-          title: Text(context.l10n.settings, style: TextStyleHelper.h1(context)),
+          title: Text(
+            AppLocalizations.of(context)!.settings,
+            style: TextStyleHelper.h1(context),
+          ),
         ),
         body: ListView(
           padding: const EdgeInsets.only(top: 8, bottom: 32),
@@ -775,7 +817,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
                   sectionTitle: 'Notifications',
                   children: [
                     ToggleItem(
-                      title: context.l10n.emergencyAlerts,
+                      title: AppLocalizations.of(context)!.emergencyAlerts,
                       subtitle: 'Critical blood requests',
                       value: state.emergencyAlerts,
                       onChanged: (val) => context
@@ -783,7 +825,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
                           .toggleEmergencyAlerts(val),
                     ),
                     ToggleItem(
-                      title: context.l10n.requestNotifications,
+                      title: AppLocalizations.of(context)!.requestNotifications,
                       subtitle: 'Standard blood requests',
                       value: state.requestNotifications,
                       onChanged: (val) => context
@@ -791,7 +833,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
                           .toggleRequestNotifications(val),
                     ),
                     ToggleItem(
-                      title: context.l10n.donationReminders,
+                      title: AppLocalizations.of(context)!.donationReminders,
                       subtitle: 'When eligible to donate again',
                       value: state.donationReminders,
                       onChanged: (val) => context
@@ -808,13 +850,13 @@ class _SettingViewBodyState extends State<SettingViewBody> {
               sectionTitle: 'Privacy',
               children: [
                 ToggleItem(
-                  title: context.l10n.locationSharing,
+                  title: AppLocalizations.of(context)!.locationSharing,
                   subtitle: 'For nearby matching',
                   value: _locationSharing,
                   onChanged: (val) => setState(() => _locationSharing = val),
                 ),
                 ToggleItem(
-                  title: context.l10n.profileVisibility,
+                  title: AppLocalizations.of(context)!.profileVisibility,
                   subtitle: 'Show to other users',
                   value: _profileVisibility,
                   onChanged: (val) => setState(() => _profileVisibility = val),
@@ -827,20 +869,20 @@ class _SettingViewBodyState extends State<SettingViewBody> {
               sectionTitle: 'Preferences',
               children: [
                 ToggleItem(
-                  title: context.l10n.darkMode,
+                  title: AppLocalizations.of(context)!.darkMode,
                   subtitle: 'Always on for eye comfort',
                   value: _darkMode,
                   onChanged: (val) => setState(() => _darkMode = val),
                 ),
                 ArrowItem(
-                  title: context.l10n.searchRadius,
+                  title: AppLocalizations.of(context)!.searchRadius,
                   subtitle: '$_searchRadius km',
                   onTap: _showSearchRadiusDialog,
                 ),
                 // Switch Role — Donor & Recipient only
                 if (isDonor || currentRole == 'Recipient')
                   ArrowItem(
-                    title: context.l10n.currentRole,
+                    title: AppLocalizations.of(context)!.currentRole,
                     subtitle: currentRole ?? 'None',
                     onTap: () {
                       if (isDonor) {
@@ -853,7 +895,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
                 // My Donations — Donor only
                 if (isDonor)
                   ArrowItem(
-                    title: context.l10n.myDonations,
+                    title: AppLocalizations.of(context)!.myDonations,
                     subtitle: 'View history & confirm status',
                     onTap: () => Get.toNamed('/donations'),
                   ),
@@ -866,14 +908,14 @@ class _SettingViewBodyState extends State<SettingViewBody> {
                 sectionTitle: 'Hospital Management',
                 children: [
                   ArrowItem(
-                    title: context.l10n.bloodInventory,
+                    title: AppLocalizations.of(context)!.bloodInventory,
                     subtitle: 'Update blood stock levels',
                     onTap: _showInventorySheet,
                     icon: Icons.bloodtype_outlined,
                     iconColor: AppColors.primary,
                   ),
                   ArrowItem(
-                    title: context.l10n.activeRequests,
+                    title: AppLocalizations.of(context)!.activeRequests,
                     subtitle: 'View open blood requests',
                     onTap: _showActiveRequestsSheet,
                     icon: Icons.notifications_active_outlined,
@@ -887,14 +929,17 @@ class _SettingViewBodyState extends State<SettingViewBody> {
               sectionTitle: 'Support',
               children: [
                 ArrowItem(
-                  title: context.l10n.helpCenter,
+                  title: AppLocalizations.of(context)!.helpCenter,
                   onTap: _showHelpCenterDialog,
                 ),
                 ArrowItem(
-                  title: context.l10n.contactSupport,
+                  title: AppLocalizations.of(context)!.contactSupport,
                   onTap: _showContactSupportDialog,
                 ),
-                ArrowItem(title: context.l10n.about, onTap: _showAboutDialog),
+                ArrowItem(
+                  title: AppLocalizations.of(context)!.about,
+                  onTap: _showAboutDialog,
+                ),
               ],
             ),
 
@@ -903,7 +948,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
             // Privacy Policy
             _BottomTile(
               icon: Icons.shield_outlined,
-              label: context.l10n.privacyPolicy,
+              label: AppLocalizations.of(context)!.privacyPolicy,
               color: AppColors.textMuted,
               onTap: _showPrivacyPolicyDialog,
             ),
@@ -911,7 +956,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
             // Sign Out
             _BottomTile(
               icon: Icons.logout,
-              label: context.l10n.signOut,
+              label: AppLocalizations.of(context)!.signOut,
               color: AppColors.primary,
               onTap: () => context.read<AuthCubit>().logout(context),
             ),
@@ -919,7 +964,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
             // Delete Account
             _BottomTile(
               icon: Icons.delete_forever,
-              label: context.l10n.deleteAccount,
+              label: AppLocalizations.of(context)!.deleteAccount,
               color: Colors.red,
               onTap: _confirmDeleteAccount,
             ),
@@ -927,7 +972,7 @@ class _SettingViewBodyState extends State<SettingViewBody> {
             const SizedBox(height: 16),
             Center(
               child: Text(
-                context.l10n.bloodBridgeV100,
+                AppLocalizations.of(context)!.bloodBridgeV100,
                 style: TextStyleHelper.xs(context),
               ),
             ),

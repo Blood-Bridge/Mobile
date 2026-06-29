@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/models/snackbar_type.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/widgets/custom_button.dart';
@@ -83,18 +83,20 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                 children: [
                   SizedBox(height: height * 0.08),
                   Text(
-                    context.l10n.permissions,
+                    AppLocalizations.of(context)!.permissions,
                     style: TextStyleHelper.h1(context),
                   ),
                   Text(
-                    context.l10n.permissionsDesc,
+                    AppLocalizations.of(context)!.permissionsDesc,
                     style: TextStyleHelper.xs(context),
                   ),
                   PermissionCard(
                     height: height,
                     width: width,
-                    title: context.l10n.locationAccess,
-                    description: context.l10n.locationAccessDesc,
+                    title: AppLocalizations.of(context)!.locationAccess,
+                    description: AppLocalizations.of(
+                      context,
+                    )!.locationAccessDesc,
                     isAccessed: cubit.isLocationAccessGranted,
                     icon: Icons.location_on_outlined,
                     onTap: () {
@@ -104,7 +106,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                   PermissionCard(
                     height: height,
                     width: width,
-                    title: context.l10n.notifications,
+                    title: AppLocalizations.of(context)!.notifications,
                     description:
                         'Receive urgent blood requests and emergency alerts',
                     isAccessed: cubit.isNotificationAccessGranted,

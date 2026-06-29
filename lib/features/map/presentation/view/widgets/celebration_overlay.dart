@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class CelebrationOverlay extends StatelessWidget {
@@ -26,7 +26,7 @@ class CelebrationOverlay extends StatelessWidget {
                   Icon(Icons.celebration, color: Colors.greenAccent, size: 100),
                   SizedBox(height: 16),
                   Text(
-                    context.l10n.arrivedSuccessfully,
+                    AppLocalizations.of(context)!.arrivedSuccessfully,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 22,

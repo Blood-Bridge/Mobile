@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,7 +20,7 @@ class AdminDashboardScreen extends StatelessWidget {
           backgroundColor: const Color(0xFF0A0A0A),
           elevation: 0,
           title: Text(
-            context.l10n.adminDashboard,
+            AppLocalizations.of(context)!.adminDashboard,
             style: TextStyle(
               color: Colors.white,
               fontSize: 24,
@@ -88,7 +88,7 @@ class _AdminDashboardBodyState extends State<_AdminDashboardBody> {
                   AdminSettingItem(
                     icon: Icons.people_outline,
                     iconBgColor: const Color(0xFFFB2C36).withOpacity(0.2),
-                    title: context.l10n.manageDonors,
+                    title: AppLocalizations.of(context)!.manageDonors,
                     subtitle: 'View, filter and delete donors',
                     hasArrow: true,
                     onTap: () => Get.toNamed('/admin/donors'),
@@ -96,7 +96,7 @@ class _AdminDashboardBodyState extends State<_AdminDashboardBody> {
                   AdminSettingItem(
                     icon: Icons.receipt_long_outlined,
                     iconBgColor: const Color(0xFFFFB020).withOpacity(0.2),
-                    title: context.l10n.manageRequests,
+                    title: AppLocalizations.of(context)!.manageRequests,
                     subtitle: 'View, track and cancel blood requests',
                     hasArrow: true,
                     onTap: () => Get.toNamed('/admin/requests'),
@@ -104,7 +104,7 @@ class _AdminDashboardBodyState extends State<_AdminDashboardBody> {
                   AdminSettingItem(
                     icon: Icons.favorite_outline,
                     iconBgColor: const Color(0xFF00C950).withOpacity(0.2),
-                    title: context.l10n.manageDonations,
+                    title: AppLocalizations.of(context)!.manageDonations,
                     subtitle: 'View and delete donation records',
                     hasArrow: true,
                     onTap: () => Get.toNamed('/admin/donations'),
@@ -119,7 +119,7 @@ class _AdminDashboardBodyState extends State<_AdminDashboardBody> {
                   AdminSettingItem(
                     icon: Icons.language,
                     iconBgColor: const Color(0xFF2B7FFF).withOpacity(0.2),
-                    title: context.l10n.systemLanguage,
+                    title: AppLocalizations.of(context)!.systemLanguage,
                     subtitle: 'English',
                     hasArrow: true,
                     onTap: () => Get.toNamed('/admin/language'),
@@ -127,7 +127,7 @@ class _AdminDashboardBodyState extends State<_AdminDashboardBody> {
                   AdminSettingItem(
                     icon: Icons.timer_outlined,
                     iconBgColor: const Color(0xFFAD46FF).withOpacity(0.2),
-                    title: context.l10n.sessionTimeout,
+                    title: AppLocalizations.of(context)!.sessionTimeout,
                     subtitle: '$_sessionTimeoutMinutes minutes',
                     hasArrow: true,
                     onTap: () => _showTimeoutDialog(),
@@ -142,7 +142,7 @@ class _AdminDashboardBodyState extends State<_AdminDashboardBody> {
                   AdminSettingItem(
                     icon: Icons.email_outlined,
                     iconBgColor: const Color(0xFF00C950).withOpacity(0.2),
-                    title: context.l10n.emailNotifications,
+                    title: AppLocalizations.of(context)!.emailNotifications,
                     subtitle: _emailNotifications ? 'Enabled' : 'Disabled',
                     trailing: _buildSwitch(
                       _emailNotifications,
@@ -157,7 +157,7 @@ class _AdminDashboardBodyState extends State<_AdminDashboardBody> {
                   AdminSettingItem(
                     icon: Icons.sms_outlined,
                     iconBgColor: const Color(0xFF2B7FFF).withOpacity(0.2),
-                    title: context.l10n.smsNotifications,
+                    title: AppLocalizations.of(context)!.smsNotifications,
                     subtitle: _smsNotifications ? 'Enabled' : 'Disabled',
                     trailing: _buildSwitch(
                       _smsNotifications,
@@ -179,7 +179,7 @@ class _AdminDashboardBodyState extends State<_AdminDashboardBody> {
                   AdminSettingItem(
                     icon: Icons.backup_outlined,
                     iconBgColor: const Color(0xFF2B7FFF).withOpacity(0.2),
-                    title: context.l10n.backupDatabase,
+                    title: AppLocalizations.of(context)!.backupDatabase,
                     subtitle: 'Manage backups & schedules',
                     hasArrow: true,
                     onTap: () => Get.toNamed('/admin/backup'),
@@ -187,7 +187,7 @@ class _AdminDashboardBodyState extends State<_AdminDashboardBody> {
                   AdminSettingItem(
                     icon: Icons.list_alt_outlined,
                     iconBgColor: const Color(0xFFFF6900).withOpacity(0.2),
-                    title: context.l10n.viewSystemLogs,
+                    title: AppLocalizations.of(context)!.viewSystemLogs,
                     subtitle: 'Last 7 days',
                     hasArrow: true,
                     onTap: () => Get.toNamed('/admin/logs'),
@@ -197,13 +197,13 @@ class _AdminDashboardBodyState extends State<_AdminDashboardBody> {
               const SizedBox(height: 24),
 
               AdminSection(
-                title: context.l10n.dangerZone,
+                title: AppLocalizations.of(context)!.dangerZone,
                 isDanger: true,
                 children: [
                   AdminSettingItem(
                     icon: Icons.build_circle_outlined,
                     iconBgColor: const Color(0xFFFF6900).withOpacity(0.2),
-                    title: context.l10n.maintenanceMode,
+                    title: AppLocalizations.of(context)!.maintenanceMode,
                     subtitle: _maintenanceMode ? 'Enabled' : 'Disabled',
                     trailing: _buildSwitch(
                       _maintenanceMode,
@@ -221,7 +221,7 @@ class _AdminDashboardBodyState extends State<_AdminDashboardBody> {
                   AdminSettingItem(
                     icon: Icons.restart_alt_outlined,
                     iconBgColor: const Color(0xFFFB2C36).withOpacity(0.2),
-                    title: context.l10n.resetSystem,
+                    title: AppLocalizations.of(context)!.resetSystem,
                     subtitle: 'Complete system reset',
                     titleColor: const Color(0xFFFF6467),
                     hasArrow: true,
@@ -245,7 +245,7 @@ class _AdminDashboardBodyState extends State<_AdminDashboardBody> {
                     ),
                   ),
                   child: Text(
-                    context.l10n.refreshData,
+                    AppLocalizations.of(context)!.refreshData,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -386,7 +386,7 @@ class _AdminDashboardBodyState extends State<_AdminDashboardBody> {
       SimpleDialog(
         backgroundColor: const Color(0xFF121212),
         title: Text(
-          context.l10n.sessionTimeout,
+          AppLocalizations.of(context)!.sessionTimeout,
           style: TextStyle(color: Colors.white),
         ),
         children: [15, 30, 60, 120].map((mins) {
@@ -416,20 +416,20 @@ class _AdminDashboardBodyState extends State<_AdminDashboardBody> {
       AlertDialog(
         backgroundColor: const Color(0xFF121212),
         title: Text(
-          context.l10n.resetSystem,
+          AppLocalizations.of(context)!.resetSystem,
           style: TextStyle(color: Color(0xFFFF6467)),
         ),
         content: Text(
-          context
-              .l10n
-              .thisWillCompletelyClearTheSystemDatabaseAndLogFilesThisActio,
+          AppLocalizations.of(
+            context,
+          )!.thisWillCompletelyClearTheSystemDatabaseAndLogFilesThisActio,
           style: TextStyle(color: Colors.white70),
         ),
         actions: [
           TextButton(
             onPressed: () => Get.back(),
             child: Text(
-              context.l10n.cancel,
+              AppLocalizations.of(context)!.cancel,
               style: TextStyle(color: Colors.grey),
             ),
           ),
@@ -450,7 +450,7 @@ class _AdminDashboardBodyState extends State<_AdminDashboardBody> {
               );
             },
             child: Text(
-              context.l10n.resetEverything,
+              AppLocalizations.of(context)!.resetEverything,
               style: TextStyle(
                 color: Color(0xFFFF6467),
                 fontWeight: FontWeight.bold,

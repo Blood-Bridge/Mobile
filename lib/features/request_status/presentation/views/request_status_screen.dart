@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/features/request_status/data/models/request_status_model.dart';
@@ -66,13 +66,16 @@ class _RequestStatusBody extends StatelessWidget {
           ),
           onPressed: () => Get.back(),
         ),
-        title: Text(context.l10n.status, style: TextStyleHelper.h1(context)),
+        title: Text(
+          AppLocalizations.of(context)!.status,
+          style: TextStyleHelper.h1(context),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () =>
                 context.read<RequestStatusCubit>().getRequestStatus(requestId),
-            tooltip: context.l10n.refresh,
+            tooltip: AppLocalizations.of(context)!.refresh,
           ),
         ],
       ),
@@ -116,7 +119,7 @@ class _RequestStatusBody extends StatelessWidget {
                         ),
                       ),
                       child: Text(
-                        context.l10n.retry,
+                        AppLocalizations.of(context)!.retry,
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
@@ -160,14 +163,14 @@ class _RequestStatusBody extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '${context.l10n.request} #$requestId',
+                            '${AppLocalizations.of(context)!.request} #$requestId',
                             style: TextStyleHelper.h2(context),
                           ),
                           const SizedBox(height: 12),
                           Row(
                             children: [
                               Text(
-                                '${context.l10n.status}: ',
+                                '${AppLocalizations.of(context)!.status}: ',
                                 style: TextStyleHelper.small(
                                   context,
                                 ).copyWith(color: AppColors.textMuted),
@@ -201,7 +204,7 @@ class _RequestStatusBody extends StatelessWidget {
                     ),
                     const SizedBox(height: 28),
                     Text(
-                      context.l10n.timeline,
+                      AppLocalizations.of(context)!.timeline,
                       style: TextStyleHelper.h3(context),
                     ),
                     const SizedBox(height: 20),
@@ -262,8 +265,8 @@ class _RequestStatusBody extends StatelessWidget {
               children: [
                 Text(
                   isCancelled
-                      ? context.l10n.requestCancelled
-                      : context.l10n.requestExpired,
+                      ? AppLocalizations.of(context)!.requestCancelled
+                      : AppLocalizations.of(context)!.requestExpired,
                   style: TextStyleHelper.h3(
                     context,
                   ).copyWith(color: Colors.red),
@@ -271,7 +274,9 @@ class _RequestStatusBody extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   isCancelled
-                      ? context.l10n.requestCancelledDescription
+                      ? AppLocalizations.of(
+                          context,
+                        )!.requestCancelledDescription
                       : 'This blood request expired because no compatible donors responded within the required timeframe.',
                   style: TextStyleHelper.small(
                     context,

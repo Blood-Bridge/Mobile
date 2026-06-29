@@ -1,5 +1,5 @@
 import 'package:blood_bridge/constants.dart';
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/widgets/custom_textfield.dart';
 import 'package:blood_bridge/features/user_information/presentation/cubit/info_cubit.dart';
@@ -25,25 +25,34 @@ class SecondInfoScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(context.l10n.phoneNumber, style: TextStyleHelper.small(context)),
+        Text(
+          AppLocalizations.of(context)!.phoneNumber,
+          style: TextStyleHelper.small(context),
+        ),
         SizedBox(height: height * 0.01),
         CustomTextfield(
           prefixIcon: Icon(Icons.phone),
-          text: context.l10n.text20123456789,
+          text: AppLocalizations.of(context)!.text20123456789,
           controller: phoneController,
           validator: cubit.phoneValidator,
         ),
         SizedBox(height: height * 0.04),
-        Text(context.l10n.address, style: TextStyleHelper.small(context)),
+        Text(
+          AppLocalizations.of(context)!.address,
+          style: TextStyleHelper.small(context),
+        ),
         SizedBox(height: height * 0.01),
         CustomTextfield(
           prefixIcon: Icon(Icons.location_on),
-          text: context.l10n.enterYourAddress,
+          text: AppLocalizations.of(context)!.enterYourAddress,
           controller: addressController,
           validator: cubit.addressValidator,
         ),
         SizedBox(height: height * 0.04),
-        Text(context.l10n.city, style: TextStyleHelper.small(context)),
+        Text(
+          AppLocalizations.of(context)!.city,
+          style: TextStyleHelper.small(context),
+        ),
         SizedBox(height: height * 0.01),
         DropdownButtonFormField<String>(
           dropdownColor: Colors.black,

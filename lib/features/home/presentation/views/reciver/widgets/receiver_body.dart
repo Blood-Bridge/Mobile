@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/models/snackbar_type.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
@@ -55,7 +55,7 @@ class _ReceiverBodyState extends State<ReceiverBody> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        context.l10n.history,
+                        AppLocalizations.of(context)!.history,
                         style: TextStyleHelper.h3(context),
                       ),
                       IconButton(
@@ -92,7 +92,7 @@ class _ReceiverBodyState extends State<ReceiverBody> {
                           ),
                           const SizedBox(height: 20),
                           CustomButton(
-                            text: context.l10n.retry,
+                            text: AppLocalizations.of(context)!.retry,
                             height: 44,
                             backgroundColor: AppColors.primary,
                             isEnabled: true,
@@ -114,7 +114,7 @@ class _ReceiverBodyState extends State<ReceiverBody> {
                             ),
                             const SizedBox(height: 16),
                             Text(
-                              context.l10n.noRequests,
+                              AppLocalizations.of(context)!.noRequests,
                               style: TextStyleHelper.small(context),
                             ),
                           ],

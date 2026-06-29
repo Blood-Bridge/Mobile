@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/features/donations/presentation/cubit/donations_cubit.dart';
@@ -42,7 +42,7 @@ class _DonationsListScreenState extends State<DonationsListScreen> {
           onPressed: () => Get.back(),
         ),
         title: Text(
-          context.l10n.myDonations,
+          AppLocalizations.of(context)!.myDonations,
           style: TextStyleHelper.h1(context),
         ),
       ),
@@ -72,7 +72,7 @@ class _DonationsListScreenState extends State<DonationsListScreen> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                     ),
-                    child: Text(context.l10n.retry),
+                    child: Text(AppLocalizations.of(context)!.retry),
                   ),
                 ],
               ),
@@ -89,7 +89,7 @@ class _DonationsListScreenState extends State<DonationsListScreen> {
                     Icon(Icons.history, size: 64, color: AppColors.textMuted),
                     const SizedBox(height: 16),
                     Text(
-                      context.l10n.noDonationHistoryFound,
+                      AppLocalizations.of(context)!.noDonationHistoryFound,
                       style: TextStyleHelper.bodyMuted(context),
                     ),
                   ],
@@ -141,7 +141,7 @@ class _DonationsListScreenState extends State<DonationsListScreen> {
                         ),
                       ),
                       title: Text(
-                        '${context.l10n.donation} #${item.donationProcessId}',
+                        '${AppLocalizations.of(context)!.donation} #${item.donationProcessId}',
                         style: TextStyleHelper.small(
                           context,
                         ).copyWith(fontWeight: FontWeight.bold),
@@ -191,7 +191,9 @@ class _DonationsListScreenState extends State<DonationsListScreen> {
             );
           }
 
-          return Center(child: Text(context.l10n.pullToRefresh));
+          return Center(
+            child: Text(AppLocalizations.of(context)!.pullToRefresh),
+          );
         },
       ),
     );

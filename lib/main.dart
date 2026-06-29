@@ -36,6 +36,7 @@ import 'package:blood_bridge/features/admin_dashboard/presentation/views/admin_d
 import 'package:blood_bridge/features/recommendations/presentation/cubit/recommendation_cubit.dart';
 import 'package:blood_bridge/features/setting/presentation/cubits/switch_role_cubit/switch_role_cubit.dart';
 import 'package:blood_bridge/features/setting/presentation/cubits/delete_account_cubit/delete_account_cubit.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -108,6 +109,8 @@ class MyApp extends StatelessWidget {
           return GetMaterialApp(
             debugShowCheckedModeBanner: false,
             locale: state.locale,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
             theme: ThemeData.dark().copyWith(
               scaffoldBackgroundColor: AppColors.bg,
               primaryColor: AppColors.primary,

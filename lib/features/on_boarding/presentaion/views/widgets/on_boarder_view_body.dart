@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/services/hive_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/core/widgets/custom_button.dart';
@@ -83,7 +83,7 @@ class _OnBoardingViewBodyState extends State<OnBoardingViewBody> {
                 HiveHelper.setValueInOnboardingBox();
                 Get.offAll(() => WelcomeView());
               },
-              text: context.l10n.getStarted,
+              text: AppLocalizations.of(context)!.getStarted,
             ),
           ),
         ),

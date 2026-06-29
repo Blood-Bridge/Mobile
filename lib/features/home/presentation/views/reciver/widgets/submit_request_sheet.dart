@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/features/home/presentation/views/reciver/cubit/receiver_cubit.dart';
@@ -39,6 +39,7 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
     {'id': 2, 'name': 'Al Salam International Hospital'},
     {'id': 3, 'name': 'Demerdash Hospital'},
     {'id': 4, 'name': 'Aswan Hospital'},
+    {'id': 5, 'name': 'Other'},
   ];
 
   @override
@@ -59,12 +60,7 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
     final width = MediaQuery.of(context).size.width;
 
     return Container(
-      padding: EdgeInsets.only(
-        top: 24,
-        left: 20,
-        right: 20,
-        bottom: MediaQuery.of(context).viewInsets.bottom + 24,
-      ),
+      padding: EdgeInsets.only(top: 24, left: 20, right: 20, bottom: 30),
       decoration: BoxDecoration(
         color: AppColors.card,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
@@ -73,6 +69,7 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
       child: Form(
         key: _formKey,
         child: SingleChildScrollView(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,8 +90,8 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
                 children: [
                   Text(
                     widget.isEmergency
-                        ? context.l10n.emergencyRequest
-                        : context.l10n.requestBlood,
+                        ? AppLocalizations.of(context)!.emergencyRequest
+                        : AppLocalizations.of(context)!.requestBlood,
                     style: TextStyleHelper.h2(context).copyWith(
                       color: widget.isEmergency
                           ? AppColors.primary
@@ -115,7 +112,7 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
                         ),
                       ),
                       child: Text(
-                        context.l10n.highPriority,
+                        AppLocalizations.of(context)!.highPriority,
                         style: TextStyleHelper.xs(context).copyWith(
                           color: AppColors.primary,
                           fontWeight: FontWeight.bold,
@@ -126,7 +123,7 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
               ),
               const SizedBox(height: 20),
               Text(
-                context.l10n.urgencyLevel,
+                AppLocalizations.of(context)!.urgencyLevel,
                 style: TextStyleHelper.small(context),
               ),
               const SizedBox(height: 8),
@@ -184,7 +181,7 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          context.l10n.bloodType,
+                          AppLocalizations.of(context)!.bloodType,
                           style: TextStyleHelper.small(context),
                         ),
                         const SizedBox(height: 8),
@@ -224,7 +221,7 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        context.l10n.quantity,
+                        AppLocalizations.of(context)!.quantity,
                         style: TextStyleHelper.small(context),
                       ),
                       const SizedBox(height: 8),
@@ -273,7 +270,7 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
               ),
               const SizedBox(height: 20),
               Text(
-                context.l10n.hospital,
+                AppLocalizations.of(context)!.hospital,
                 style: TextStyleHelper.small(context),
               ),
               const SizedBox(height: 8),
@@ -306,7 +303,7 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
               ),
               const SizedBox(height: 20),
               Text(
-                context.l10n.medicalInformation,
+                AppLocalizations.of(context)!.medicalInformation,
                 style: TextStyleHelper.small(context),
               ),
               const SizedBox(height: 8),
@@ -328,9 +325,9 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
                       width: 1.5,
                     ),
                   ),
-                  hintText: context
-                      .l10n
-                      .enterCaseDetailsEGPostOperativeCareAccidentLeukemiaTreatment,
+                  hintText: AppLocalizations.of(
+                    context,
+                  )!.enterCaseDetailsEGPostOperativeCareAccidentLeukemiaTreatment,
                   hintStyle: TextStyle(
                     color: AppColors.textMuted,
                     fontSize: 13,
@@ -394,8 +391,10 @@ class _SubmitRequestSheetState extends State<SubmitRequestSheet> {
                           ? const CircularProgressIndicator(color: Colors.white)
                           : Text(
                               widget.isEmergency
-                                  ? context.l10n.submitEmergencyRequest
-                                  : context.l10n.submitRequest,
+                                  ? AppLocalizations.of(
+                                      context,
+                                    )!.submitEmergencyRequest
+                                  : AppLocalizations.of(context)!.submitRequest,
                               style: TextStyleHelper.h3(context).copyWith(
                                 color: widget.isEmergency
                                     ? AppColors.primaryForeground

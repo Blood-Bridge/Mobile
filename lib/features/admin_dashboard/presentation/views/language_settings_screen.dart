@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'widgets/admin_section.dart';
 import 'widgets/admin_setting_item.dart';
@@ -14,7 +14,7 @@ class LanguageSettingsScreen extends StatelessWidget {
         backgroundColor: Color(0xFF0A0A0A),
         elevation: 0,
         title: Text(
-          context.l10n.systemLanguage,
+          AppLocalizations.of(context)!.systemLanguage,
           style: TextStyle(
             color: Colors.white,
             fontSize: 24,
@@ -34,7 +34,7 @@ class LanguageSettingsScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AdminSection(
-              title: context.l10n.selectLanguage,
+              title: AppLocalizations.of(context)!.selectLanguage,
               children: [
                 _buildLanguageItem(context, 'English', 'United States', true),
                 _buildLanguageItem(context, 'Arabic', 'Saudi Arabia', false),
@@ -49,14 +49,14 @@ class LanguageSettingsScreen extends StatelessWidget {
                 AdminSettingItem(
                   icon: Icons.date_range_outlined,
                   iconBgColor: Color(0xFF2B7FFF).withOpacity(0.2),
-                  title: context.l10n.dateFormat,
+                  title: AppLocalizations.of(context)!.dateFormat,
                   subtitle: 'MM/DD/YYYY',
                   hasArrow: true,
                 ),
                 AdminSettingItem(
                   icon: Icons.access_time_outlined,
                   iconBgColor: Color(0xFFAD46FF).withOpacity(0.2),
-                  title: context.l10n.timeFormat,
+                  title: AppLocalizations.of(context)!.timeFormat,
                   subtitle: '24-hour',
                   hasArrow: true,
                 ),

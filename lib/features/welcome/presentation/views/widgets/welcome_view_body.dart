@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/models/user_role.dart';
 import 'package:blood_bridge/core/services/hive_helper.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
@@ -96,12 +96,15 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody> {
               children: [
                 SizedBox(height: height * 0.08),
 
-                Text(context.l10n.welcome, style: TextStyleHelper.h1(context)),
+                Text(
+                  AppLocalizations.of(context)!.welcome,
+                  style: TextStyleHelper.h1(context),
+                ),
 
                 const SizedBox(height: 8),
 
                 Text(
-                  context.l10n.howWouldYouLikeTo,
+                  AppLocalizations.of(context)!.howWouldYouLikeTo,
                   textAlign: TextAlign.center,
                   style: TextStyleHelper.small(context),
                 ),
@@ -113,7 +116,7 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody> {
                   duration: const Duration(milliseconds: 400),
                   child: RoleCard(
                     icon: SvgPicture.asset(Assets.imagesBloodTypeIcon),
-                    title: context.l10n.donateBlood,
+                    title: AppLocalizations.of(context)!.donateBlood,
                     subtitle: 'Help save lives by donating blood',
                     isSelected: selectedRole == UserRole.donor,
                     onTap: () => _onRoleTap(UserRole.donor),
@@ -122,7 +125,7 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody> {
 
                 RoleCard(
                   icon: SvgPicture.asset(Assets.imagesFavoriteIcon),
-                  title: context.l10n.requestBlood,
+                  title: AppLocalizations.of(context)!.requestBlood,
                   subtitle: 'Find donors in your area',
                   isSelected: selectedRole == UserRole.recipient,
                   onTap: () => _onRoleTap(UserRole.recipient),
@@ -130,7 +133,7 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody> {
 
                 RoleCard(
                   icon: SvgPicture.asset(Assets.imagesHospitalIcon),
-                  title: context.l10n.hospital,
+                  title: AppLocalizations.of(context)!.hospital,
                   subtitle: 'Manage blood requests',
                   isSelected: selectedRole == UserRole.hospital,
                   onTap: () => _onRoleTap(UserRole.hospital),
@@ -142,7 +145,7 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody> {
                   duration: const Duration(milliseconds: 300),
                   opacity: selectedRole != null ? 1 : 0,
                   child: Text(
-                    context.l10n.tapAgainToContinue,
+                    AppLocalizations.of(context)!.tapAgainToContinue,
                     style: TextStyleHelper.small(context),
                   ),
                 ),

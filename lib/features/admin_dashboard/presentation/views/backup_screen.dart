@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'widgets/admin_section.dart';
@@ -49,7 +49,7 @@ class _BackupScreenState extends State<BackupScreen> {
       SimpleDialog(
         backgroundColor: Color(0xFF121212),
         title: Text(
-          context.l10n.retentionPeriod,
+          AppLocalizations.of(context)!.retentionPeriod,
           style: TextStyle(color: Colors.white),
         ),
         children: [7, 15, 30, 90].map((days) {
@@ -93,7 +93,7 @@ class _BackupScreenState extends State<BackupScreen> {
           onPressed: () => Get.back(),
         ),
         title: Text(
-          context.l10n.backupDatabase,
+          AppLocalizations.of(context)!.backupDatabase,
           style: TextStyle(
             color: Colors.white,
             fontSize: 24,
@@ -113,12 +113,12 @@ class _BackupScreenState extends State<BackupScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AdminSection(
-              title: context.l10n.backupOptions,
+              title: AppLocalizations.of(context)!.backupOptions,
               children: [
                 AdminSettingItem(
                   icon: Icons.cloud_upload_outlined,
                   iconBgColor: Color(0xFF2B7FFF).withOpacity(0.2),
-                  title: context.l10n.backupToCloud,
+                  title: AppLocalizations.of(context)!.backupToCloud,
                   subtitle: 'Last backup: $_lastCloudBackup',
                   hasArrow: true,
                   onTap: () => _triggerBackup(true),
@@ -126,7 +126,7 @@ class _BackupScreenState extends State<BackupScreen> {
                 AdminSettingItem(
                   icon: Icons.sd_storage_outlined,
                   iconBgColor: Color(0xFFAD46FF).withOpacity(0.2),
-                  title: context.l10n.localBackup,
+                  title: AppLocalizations.of(context)!.localBackup,
                   subtitle: 'Last backup: $_lastLocalBackup',
                   hasArrow: true,
                   onTap: () => _triggerBackup(false),
@@ -135,12 +135,12 @@ class _BackupScreenState extends State<BackupScreen> {
             ),
             SizedBox(height: 24),
             AdminSection(
-              title: context.l10n.automaticBackup,
+              title: AppLocalizations.of(context)!.automaticBackup,
               children: [
                 AdminSettingItem(
                   icon: Icons.auto_mode_outlined,
                   iconBgColor: Color(0xFF00C950).withOpacity(0.2),
-                  title: context.l10n.dailyBackup,
+                  title: AppLocalizations.of(context)!.dailyBackup,
                   subtitle: _dailyBackup ? 'Enabled' : 'Disabled',
                   trailing: _buildSwitch(
                     _dailyBackup,
@@ -160,7 +160,7 @@ class _BackupScreenState extends State<BackupScreen> {
                 AdminSettingItem(
                   icon: Icons.history_outlined,
                   iconBgColor: Color(0xFFF0B100).withOpacity(0.2),
-                  title: context.l10n.retentionPeriod,
+                  title: AppLocalizations.of(context)!.retentionPeriod,
                   subtitle: '$_retentionDays days',
                   hasArrow: true,
                   onTap: () => _showRetentionDialog(),
@@ -186,7 +186,7 @@ class _BackupScreenState extends State<BackupScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            context.l10n.selectBackupType,
+                            AppLocalizations.of(context)!.selectBackupType,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 18,
@@ -200,7 +200,7 @@ class _BackupScreenState extends State<BackupScreen> {
                               color: Color(0xFF2B7FFF),
                             ),
                             title: Text(
-                              context.l10n.cloudBackup,
+                              AppLocalizations.of(context)!.cloudBackup,
                               style: TextStyle(color: Colors.white),
                             ),
                             onTap: () {
@@ -214,7 +214,7 @@ class _BackupScreenState extends State<BackupScreen> {
                               color: Color(0xFFAD46FF),
                             ),
                             title: Text(
-                              context.l10n.localBackup,
+                              AppLocalizations.of(context)!.localBackup,
                               style: TextStyle(color: Colors.white),
                             ),
                             onTap: () {
@@ -234,7 +234,7 @@ class _BackupScreenState extends State<BackupScreen> {
                   ),
                 ),
                 child: Text(
-                  context.l10n.createNewBackup,
+                  AppLocalizations.of(context)!.createNewBackup,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,

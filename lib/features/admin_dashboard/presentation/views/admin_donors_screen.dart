@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/features/home/presentation/views/donor/cubit/cubit/donor_cubit.dart';
@@ -74,7 +74,7 @@ class _AdminDonorsScreenState extends State<AdminDonorsScreen> {
           onPressed: () => Get.back(),
         ),
         title: Text(
-          context.l10n.adminDonors,
+          AppLocalizations.of(context)!.adminDonors,
           style: TextStyleHelper.h1(context),
         ),
       ),
@@ -93,7 +93,7 @@ class _AdminDonorsScreenState extends State<AdminDonorsScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  context.l10n.filters,
+                  AppLocalizations.of(context)!.filters,
                   style: TextStyleHelper.small(
                     context,
                   ).copyWith(fontWeight: FontWeight.bold),
@@ -113,7 +113,7 @@ class _AdminDonorsScreenState extends State<AdminDonorsScreen> {
                           child: DropdownButton<String>(
                             value: _selectedBloodType,
                             hint: Text(
-                              context.l10n.bloodType,
+                              AppLocalizations.of(context)!.bloodType,
                               style: TextStyle(
                                 color: AppColors.textMuted,
                                 fontSize: 13,
@@ -156,7 +156,7 @@ class _AdminDonorsScreenState extends State<AdminDonorsScreen> {
                           child: DropdownButton<String>(
                             value: _selectedGovernorate,
                             hint: Text(
-                              context.l10n.governorate,
+                              AppLocalizations.of(context)!.governorate,
                               style: TextStyle(
                                 color: AppColors.textMuted,
                                 fontSize: 13,
@@ -200,7 +200,7 @@ class _AdminDonorsScreenState extends State<AdminDonorsScreen> {
                         context.read<DonorCubit>().getAllDonors();
                       },
                       child: Text(
-                        context.l10n.clearFilters,
+                        AppLocalizations.of(context)!.clearFilters,
                         style: TextStyle(
                           color: AppColors.primary,
                           fontWeight: FontWeight.bold,
@@ -261,7 +261,7 @@ class _AdminDonorsScreenState extends State<AdminDonorsScreen> {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primary,
                           ),
-                          child: Text(context.l10n.retry),
+                          child: Text(AppLocalizations.of(context)!.retry),
                         ),
                       ],
                     ),
@@ -292,7 +292,7 @@ class _AdminDonorsScreenState extends State<AdminDonorsScreen> {
                         ),
                         SizedBox(height: 16),
                         Text(
-                          context.l10n.noDonorsFound,
+                          AppLocalizations.of(context)!.noDonorsFound,
                           style: TextStyleHelper.bodyMuted(context),
                         ),
                       ],
@@ -343,7 +343,7 @@ class _AdminDonorsScreenState extends State<AdminDonorsScreen> {
                               children: [
                                 Text(
                                   donorName.isEmpty
-                                      ? '${context.l10n.donor} #$donorId'
+                                      ? '${AppLocalizations.of(context)!.donor} #$donorId'
                                       : donorName,
                                   style: TextStyleHelper.small(
                                     context,
@@ -369,18 +369,20 @@ class _AdminDonorsScreenState extends State<AdminDonorsScreen> {
                                 AlertDialog(
                                   backgroundColor: AppColors.card,
                                   title: Text(
-                                    context.l10n.deleteDonor,
+                                    AppLocalizations.of(context)!.deleteDonor,
                                     style: TextStyleHelper.h3(context),
                                   ),
                                   content: Text(
-                                    context.l10n.deleteDonorConfirmation,
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.deleteDonorConfirmation,
                                     style: TextStyleHelper.small(context),
                                   ),
                                   actions: [
                                     TextButton(
                                       onPressed: () => Get.back(),
                                       child: Text(
-                                        context.l10n.cancel,
+                                        AppLocalizations.of(context)!.cancel,
                                         style: TextStyle(
                                           color: AppColors.textMuted,
                                         ),
@@ -394,7 +396,7 @@ class _AdminDonorsScreenState extends State<AdminDonorsScreen> {
                                         );
                                       },
                                       child: Text(
-                                        context.l10n.delete,
+                                        AppLocalizations.of(context)!.delete,
                                         style: TextStyle(
                                           color: AppColors.primary,
                                           fontWeight: FontWeight.bold,

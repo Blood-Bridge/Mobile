@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/services/hive_helper.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
@@ -52,9 +52,12 @@ class _DonorAppBarState extends State<DonorAppBar> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(context.l10n.bloodBridge, style: TextStyleHelper.h1(context)),
                     Text(
-                      context.l10n.donorDashboard,
+                      AppLocalizations.of(context)!.bloodBridge,
+                      style: TextStyleHelper.h1(context),
+                    ),
+                    Text(
+                      AppLocalizations.of(context)!.donorDashboard,
                       style: TextStyleHelper.xs(context),
                     ),
                   ],
@@ -98,12 +101,12 @@ class _DonorAppBarState extends State<DonorAppBar> {
                     children: [
                       Text(
                         isEnabled
-                            ? context.l10n.available
-                            : context.l10n.notAvailable,
+                            ? AppLocalizations.of(context)!.available
+                            : AppLocalizations.of(context)!.notAvailable,
                         style: TextStyleHelper.h4(context),
                       ),
                       Text(
-                        context.l10n.bloodType,
+                        AppLocalizations.of(context)!.bloodType,
                         style: TextStyleHelper.xs(context),
                       ),
                       BlocBuilder<ProfileCubit, ProfileState>(

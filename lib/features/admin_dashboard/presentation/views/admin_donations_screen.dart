@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/features/admin_dashboard/presentation/cubit/admin_donations_cubit.dart';
@@ -84,7 +84,10 @@ class _AdminDonationsScreenState extends State<AdminDonationsScreen> {
           ),
           onPressed: () => Get.back(),
         ),
-        title: Text(context.l10n.manageDonations, style: TextStyleHelper.h1(context)),
+        title: Text(
+          AppLocalizations.of(context)!.manageDonations,
+          style: TextStyleHelper.h1(context),
+        ),
       ),
       body: Column(
         children: [
@@ -101,7 +104,7 @@ class _AdminDonationsScreenState extends State<AdminDonationsScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  context.l10n.filters,
+                  AppLocalizations.of(context)!.filters,
                   style: TextStyleHelper.small(
                     context,
                   ).copyWith(fontWeight: FontWeight.bold),
@@ -121,7 +124,7 @@ class _AdminDonationsScreenState extends State<AdminDonationsScreen> {
                           child: DropdownButton<String>(
                             value: _selectedStatus,
                             hint: Text(
-                              context.l10n.status,
+                              AppLocalizations.of(context)!.status,
                               style: TextStyle(
                                 color: AppColors.textMuted,
                                 fontSize: 13,
@@ -162,7 +165,7 @@ class _AdminDonationsScreenState extends State<AdminDonationsScreen> {
                           child: DropdownButton<String>(
                             value: _selectedGovernorate,
                             hint: Text(
-                              context.l10n.governorate,
+                              AppLocalizations.of(context)!.governorate,
                               style: TextStyle(
                                 color: AppColors.textMuted,
                                 fontSize: 13,
@@ -206,7 +209,7 @@ class _AdminDonationsScreenState extends State<AdminDonationsScreen> {
                           _applyFilters();
                         },
                         child: Text(
-                          context.l10n.clearFilters,
+                          AppLocalizations.of(context)!.clearFilters,
                           style: TextStyleHelper.xs(context).copyWith(
                             color: AppColors.primary,
                             fontWeight: FontWeight.bold,
@@ -246,7 +249,7 @@ class _AdminDonationsScreenState extends State<AdminDonationsScreen> {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primary,
                           ),
-                          child: Text(context.l10n.retry),
+                          child: Text(AppLocalizations.of(context)!.retry),
                         ),
                       ],
                     ),
@@ -258,7 +261,7 @@ class _AdminDonationsScreenState extends State<AdminDonationsScreen> {
                   if (list.isEmpty) {
                     return Center(
                       child: Text(
-                        context.l10n.noDonationsFound,
+                        AppLocalizations.of(context)!.noDonationsFound,
                         style: TextStyleHelper.bodyMuted(context),
                       ),
                     );
@@ -294,7 +297,7 @@ class _AdminDonationsScreenState extends State<AdminDonationsScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    '${context.l10n.donation} #${item.donationProcessId}',
+                                    '${AppLocalizations.of(context)!.donation} #${item.donationProcessId}',
                                     style: TextStyleHelper.small(
                                       context,
                                     ).copyWith(fontWeight: FontWeight.bold),
@@ -368,7 +371,9 @@ class _AdminDonationsScreenState extends State<AdminDonationsScreen> {
                                       color: Colors.red,
                                     ),
                                     label: Text(
-                                      context.l10n.deleteRecord,
+                                      AppLocalizations.of(
+                                        context,
+                                      )!.deleteRecord,
                                       style: TextStyle(
                                         color: Colors.red,
                                         fontSize: 12,
@@ -417,18 +422,18 @@ class _AdminDonationsScreenState extends State<AdminDonationsScreen> {
       builder: (dlgContext) => AlertDialog(
         backgroundColor: AppColors.card,
         title: Text(
-          context.l10n.deleteDonationRecord,
+          AppLocalizations.of(context)!.deleteDonationRecord,
           style: TextStyle(color: Colors.white),
         ),
         content: Text(
-          '${context.l10n.areYouSureYouWantToDelete} #$donationId?',
+          '${AppLocalizations.of(context)!.areYouSureYouWantToDelete} #$donationId?',
           style: TextStyle(color: Colors.grey),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dlgContext),
             child: Text(
-              context.l10n.cancel,
+              AppLocalizations.of(context)!.cancel,
               style: TextStyle(color: Colors.grey),
             ),
           ),
@@ -438,7 +443,7 @@ class _AdminDonationsScreenState extends State<AdminDonationsScreen> {
               context.read<AdminDonationsCubit>().deleteDonation(donationId);
             },
             child: Text(
-              context.l10n.delete,
+              AppLocalizations.of(context)!.delete,
               style: TextStyle(color: Colors.red),
             ),
           ),

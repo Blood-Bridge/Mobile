@@ -256,7 +256,7 @@ def generate_dart_l10n(strings: dict, class_name: str = 'AppLocalizations') -> s
         '}',
         '',
         '// === قائمة الـ Keys المستخرجة ===',
-        '// استخدم context.l10n.keyName في كودك',
+        '// استخدم AppLocalizations.of(context)!.keyName في كودك',
         '//',
     ]
 
@@ -269,7 +269,7 @@ def generate_dart_l10n(strings: dict, class_name: str = 'AppLocalizations') -> s
 
 
 def replace_in_files(project_path: Path, strings: dict, dry_run: bool = False) -> int:
-    """استبدال النصوص في ملفات Dart بـ context.l10n.key"""
+    """استبدال النصوص في ملفات Dart بـ AppLocalizations.of(context)!.key"""
     replacements_count = 0
 
     # جمع التعديلات حسب الملف
@@ -297,9 +297,9 @@ def replace_in_files(project_path: Path, strings: dict, dry_run: bool = False) -
                 text = rep['text']
 
                 # إنشاء النسخة البديلة
-                # Text('...') → Text(context.l10n.key)
-                new_code = original.replace(f"'{text}'", f'context.l10n.{key}')
-                new_code = new_code.replace(f'"{text}"', f'context.l10n.{key}')
+                # Text('...') → Text(AppLocalizations.of(context)!.key)
+                new_code = original.replace(f"'{text}'", f'AppLocalizations.of(context)!.{key}')
+                new_code = new_code.replace(f'"{text}"', f'AppLocalizations.of(context)!.{key}')
 
                 if new_code != original:
                     new_content = new_content.replace(original, new_code)

@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/features/home/presentation/views/reciver/cubit/receiver_cubit.dart';
@@ -62,7 +62,10 @@ class _DetectionConfirmationScreenState
           ),
           onPressed: () => Get.back(),
         ),
-        title: Text(context.l10n.confirm, style: TextStyleHelper.h1(context)),
+        title: Text(
+          AppLocalizations.of(context)!.confirm,
+          style: TextStyleHelper.h1(context),
+        ),
       ),
       body: BlocConsumer<ReceiverCubit, ReceiverState>(
         listener: (context, state) {
@@ -114,7 +117,7 @@ class _DetectionConfirmationScreenState
                 const SizedBox(height: 24),
                 Center(
                   child: Text(
-                    context.l10n.aiReportExtractedInformation,
+                    AppLocalizations.of(context)!.aiReportExtractedInformation,
                     style: TextStyleHelper.h2(context),
                     textAlign: TextAlign.center,
                   ),
@@ -122,7 +125,9 @@ class _DetectionConfirmationScreenState
                 const SizedBox(height: 8),
                 Center(
                   child: Text(
-                    context.l10n.pleaseReviewTheDetailsExtracted,
+                    AppLocalizations.of(
+                      context,
+                    )!.pleaseReviewTheDetailsExtracted,
                     style: TextStyleHelper.small(
                       context,
                     ).copyWith(color: AppColors.textMuted),
@@ -143,7 +148,7 @@ class _DetectionConfirmationScreenState
                     children: [
                       _buildInfoRow(
                         context,
-                        label: context.l10n.urgencyLevel,
+                        label: AppLocalizations.of(context)!.urgencyLevel,
                         value: widget.urgencyLevel,
                         valueColor: widget.urgencyLevel == 'Critical'
                             ? AppColors.primary
@@ -151,7 +156,7 @@ class _DetectionConfirmationScreenState
                       ),
                       const Divider(height: 32, color: Colors.grey),
                       Text(
-                        context.l10n.verifiedBloodTypeRequired,
+                        AppLocalizations.of(context)!.verifiedBloodTypeRequired,
                         style: TextStyleHelper.small(
                           context,
                         ).copyWith(color: AppColors.textMuted),
@@ -216,7 +221,7 @@ class _DetectionConfirmationScreenState
                     child: isLoading
                         ? const CircularProgressIndicator(color: Colors.white)
                         : Text(
-                            context.l10n.confirmSearchDonors,
+                            AppLocalizations.of(context)!.confirmSearchDonors,
                             style: TextStyleHelper.h3(
                               context,
                             ).copyWith(color: AppColors.primaryForeground),

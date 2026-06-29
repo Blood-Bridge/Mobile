@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/features/profile/presentation/cubit/profile_cubit.dart';
@@ -27,7 +27,10 @@ class ProfileScreen extends StatelessWidget {
           ),
           onPressed: () => Get.back(),
         ),
-        title: Text(context.l10n.myProfile, style: TextStyleHelper.h1(context)),
+        title: Text(
+          AppLocalizations.of(context)!.myProfile,
+          style: TextStyleHelper.h1(context),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -56,7 +59,7 @@ class ProfileScreen extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                     ),
-                    child: Text(context.l10n.retry),
+                    child: Text(AppLocalizations.of(context)!.retry),
                   ),
                 ],
               ),
@@ -121,7 +124,7 @@ class ProfileScreen extends StatelessWidget {
                   // Blood Type Card
                   _buildProfileCard(
                     context,
-                    title: context.l10n.medicalInformation,
+                    title: AppLocalizations.of(context)!.medicalInformation,
                     icon: Icons.medical_services_outlined,
                     children: [
                       _buildInfoTile(
@@ -157,7 +160,7 @@ class ProfileScreen extends StatelessWidget {
                   // Contact Card
                   _buildProfileCard(
                     context,
-                    title: context.l10n.personalDetails,
+                    title: AppLocalizations.of(context)!.personalDetails,
                     icon: Icons.person_outline,
                     children: [
                       _buildInfoTile(context, 'Phone Number', profile.phone),
@@ -180,7 +183,7 @@ class ProfileScreen extends StatelessWidget {
             );
           }
 
-          return Center(child: Text(context.l10n.noData));
+          return Center(child: Text(AppLocalizations.of(context)!.noData));
         },
       ),
     );

@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/features/admin_dashboard/presentation/cubit/admin_requests_cubit.dart';
@@ -86,7 +86,10 @@ class _AdminRequestsScreenState extends State<AdminRequestsScreen> {
           ),
           onPressed: () => Get.back(),
         ),
-        title: Text(context.l10n.manageRequests, style: TextStyleHelper.h1(context)),
+        title: Text(
+          AppLocalizations.of(context)!.manageRequests,
+          style: TextStyleHelper.h1(context),
+        ),
       ),
       body: Column(
         children: [
@@ -103,7 +106,7 @@ class _AdminRequestsScreenState extends State<AdminRequestsScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  context.l10n.filters,
+                  AppLocalizations.of(context)!.filters,
                   style: TextStyleHelper.small(
                     context,
                   ).copyWith(fontWeight: FontWeight.bold),
@@ -123,7 +126,7 @@ class _AdminRequestsScreenState extends State<AdminRequestsScreen> {
                           child: DropdownButton<String>(
                             value: _selectedStatus,
                             hint: Text(
-                              context.l10n.status,
+                              AppLocalizations.of(context)!.status,
                               style: TextStyle(
                                 color: AppColors.textMuted,
                                 fontSize: 13,
@@ -164,7 +167,7 @@ class _AdminRequestsScreenState extends State<AdminRequestsScreen> {
                           child: DropdownButton<String>(
                             value: _selectedGovernorate,
                             hint: Text(
-                              context.l10n.governorate,
+                              AppLocalizations.of(context)!.governorate,
                               style: TextStyle(
                                 color: AppColors.textMuted,
                                 fontSize: 13,
@@ -208,7 +211,7 @@ class _AdminRequestsScreenState extends State<AdminRequestsScreen> {
                           _applyFilters();
                         },
                         child: Text(
-                          context.l10n.clearFilters,
+                          AppLocalizations.of(context)!.clearFilters,
                           style: TextStyleHelper.xs(context).copyWith(
                             color: AppColors.primary,
                             fontWeight: FontWeight.bold,
@@ -248,7 +251,7 @@ class _AdminRequestsScreenState extends State<AdminRequestsScreen> {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primary,
                           ),
-                          child: Text(context.l10n.retry),
+                          child: Text(AppLocalizations.of(context)!.retry),
                         ),
                       ],
                     ),
@@ -260,7 +263,9 @@ class _AdminRequestsScreenState extends State<AdminRequestsScreen> {
                   if (list.isEmpty) {
                     return Center(
                       child: Text(
-                        context.l10n.noRequestsMatchTheSelected,
+                        AppLocalizations.of(
+                          context,
+                        )!.noRequestsMatchTheSelected,
                         style: TextStyleHelper.bodyMuted(context),
                       ),
                     );
@@ -368,7 +373,9 @@ class _AdminRequestsScreenState extends State<AdminRequestsScreen> {
                                         color: Colors.red,
                                       ),
                                       label: Text(
-                                        context.l10n.cancelRequest,
+                                        AppLocalizations.of(
+                                          context,
+                                        )!.cancelRequest,
                                         style: TextStyle(
                                           color: Colors.red,
                                           fontSize: 12,
@@ -417,7 +424,7 @@ class _AdminRequestsScreenState extends State<AdminRequestsScreen> {
       builder: (dlgContext) => AlertDialog(
         backgroundColor: AppColors.card,
         title: Text(
-          context.l10n.cancelRequest,
+          AppLocalizations.of(context)!.cancelRequest,
           style: TextStyle(color: Colors.white),
         ),
         content: Text(
@@ -427,7 +434,10 @@ class _AdminRequestsScreenState extends State<AdminRequestsScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dlgContext),
-            child: Text(context.l10n.no, style: TextStyle(color: Colors.grey)),
+            child: Text(
+              AppLocalizations.of(context)!.no,
+              style: TextStyle(color: Colors.grey),
+            ),
           ),
           TextButton(
             onPressed: () {
@@ -435,7 +445,7 @@ class _AdminRequestsScreenState extends State<AdminRequestsScreen> {
               context.read<AdminRequestsCubit>().deleteRequest(requestId);
             },
             child: Text(
-              context.l10n.yesCancel,
+              AppLocalizations.of(context)!.yesCancel,
               style: TextStyle(color: Colors.red),
             ),
           ),

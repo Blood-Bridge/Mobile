@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/features/notifications/presentation/cubit/app_notifications_cubit.dart';
@@ -25,7 +25,7 @@ class NotificationsScreen extends StatelessWidget {
           onPressed: () => Get.back(),
         ),
         title: Text(
-          context.l10n.notifications,
+          AppLocalizations.of(context)!.notifications,
           style: TextStyleHelper.h1(context),
         ),
         actions: [
@@ -40,7 +40,7 @@ class NotificationsScreen extends StatelessWidget {
               );
             },
             child: Text(
-              context.l10n.markAllRead,
+              AppLocalizations.of(context)!.markAllRead,
               style: TextStyleHelper.small(
                 context,
               ).copyWith(color: AppColors.primary, fontWeight: FontWeight.bold),
@@ -70,7 +70,7 @@ class NotificationsScreen extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                     ),
-                    child: Text(context.l10n.retry),
+                    child: Text(AppLocalizations.of(context)!.retry),
                   ),
                 ],
               ),
@@ -92,12 +92,12 @@ class NotificationsScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      context.l10n.noNotificationsYet,
+                      AppLocalizations.of(context)!.noNotificationsYet,
                       style: TextStyleHelper.h2(context),
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      context.l10n.youWillSeeUpdatesHere,
+                      AppLocalizations.of(context)!.youWillSeeUpdatesHere,
                       style: TextStyleHelper.bodyMuted(context),
                     ),
                   ],
@@ -200,7 +200,9 @@ class NotificationsScreen extends StatelessWidget {
             );
           }
 
-          return Center(child: Text(context.l10n.pullToRefresh));
+          return Center(
+            child: Text(AppLocalizations.of(context)!.pullToRefresh),
+          );
         },
       ),
     );

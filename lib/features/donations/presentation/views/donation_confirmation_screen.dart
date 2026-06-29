@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/features/donations/data/models/donation_model.dart';
@@ -31,7 +31,7 @@ class DonationConfirmationScreen extends StatelessWidget {
           onPressed: () => Get.back(),
         ),
         title: Text(
-          context.l10n.donationConfirmation,
+          AppLocalizations.of(context)!.donationConfirmation,
           style: TextStyleHelper.h2(context),
         ),
       ),
@@ -69,7 +69,7 @@ class DonationConfirmationScreen extends StatelessWidget {
               children: [
                 SizedBox(height: height * 0.02),
                 Text(
-                  '${context.l10n.donationc} #${donation.donationProcessId}.',
+                  '${AppLocalizations.of(context)!.donationc} #${donation.donationProcessId}.',
                   style: TextStyleHelper.bodyMuted(context),
                 ),
                 SizedBox(height: height * 0.04),
@@ -106,7 +106,7 @@ class DonationConfirmationScreen extends StatelessWidget {
                 ),
                 const Spacer(),
                 Text(
-                  context.l10n.confirmDonation,
+                  AppLocalizations.of(context)!.confirmDonation,
                   style: TextStyleHelper.xs(
                     context,
                   ).copyWith(color: AppColors.textMuted),
@@ -133,7 +133,7 @@ class DonationConfirmationScreen extends StatelessWidget {
                     child: isLoading
                         ? const CircularProgressIndicator(color: Colors.white)
                         : Text(
-                            context.l10n.confirm,
+                            AppLocalizations.of(context)!.confirm,
                             style: TextStyleHelper.h3(
                               context,
                             ).copyWith(color: Colors.white),

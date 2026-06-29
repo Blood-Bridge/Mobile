@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/features/home/presentation/views/donor/cubit/cubit/donor_cubit.dart';
@@ -35,7 +35,10 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
           ),
           onPressed: () => Get.back(),
         ),
-        title: Text(context.l10n.topDonors, style: TextStyleHelper.h1(context)),
+        title: Text(
+          AppLocalizations.of(context)!.topDonors,
+          style: TextStyleHelper.h1(context),
+        ),
       ),
       body: BlocBuilder<DonorCubit, DonorState>(
         builder: (context, state) {
@@ -58,7 +61,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                     ),
-                    child: Text(context.l10n.retry),
+                    child: Text(AppLocalizations.of(context)!.retry),
                   ),
                 ],
               ),
@@ -90,12 +93,12 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    context.l10n.noTopDonors,
+                    AppLocalizations.of(context)!.noTopDonors,
                     style: TextStyleHelper.h2(context),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    context.l10n.beTheFirstChampion,
+                    AppLocalizations.of(context)!.beTheFirstChampion,
                     style: TextStyleHelper.bodyMuted(context),
                   ),
                 ],
@@ -220,7 +223,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                             ).copyWith(color: AppColors.primary),
                           ),
                           Text(
-                            context.l10n.donation,
+                            AppLocalizations.of(context)!.donation,
                             style: TextStyleHelper.xs(
                               context,
                             ).copyWith(color: AppColors.textMuted),

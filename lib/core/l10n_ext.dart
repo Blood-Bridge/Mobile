@@ -4,7 +4,7 @@
 import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:flutter/widgets.dart';
 
-/// Quick accessor:  context.l10n.someKey
+/// Quick accessor:  AppLocalizations.of(context)!.someKey
 extension BuildContextL10n on BuildContext {
   AppLocalizations get l10n => AppLocalizations.of(this)!;
 }

@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/models/snackbar_type.dart';
 import 'package:blood_bridge/core/models/user_role.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
@@ -67,14 +67,14 @@ class SignUpScreen extends StatelessWidget {
                     SizedBox(height: height * 0.1),
 
                     Text(
-                      context.l10n.signUp,
+                      AppLocalizations.of(context)!.signUp,
                       style: TextStyleHelper.h1(context),
                     ),
 
                     SizedBox(height: height * 0.02),
 
                     Text(
-                      context.l10n.joinBloodBridgeToSaveLives,
+                      AppLocalizations.of(context)!.joinBloodBridgeToSaveLives,
                       textAlign: TextAlign.center,
                       style: TextStyleHelper.bodyMuted(context),
                     ),
@@ -82,7 +82,7 @@ class SignUpScreen extends StatelessWidget {
                     Container(
                       height: height * 0.076,
                       child: CustomTextfield(
-                        text: context.l10n.email,
+                        text: AppLocalizations.of(context)!.email,
                         controller: emailController,
                         validator: cubit.emailValidator,
                       ),
@@ -93,7 +93,7 @@ class SignUpScreen extends StatelessWidget {
                     Container(
                       height: height * 0.076,
                       child: CustomTextfield(
-                        text: context.l10n.password,
+                        text: AppLocalizations.of(context)!.password,
                         isPassword: true,
                         controller: passwordController,
                         validator: cubit.passwordValidator,
@@ -104,7 +104,7 @@ class SignUpScreen extends StatelessWidget {
                       builder: (context, state) {
                         return CustomLoadingButton(
                           isEnabled: cubit.isEnabled,
-                          text: context.l10n.signUp,
+                          text: AppLocalizations.of(context)!.signUp,
                           formKey: _formKey,
 
                           emailController: emailController,
@@ -136,7 +136,7 @@ class SignUpScreen extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.all(width * 0.02),
                           child: Text(
-                            context.l10n.orContinueWith,
+                            AppLocalizations.of(context)!.orContinueWith,
                             style: TextStyleHelper.bodyMuted(context),
                           ),
                         ),
@@ -168,7 +168,7 @@ class SignUpScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          context.l10n.alreadyHaveAnAccount,
+                          AppLocalizations.of(context)!.alreadyHaveAnAccount,
                           style: TextStyleHelper.body(context),
                         ),
                         TextButton(
@@ -176,7 +176,7 @@ class SignUpScreen extends StatelessWidget {
                             Get.back();
                           },
                           child: Text(
-                            context.l10n.login,
+                            AppLocalizations.of(context)!.login,
                             style: TextStyleHelper.body(
                               context,
                             ).copyWith(color: AppColors.primary),

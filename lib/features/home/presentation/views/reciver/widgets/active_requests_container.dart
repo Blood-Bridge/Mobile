@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/features/home/presentation/views/reciver/cubit/receiver_cubit.dart';
@@ -207,7 +207,7 @@ class _ActiveRequestsContainerState extends State<ActiveRequestsContainer> {
                           Icon(Icons.check_circle, color: AppColors.success),
                           const SizedBox(width: 8),
                           Text(
-                            context.l10n.donorAccepted,
+                            AppLocalizations.of(context)!.donorAccepted,
                             style: TextStyleHelper.small(
                               context,
                             ).copyWith(fontWeight: FontWeight.bold),
@@ -222,7 +222,7 @@ class _ActiveRequestsContainerState extends State<ActiveRequestsContainer> {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          '${context.l10n.bloodType}: ${donor['bloodType'] ?? 'N/A'}',
+                          '${AppLocalizations.of(context)!.bloodType}: ${donor['bloodType'] ?? 'N/A'}',
                           style: TextStyleHelper.small(context),
                         ),
                         const SizedBox(height: 4),
@@ -266,7 +266,7 @@ class _ActiveRequestsContainerState extends State<ActiveRequestsContainer> {
                               Icon(Icons.phone, color: Colors.white),
                               SizedBox(width: 8),
                               Text(
-                                context.l10n.contactDonor,
+                                AppLocalizations.of(context)!.contactDonor,
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
@@ -326,7 +326,7 @@ class _ActiveRequestsContainerState extends State<ActiveRequestsContainer> {
                       Icon(Icons.cancel, color: Colors.red),
                       SizedBox(width: 10),
                       Text(
-                        context.l10n.requestCancelled,
+                        AppLocalizations.of(context)!.requestCancelled,
                         style: TextStyle(
                           color: Colors.red,
                           fontWeight: FontWeight.bold,
@@ -363,7 +363,7 @@ class _ActiveRequestsContainerState extends State<ActiveRequestsContainer> {
                             children: [
                               Icon(Icons.location_on_outlined),
                               SizedBox(width: 8),
-                              Text(context.l10n.viewOnMap),
+                              Text(AppLocalizations.of(context)!.viewOnMap),
                             ],
                           ),
                         ),
@@ -384,7 +384,7 @@ class _ActiveRequestsContainerState extends State<ActiveRequestsContainer> {
                           ),
                           child: Center(
                             child: Text(
-                              context.l10n.cancelRequest,
+                              AppLocalizations.of(context)!.cancelRequest,
                               style: TextStyle(
                                 color: Colors.red,
                                 fontWeight: FontWeight.bold,

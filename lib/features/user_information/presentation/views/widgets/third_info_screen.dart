@@ -1,5 +1,5 @@
 import 'package:blood_bridge/constants.dart';
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/core/widgets/blood_type_icon.dart';
@@ -31,7 +31,10 @@ class ThirdInfoScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(context.l10n.bloodType2, style: TextStyleHelper.small(context)),
+        Text(
+          AppLocalizations.of(context)!.bloodType2,
+          style: TextStyleHelper.small(context),
+        ),
         SizedBox(height: height * 0.01),
         Wrap(
           spacing: 10,
@@ -58,17 +61,20 @@ class ThirdInfoScreen extends StatelessWidget {
               .toList(),
         ),
         SizedBox(height: height * 0.04),
-        Text(context.l10n.weight, style: TextStyleHelper.small(context)),
+        Text(
+          AppLocalizations.of(context)!.weight,
+          style: TextStyleHelper.small(context),
+        ),
         SizedBox(height: height * 0.01),
         CustomTextfield(
           prefixIcon: Icon(CupertinoIcons.bag),
-          text: context.l10n.enterWeight,
+          text: AppLocalizations.of(context)!.enterWeight,
           controller: weightController,
           validator: cubit.weightValidator,
         ),
         SizedBox(height: height * 0.04),
         Text(
-          context.l10n.medicalConditionsOptional,
+          AppLocalizations.of(context)!.medicalConditionsOptional,
           style: TextStyleHelper.small(context),
         ),
         SizedBox(height: height * 0.01),
@@ -77,7 +83,7 @@ class ThirdInfoScreen extends StatelessWidget {
           controller: medicalController,
           style: TextStyle(color: AppColors.textMuted),
           decoration: InputDecoration(
-            hintText: context.l10n.enterYourMedicalConditions,
+            hintText: AppLocalizations.of(context)!.enterYourMedicalConditions,
             filled: true,
             fillColor: AppColors.accent,
             border: OutlineInputBorder(

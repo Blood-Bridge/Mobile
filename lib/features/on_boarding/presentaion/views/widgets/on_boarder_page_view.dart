@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/utiles/app_images.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/features/on_boarding/presentaion/views/widgets/page_view_item.dart';
@@ -18,7 +18,10 @@ class OnBoarderPageView extends StatelessWidget {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(context.l10n.saveLives, style: TextStyleHelper.h2(context)),
+              Text(
+                AppLocalizations.of(context)!.saveLives,
+                style: TextStyleHelper.h2(context),
+              ),
             ],
           ),
           subTitle:
@@ -28,7 +31,7 @@ class OnBoarderPageView extends StatelessWidget {
         PageViewItem(
           image: Assets.imagesRingIcon,
           title: Text(
-            context.l10n.saveLives,
+            AppLocalizations.of(context)!.saveLives,
             style: TextStyleHelper.h2(context),
           ),
           subTitle:

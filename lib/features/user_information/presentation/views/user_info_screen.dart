@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/models/snackbar_type.dart';
 import 'package:blood_bridge/core/services/hive_helper.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
@@ -179,7 +179,9 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                       ),
                       SizedBox(height: height * 0.01),
                       Text(
-                        context.l10n.yourInformationIsEncryptedAnd,
+                        AppLocalizations.of(
+                          context,
+                        )!.yourInformationIsEncryptedAnd,
                         style: TextStyleHelper.small(context),
                       ),
                     ],

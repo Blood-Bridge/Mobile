@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -90,7 +90,7 @@ class PermissionCard extends StatelessWidget {
                         duration: Duration(seconds: 1),
                         child: Center(
                           child: Text(
-                            context.l10n.allow,
+                            AppLocalizations.of(context)!.allow,
                             style: TextStyleHelper.xs(
                               context,
                             ).copyWith(color: AppColors.primary),

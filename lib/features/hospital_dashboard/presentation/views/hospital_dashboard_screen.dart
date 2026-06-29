@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/features/hospital_dashboard/presentation/cubit/hospital_dashboard_cubit.dart';
@@ -6,6 +6,7 @@ import 'package:blood_bridge/features/hospital_profile/presentation/cubit/hospit
 import 'package:blood_bridge/features/hospital_profile/presentation/views/hospital_profile_screen.dart';
 import 'package:blood_bridge/features/map/presentation/view/map_screen.dart';
 import 'package:blood_bridge/features/setting/presentation/views/setting_view.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -73,7 +74,7 @@ class _ErrorView extends StatelessWidget {
           ElevatedButton(
             onPressed: onRetry,
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
-            child: Text(context.l10n.retry),
+            child: Text(AppLocalizations.of(context)!.retry),
           ),
         ],
       ),
@@ -114,12 +115,14 @@ class _DashboardContent extends StatelessWidget {
                   const SizedBox(height: 16),
                   _SummaryRow(state: state),
                   const SizedBox(height: 24),
-                  _SectionHeader(title: context.l10n.bloodStockOverview),
+                  _SectionHeader(
+                    title: AppLocalizations.of(context)!.bloodStockOverview,
+                  ),
                   const SizedBox(height: 12),
                   _BloodStockGrid(inventory: state.bloodInventory),
                   const SizedBox(height: 24),
                   _SectionHeader(
-                    title: context.l10n.activeRequests,
+                    title: AppLocalizations.of(context)!.activeRequests,
                     action: 'View All',
                     onAction: () {},
                   ),
@@ -127,7 +130,7 @@ class _DashboardContent extends StatelessWidget {
                   _ActiveRequestsList(requests: state.activeRequests),
                   const SizedBox(height: 24),
                   _SectionHeader(
-                    title: context.l10n.nearbyAvailableDonors,
+                    title: AppLocalizations.of(context)!.nearbyAvailableDonors,
                     action: 'Map View',
                     onAction: () {
                       final donors = context
@@ -166,9 +169,12 @@ class _HospitalAppBar extends StatelessWidget {
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(context.l10n.cityHospital, style: TextStyleHelper.h1(context)),
           Text(
-            context.l10n.bloodManagement,
+            AppLocalizations.of(context)!.cityHospital,
+            style: TextStyleHelper.h1(context),
+          ),
+          Text(
+            AppLocalizations.of(context)!.bloodManagement,
             style: TextStyleHelper.xs(
               context,
             ).copyWith(color: AppColors.textMuted),
@@ -211,21 +217,21 @@ class _SummaryRow extends StatelessWidget {
       children: [
         Expanded(
           child: _SummaryCard(
-            label: context.l10n.totalStock,
+            label: AppLocalizations.of(context)!.totalStock,
             value: '${state.availableBloodUnits} units',
           ),
         ),
         const SizedBox(width: 10),
         Expanded(
           child: _SummaryCard(
-            label: context.l10n.activeRequests,
+            label: AppLocalizations.of(context)!.activeRequests,
             value: state.pendingRequests.toString(),
           ),
         ),
         const SizedBox(width: 10),
         Expanded(
           child: _SummaryCard(
-            label: context.l10n.availableDonors,
+            label: AppLocalizations.of(context)!.availableDonors,
             value: state.activeDonors.toString(),
           ),
         ),
@@ -407,7 +413,7 @@ class _BloodStockCard extends StatelessWidget {
             ).copyWith(fontWeight: FontWeight.bold),
           ),
           Text(
-            context.l10n.unitsAvailable,
+            AppLocalizations.of(context)!.unitsAvailable,
             style: TextStyleHelper.xs(
               context,
             ).copyWith(color: AppColors.textMuted),
@@ -548,7 +554,7 @@ class _ActiveRequestCard extends StatelessWidget {
                       ).copyWith(fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      context.l10n.donors,
+                      AppLocalizations.of(context)!.donors,
                       style: TextStyleHelper.xs(
                         context,
                       ).copyWith(color: AppColors.textMuted),
@@ -570,7 +576,7 @@ class _ActiveRequestCard extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 10),
                 ),
                 child: Text(
-                  context.l10n.viewDetails,
+                  AppLocalizations.of(context)!.viewDetails,
                   style: TextStyleHelper.small(context),
                 ),
               ),
@@ -683,7 +689,7 @@ class _DonorTile extends StatelessWidget {
               elevation: 0,
             ),
             child: Text(
-              context.l10n.call,
+              AppLocalizations.of(context)!.call,
               style: TextStyleHelper.small(
                 context,
               ).copyWith(fontWeight: FontWeight.bold, color: Colors.white),
@@ -711,7 +717,7 @@ class _CreateRequestButton extends StatelessWidget {
             onPressed: () {},
             icon: const Icon(Icons.add_circle_outline, color: Colors.white),
             label: Text(
-              context.l10n.createRequest,
+              AppLocalizations.of(context)!.createRequest,
               style: TextStyleHelper.small(
                 context,
               ).copyWith(color: Colors.white, fontWeight: FontWeight.bold),

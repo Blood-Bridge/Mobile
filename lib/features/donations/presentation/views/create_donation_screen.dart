@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/core/widgets/custom_textfield.dart';
@@ -74,7 +74,10 @@ class _CreateDonationScreenState extends State<CreateDonationScreen> {
           ),
           onPressed: () => Get.back(),
         ),
-        title: Text(context.l10n.logDonationRecord, style: TextStyleHelper.h1(context)),
+        title: Text(
+          AppLocalizations.of(context)!.logDonationRecord,
+          style: TextStyleHelper.h1(context),
+        ),
       ),
       body: BlocConsumer<DonationsCubit, DonationsState>(
         listener: (context, state) {
@@ -110,13 +113,13 @@ class _CreateDonationScreenState extends State<CreateDonationScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      context.l10n.createDonation,
+                      AppLocalizations.of(context)!.createDonation,
 
                       style: TextStyleHelper.bodyMuted(context),
                     ),
                     SizedBox(height: height * 0.03),
                     CustomTextfield(
-                      text: context.l10n.bloodRequestId,
+                      text: AppLocalizations.of(context)!.bloodRequestId,
                       controller: _requestIdController,
                       keyboardType: TextInputType.number,
                       validator: (v) {
@@ -129,12 +132,14 @@ class _CreateDonationScreenState extends State<CreateDonationScreen> {
                     ),
                     SizedBox(height: height * 0.02),
                     CustomTextfield(
-                      text: context.l10n.hospitalId,
+                      text: AppLocalizations.of(context)!.hospitalId,
                       controller: _hospitalIdController,
                       keyboardType: TextInputType.number,
                       validator: (v) {
                         if (v == null || v.isEmpty)
-                          return context.l10n.hospitalIdRequired;
+                          return AppLocalizations.of(
+                            context,
+                          )!.hospitalIdRequired;
                         if (int.tryParse(v) == null)
                           return 'Must be a valid number';
                         return null;
@@ -142,7 +147,7 @@ class _CreateDonationScreenState extends State<CreateDonationScreen> {
                     ),
                     SizedBox(height: height * 0.03),
                     Text(
-                      context.l10n.donationDate,
+                      AppLocalizations.of(context)!.donationDate,
                       style: TextStyleHelper.small(context),
                     ),
                     const SizedBox(height: 8),
@@ -211,7 +216,7 @@ class _CreateDonationScreenState extends State<CreateDonationScreen> {
                                 color: Colors.white,
                               )
                             : Text(
-                                context.l10n.logDonation,
+                                AppLocalizations.of(context)!.logDonation,
                                 style: TextStyleHelper.h3(
                                   context,
                                 ).copyWith(color: Colors.white),

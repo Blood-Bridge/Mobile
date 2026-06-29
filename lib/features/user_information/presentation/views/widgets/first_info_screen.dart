@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/core/widgets/custom_textfield.dart';
@@ -28,26 +28,32 @@ class FirstInfoScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(context.l10n.fullName, style: TextStyleHelper.small(context)),
+        Text(
+          AppLocalizations.of(context)!.fullName,
+          style: TextStyleHelper.small(context),
+        ),
         SizedBox(height: height * 0.01),
         CustomTextfield(
           prefixIcon: Icon(Icons.person),
-          text: context.l10n.enterYourFullName,
+          text: AppLocalizations.of(context)!.enterYourFullName,
           controller: nameController,
           validator: cubit.nameValidator,
         ),
         SizedBox(height: height * 0.04),
-        Text(context.l10n.nationalId2, style: TextStyleHelper.small(context)),
+        Text(
+          AppLocalizations.of(context)!.nationalId2,
+          style: TextStyleHelper.small(context),
+        ),
         SizedBox(height: height * 0.01),
         CustomTextfield(
           prefixIcon: Icon(Icons.credit_card),
-          text: context.l10n.enterNationalIdNumber,
+          text: AppLocalizations.of(context)!.enterNationalIdNumber,
           controller: nationalIDController,
           validator: cubit.nationalIdValidator,
         ),
         SizedBox(height: height * 0.04),
         CustomDateField(
-          label: context.l10n.dateOfBirth,
+          label: AppLocalizations.of(context)!.dateOfBirth,
           onDateSelected: (date) {
             cubit.dateOfBirth = date;
           },
@@ -56,7 +62,10 @@ class FirstInfoScreen extends StatelessWidget {
               : null,
         ),
         SizedBox(height: height * 0.04),
-        Text(context.l10n.gender, style: TextStyleHelper.small(context)),
+        Text(
+          AppLocalizations.of(context)!.gender,
+          style: TextStyleHelper.small(context),
+        ),
         SizedBox(height: height * 0.01),
         BlocBuilder<InfoCubit, InfoState>(
           builder: (context, state) {
@@ -85,7 +94,7 @@ class FirstInfoScreen extends StatelessWidget {
 
                     child: Center(
                       child: Text(
-                        context.l10n.male,
+                        AppLocalizations.of(context)!.male,
                         style: TextStyleHelper.small(context),
                       ),
                     ),
@@ -116,7 +125,7 @@ class FirstInfoScreen extends StatelessWidget {
 
                     child: Center(
                       child: Text(
-                        context.l10n.female,
+                        AppLocalizations.of(context)!.female,
                         style: TextStyleHelper.small(context),
                       ),
                     ),

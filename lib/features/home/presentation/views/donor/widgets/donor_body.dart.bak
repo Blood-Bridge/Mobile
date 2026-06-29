@@ -13,7 +13,7 @@ import 'package:blood_bridge/features/recommendations/presentation/widgets/donat
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 
 class DonorBody extends StatefulWidget {
   const DonorBody({
@@ -218,7 +218,7 @@ class _DonorBodyState extends State<DonorBody> {
                           ),
                           const SizedBox(height: 16),
                           CustomButton(
-                            text: context.l10n.retry,
+                            text: AppLocalizations.of(context)!.retry,
                             height: 44,
                             backgroundColor: AppColors.primary,
                             isEnabled: true,

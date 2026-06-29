@@ -1,5 +1,5 @@
 import 'package:blood_bridge/core/models/blood_request_model.dart';
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:blood_bridge/core/widgets/custom_button.dart';
@@ -148,7 +148,7 @@ class RequestsContainer extends StatelessWidget {
             children: [
               Expanded(
                 child: CustomButton(
-                  text: context.l10n.accept,
+                  text: AppLocalizations.of(context)!.accept,
                   height: height * 0.06,
                   backgroundColor: AppColors.primary,
                   isEnabled: true,
@@ -164,7 +164,7 @@ class RequestsContainer extends StatelessWidget {
               const SizedBox(width: 8),
               Expanded(
                 child: CustomButton(
-                  text: context.l10n.decline,
+                  text: AppLocalizations.of(context)!.decline,
                   height: height * 0.06,
                   backgroundColor: AppColors.popover,
                   isEnabled: true,
@@ -177,7 +177,7 @@ class RequestsContainer extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           CustomButton(
-            text: context.l10n.viewDetails,
+            text: AppLocalizations.of(context)!.viewDetails,
             height: height * 0.06,
             isEnabled: true,
             backgroundColor: AppColors.popover.withOpacity(0.5),
@@ -238,7 +238,7 @@ class RequestsContainer extends StatelessWidget {
             children: [
               Expanded(
                 child: CustomButton(
-                  text: context.l10n.cancelAcceptance,
+                  text: AppLocalizations.of(context)!.cancelAcceptance,
                   height: height * 0.06,
                   backgroundColor: Colors.red.withOpacity(0.2),
                   isEnabled: true,
@@ -249,18 +249,20 @@ class RequestsContainer extends StatelessWidget {
                         return AlertDialog(
                           backgroundColor: AppColors.card,
                           title: Text(
-                            context.l10n.cancel,
+                            AppLocalizations.of(context)!.cancel,
                             style: TextStyleHelper.h3(context),
                           ),
                           content: Text(
-                            context.l10n.areYouSureYouWantToCancelAcceptance,
+                            AppLocalizations.of(
+                              context,
+                            )!.areYouSureYouWantToCancelAcceptance,
                             style: TextStyleHelper.small(context),
                           ),
                           actions: [
                             TextButton(
                               onPressed: () => Navigator.pop(context),
                               child: Text(
-                                context.l10n.no,
+                                AppLocalizations.of(context)!.no,
                                 style: TextStyle(color: Colors.white),
                               ),
                             ),
@@ -270,7 +272,7 @@ class RequestsContainer extends StatelessWidget {
                                 donorCubit.cancelAcceptance(requestId);
                               },
                               child: Text(
-                                context.l10n.yesCancel,
+                                AppLocalizations.of(context)!.yesCancel,
                                 style: TextStyle(color: Colors.red),
                               ),
                             ),
@@ -284,7 +286,7 @@ class RequestsContainer extends StatelessWidget {
               const SizedBox(width: 8),
               Expanded(
                 child: CustomButton(
-                  text: context.l10n.viewStatus,
+                  text: AppLocalizations.of(context)!.viewStatus,
                   height: height * 0.06,
                   backgroundColor: AppColors.popover.withOpacity(0.5),
                   isEnabled: true,
@@ -318,7 +320,7 @@ class RequestsContainer extends StatelessWidget {
             const Icon(Icons.check_circle, color: Colors.green, size: 20),
             const SizedBox(width: 8),
             Text(
-              context.l10n.donationCompleted,
+              AppLocalizations.of(context)!.donationCompleted,
               style: TextStyleHelper.small(
                 context,
               ).copyWith(color: Colors.green, fontWeight: FontWeight.bold),
@@ -336,7 +338,7 @@ class RequestsContainer extends StatelessWidget {
         return AlertDialog(
           backgroundColor: AppColors.card,
           title: Text(
-            context.l10n.requestDetails,
+            AppLocalizations.of(context)!.requestDetails,
             style: TextStyleHelper.h3(context),
           ),
           content: Column(
@@ -365,7 +367,7 @@ class RequestsContainer extends StatelessWidget {
             TextButton(
               onPressed: () => Navigator.pop(context),
               child: Text(
-                context.l10n.close,
+                AppLocalizations.of(context)!.close,
                 style: TextStyle(color: AppColors.primary),
               ),
             ),

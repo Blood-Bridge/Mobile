@@ -13,7 +13,7 @@ import 'package:blood_bridge/features/recommendations/presentation/widgets/donat
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 
 class DonorBody extends StatefulWidget {
   const DonorBody({
@@ -150,7 +150,7 @@ class _DonorBodyState extends State<DonorBody> {
                   Row(
                     children: [
                       Text(
-                        context.l10n.nearbyRequests,
+                        AppLocalizations.of(context)!.nearbyRequests,
                         style: TextStyleHelper.h3(context),
                       ),
                       const Spacer(),
@@ -158,7 +158,7 @@ class _DonorBodyState extends State<DonorBody> {
                         onPressed: () =>
                             Get.to(() => const LeaderboardScreen()),
                         child: Text(
-                          context.l10n.leaderboard,
+                          AppLocalizations.of(context)!.leaderboard,
                           style: TextStyleHelper.small(
                             context,
                           ).copyWith(color: AppColors.primary),
@@ -168,7 +168,7 @@ class _DonorBodyState extends State<DonorBody> {
                       TextButton(
                         onPressed: () => Get.to(() => const MapScreen()),
                         child: Text(
-                          context.l10n.map,
+                          AppLocalizations.of(context)!.map,
                           style: TextStyleHelper.small(
                             context,
                           ).copyWith(color: AppColors.primary),
@@ -218,7 +218,7 @@ class _DonorBodyState extends State<DonorBody> {
                           ),
                           const SizedBox(height: 16),
                           CustomButton(
-                            text: context.l10n.retry,
+                            text: AppLocalizations.of(context)!.retry,
                             height: 44,
                             backgroundColor: AppColors.primary,
                             isEnabled: true,
@@ -246,8 +246,12 @@ class _DonorBodyState extends State<DonorBody> {
                             padding: const EdgeInsets.all(32),
                             child: Text(
                               _selectedTabIndex == 0
-                                  ? context.l10n.noActiveRequests
-                                  : context.l10n.noCompletedDonations,
+                                  ? AppLocalizations.of(
+                                      context,
+                                    )!.noActiveRequests
+                                  : AppLocalizations.of(
+                                      context,
+                                    )!.noCompletedDonations,
                               style: TextStyleHelper.small(context),
                             ),
                           ),
@@ -305,7 +309,7 @@ class _DonorBodyState extends State<DonorBody> {
               ),
               const SizedBox(height: 12),
               Text(
-                context.l10n.noDeliveries,
+                AppLocalizations.of(context)!.noDeliveries,
                 style: TextStyleHelper.small(context),
                 textAlign: TextAlign.center,
               ),

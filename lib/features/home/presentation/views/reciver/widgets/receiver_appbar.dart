@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -36,9 +36,12 @@ class _ReceiverAppBarState extends State<ReceiverAppBar> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(context.l10n.bloodBridge, style: TextStyleHelper.h1(context)),
                     Text(
-                      context.l10n.receiverDashboard,
+                      AppLocalizations.of(context)!.bloodBridge,
+                      style: TextStyleHelper.h1(context),
+                    ),
+                    Text(
+                      AppLocalizations.of(context)!.receiverDashboard,
                       style: TextStyleHelper.xs(context),
                     ),
                   ],
@@ -87,11 +90,13 @@ class _ReceiverAppBarState extends State<ReceiverAppBar> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          context.l10n.emergencyRequest,
+                          AppLocalizations.of(context)!.emergencyRequest,
                           style: TextStyleHelper.h4(context),
                         ),
                         Text(
-                          context.l10n.instantDonorNotification,
+                          AppLocalizations.of(
+                            context,
+                          )!.instantDonorNotification,
                           style: TextStyleHelper.xs(
                             context,
                           ).copyWith(color: AppColors.primaryForeground),
@@ -123,7 +128,7 @@ class _ReceiverAppBarState extends State<ReceiverAppBar> {
                   children: [
                     Center(
                       child: Text(
-                        context.l10n.requestBlood,
+                        AppLocalizations.of(context)!.requestBlood,
                         style: TextStyleHelper.small(
                           context,
                         ).copyWith(color: AppColors.primaryForeground),

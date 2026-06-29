@@ -233,10 +233,8 @@ class DonorCubit extends Cubit<DonorState> {
     emit(DonorsLoading());
     isLoading = true;
     try {
-      await DioHelper.postData(
-        path: "Donors/complete",
-        body: {"requestId": requestId},
-      );
+      await DioHelper.postData(path: "Donors/completed/$requestId");
+
       _localAccepted.removeWhere((r) => r.requestId == requestId);
       emit(DonorsSuccess({"completedRequestId": requestId}));
     } catch (e) {

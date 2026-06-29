@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/services/dio_helper.dart';
 import 'package:blood_bridge/core/services/hive_helper.dart';
 import 'package:blood_bridge/features/map/presentation/view/widgets/req_marker.dart';
@@ -350,9 +350,11 @@ class MapCubit extends Cubit<MapState> {
   }
 
   String routeInfoText(BuildContext context) {
-    if (state.myLocation == null) return context.l10n.gettingLocation;
-    if (state.isRouting) return context.l10n.calculatingRoute;
-    if (state.selected == null) return context.l10n.tapToSeeRoute;
+    if (state.myLocation == null)
+      return AppLocalizations.of(context)!.gettingLocation;
+    if (state.isRouting) return AppLocalizations.of(context)!.calculatingRoute;
+    if (state.selected == null)
+      return AppLocalizations.of(context)!.tapToSeeRoute;
 
     if (state.routeDistanceMeters == null ||
         state.routeDurationSeconds == null) {

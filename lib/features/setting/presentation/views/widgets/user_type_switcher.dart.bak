@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/models/snackbar_type.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
@@ -50,7 +50,7 @@ class UserTypeSelector extends StatelessWidget {
               Row(
                 children: [
                   _TypeOption(
-                    label: context.l10n.donor,
+                    label: AppLocalizations.of(context)!.donor,
                     isSelected: isDonor,
                     isLoading: isLoading,
                     onTap: () {
@@ -60,7 +60,7 @@ class UserTypeSelector extends StatelessWidget {
                   ),
                   const SizedBox(width: 12),
                   _TypeOption(
-                    label: context.l10n.recipient,
+                    label: AppLocalizations.of(context)!.recipient,
                     isSelected: !isDonor,
                     isLoading: isLoading,
                     onTap: () =>
@@ -80,12 +80,12 @@ class UserTypeSelector extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(context.l10n.switchToDonor),
-        content: Text(context.l10n.weightDobEtc),
+        title: Text(AppLocalizations.of(context)!.switchToDonor),
+        content: Text(AppLocalizations.of(context)!.weightDobEtc),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(context.l10n.text100),
+            child: Text(AppLocalizations.of(context)!.text100),
           ),
           ElevatedButton(
             onPressed: () {
@@ -100,7 +100,7 @@ class UserTypeSelector extends StatelessWidget {
               );
               Navigator.pop(context);
             },
-            child: Text(context.l10n.text101),
+            child: Text(AppLocalizations.of(context)!.text101),
           ),
         ],
       ),

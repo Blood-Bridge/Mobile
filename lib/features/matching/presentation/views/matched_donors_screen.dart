@@ -1,4 +1,4 @@
-import 'package:blood_bridge/core/l10n_ext.dart';
+import 'package:blood_bridge/l10n/app_localizations.dart';
 import 'package:blood_bridge/core/models/snackbar_type.dart';
 import 'package:blood_bridge/core/services/text_style_helper.dart';
 import 'package:blood_bridge/core/utiles/app_colors.dart';
@@ -68,7 +68,7 @@ class _MatchedDonorsScreenState extends State<MatchedDonorsScreen> {
           onPressed: () => Get.back(),
         ),
         title: Text(
-          context.l10n.compatibleDonors,
+          AppLocalizations.of(context)!.compatibleDonors,
           style: TextStyleHelper.h1(context),
         ),
       ),
@@ -96,7 +96,7 @@ class _MatchedDonorsScreenState extends State<MatchedDonorsScreen> {
                     const SizedBox(height: 24),
                     ElevatedButton(
                       onPressed: _loadData,
-                      child: Text(context.l10n.retry),
+                      child: Text(AppLocalizations.of(context)!.retry),
                     ),
                   ],
                 ),
@@ -119,12 +119,12 @@ class _MatchedDonorsScreenState extends State<MatchedDonorsScreen> {
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      context.l10n.noCompatibleDonors,
+                      AppLocalizations.of(context)!.noCompatibleDonors,
                       style: TextStyleHelper.h2(context),
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      context.l10n.tryAgainLater,
+                      AppLocalizations.of(context)!.tryAgainLater,
                       style: TextStyleHelper.small(context),
                     ),
                   ],
@@ -247,7 +247,7 @@ class _MatchedDonorsScreenState extends State<MatchedDonorsScreen> {
             );
           }
 
-          return Center(child: Text(context.l10n.noData));
+          return Center(child: Text(AppLocalizations.of(context)!.noData));
         },
       ),
     );
